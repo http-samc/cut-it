@@ -34,8 +34,8 @@ border-radius: 15px;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(234, 242, 248);
-border-radius: 10px;
-color: rgb(26, 82, 118)
+color: rgb(26, 82, 118);
+border-radius:10px;
 </string>
     </property>
     <property name="html">
@@ -57,8 +57,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(234, 242, 248);
-border-radius: 15px;
-color: rgb(26, 82, 118)
+color: rgb(26, 82, 118);
+border-radius:5px;
 </string>
     </property>
    </widget>
@@ -73,7 +73,9 @@ color: rgb(26, 82, 118)
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(234, 242, 248);
-color: rgb(26, 82, 118)</string>
+color: rgb(26, 82, 118);
+border-radius:5px;
+</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="creds_input">
@@ -87,7 +89,9 @@ color: rgb(26, 82, 118)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(234, 242, 248);
-color: rgb(26, 82, 118)</string>
+color: rgb(26, 82, 118);
+border-radius:5px;
+</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="link_input">
@@ -101,7 +105,8 @@ color: rgb(26, 82, 118)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(234, 242, 248);
-color: rgb(26, 82, 118)</string>
+color: rgb(26, 82, 118);
+border-radius:5px;</string>
     </property>
     <property name="text">
      <string/>
@@ -120,7 +125,7 @@ color: rgb(26, 82, 118)</string>
      <string notr="true">color: rgb(169, 204, 227)</string>
     </property>
     <property name="text">
-     <string>Warrant:</string>
+     <string>Tagline:</string>
     </property>
    </widget>
    <widget class="QLabel" name="cite_label">
@@ -191,7 +196,7 @@ color: rgb(26, 82, 118)</string>
     </property>
     <property name="styleSheet">
      <string notr="true">font: 24pt &quot;Segoe UI Semilight&quot;;
-color: rgb(169, 204, 227)</string>
+color: rgb(140, 84, 255)</string>
     </property>
     <property name="text">
      <string>Card Information: </string>
@@ -207,8 +212,9 @@ color: rgb(169, 204, 227)</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">border-radius: 15px;
-background-color: rgb(212, 230, 241);
+     <string notr="true">background-color: rgb(140, 84, 255);
+color: #130e2c;
+border-radius:10px;
 
 </string>
     </property>
@@ -235,17 +241,23 @@ background-color: rgb(212, 230, 241);
    <widget class="QLabel" name="OTR_logo">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>320</y>
-      <width>201</width>
-      <height>141</height>
+      <x>-30</x>
+      <y>260</y>
+      <width>441</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-image: url(:/x/OTR.png);</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>resources/otr_logo.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="OTR_brand_label">
@@ -258,7 +270,8 @@ background-color: rgb(212, 230, 241);
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(169, 204, 227)</string>
+     <string notr="true">color: rgb(140, 84, 255);
+</string>
     </property>
     <property name="text">
      <string>Cut-It™ by Offtime Roadmap, LLC</string>
@@ -274,12 +287,27 @@ background-color: rgb(212, 230, 241);
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(169, 204, 227)</string>
+     <string notr="true">color: rgb(140, 84, 255)</string>
     </property>
     <property name="text">
      <string>v.1.0.0 </string>
     </property>
    </widget>
+   <zorder>OTR_logo</zorder>
+   <zorder>evidence_box</zorder>
+   <zorder>warrant_input</zorder>
+   <zorder>cite_input</zorder>
+   <zorder>creds_input</zorder>
+   <zorder>link_input</zorder>
+   <zorder>warrant_label</zorder>
+   <zorder>cite_label</zorder>
+   <zorder>creds_label</zorder>
+   <zorder>link_label</zorder>
+   <zorder>card_info_label</zorder>
+   <zorder>cutit_label</zorder>
+   <zorder>cite_box</zorder>
+   <zorder>OTR_brand_label</zorder>
+   <zorder>version</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
