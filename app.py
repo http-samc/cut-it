@@ -1,12 +1,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import (QPlainTextEdit, QApplication, QWidget)
+from PyQt5.QtWidgets import (QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5.QtCore import *
 from api.resource import PATH
 from api.version import check
+from bs4 import BeautifulSoup
 import sys
+import klembord
+from api.citer import cite
 
-# TODO google docs not recognizing bolded txt, maybe find way to -> html and copy that to clip?
-# https://github.com/OzymandiasTheGreat/klembord 
+# TODO add OSX clipboard rich support https://pypi.org/project/richxerox/ 
 # TODO font selector (css not recognized), https://forum.qt.io/topic/35999/solved-qplaintextedit-how-to-change-the-font-to-be-monospaced/7 
 
 class Ui_MainWindow(object):
@@ -29,7 +31,10 @@ class Ui_MainWindow(object):
         
         #Setting up evidence box
         self.evidence_box = QPlainTextEdit(self.centralwidget)
-        self.evidence_box.keyPressEvent = self.keyPressEvent
+
+        self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+S'), self.evidence_box)
+        self.cutit_shortcut.activated.connect(self.cut_it)
+
         self.evidence_box.setGeometry(QtCore.QRect(330, 20, 541, 481))
         self.evidence_box.setObjectName("evidence_box")
         self.evidence_box.setStyleSheet("background-color: rgb(234, 242, 248);\n"
@@ -119,21 +124,34 @@ class Ui_MainWindow(object):
         self.card_info_label.setObjectName("card_info_label")
 
         #Setting up cut-it button
-        self.cutit_label = QtWidgets.QPushButton(self.centralwidget)
-        self.cutit_label.setGeometry(QtCore.QRect(490, 530, 221, 23))
-        self.cutit_label.setStyleSheet("background-color: rgb(140, 84, 255);\n"
-        "color: #130e2c;\n"
-        "border-radius:10px;\n"
-        "\n"
-        "")
-        self.cutit_label.setObjectName("cutit_label")
-        self.cutit_label.clicked.connect(self.clicked)
+        self.cutit_button = QtWidgets.QPushButton(self.centralwidget)
+        self.cutit_button.setGeometry(QtCore.QRect(490, 530, 221, 23))
+        self.cutit_button.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #130e2c;"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #ffffff;"
+                             "border-radius:10px;"
+                             "}"
+                             ) 
+        # self.cutit_button.setStyleSheet("background-color: rgb(140, 84, 255);\n"
+        # "color: #130e2c;\n"
+        # "border-radius:10px;\n"
+        # "\n"
+        # "")
+        self.cutit_button.setObjectName("cutit_button")
+        self.cutit_button.clicked.connect(self.cut_it)
 
         #Setting up autocite checkbox
-        self.cite_box = QtWidgets.QCheckBox(self.centralwidget)
-        self.cite_box.setGeometry(QtCore.QRect(10, 270, 70, 17))
-        self.cite_box.setStyleSheet("color: rgb(169, 204, 227)")
-        self.cite_box.setObjectName("cite_box")
+        self.autocite_box = QtWidgets.QCheckBox(self.centralwidget)
+        self.autocite_box.setGeometry(QtCore.QRect(10, 270, 70, 17))
+        self.autocite_box.setStyleSheet("color: rgb(169, 204, 227)")
+        self.autocite_box.setObjectName("autocite_box")
 
         #Adding Offtime Logo
         self.OTR_logo = QtWidgets.QLabel(self.centralwidget)
@@ -169,8 +187,8 @@ class Ui_MainWindow(object):
         self.creds_label.raise_()
         self.link_label.raise_()
         self.card_info_label.raise_()
-        self.cutit_label.raise_()
-        self.cite_box.raise_()
+        self.cutit_button.raise_()
+        self.autocite_box.raise_()
         self.OTR_brand_label.raise_()
         self.version.raise_()
 
@@ -183,14 +201,67 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def keyPressEvent(self, e):
-        if e.key()  == Qt.Key_Control :
-            self.clicked()
-        
-        #FIXME allow for ctrl-v bypass
+    def toHTML(self):
+        doc = self.evidence_box.document()
+        soup = BeautifulSoup(doc.toHtml(), 'html.parser')
+        html = str(soup.find('p'))
+        html = html.replace('600', 'bold')
+        text = str(soup.text)
 
-    def clicked(self):
+        return [text, html]
+
+    def cut_it(self):
+
+        if self.autocite_box.isChecked() is True:
+
+            self.autocite_box.setCheckState(False)
+
+            URL = self.link_input.text()
+            CREDS = self.creds_input.text()
+            TAG = self.warrant_input.text()
+
+            c = cite(URL)
+            citation_data_debate = c.debate()
+            citation_mla = c.mla()
+
+            citation = f"""
+            <p>
+            """
+
+            if TAG != "":
+                citation += f"""
+                <span style='background-color: cyan; font-size: 12pt;'><u><strong>
+                    {TAG}
+                </strong></u></span>
+                """
+            
+            citation += f"""
+            <span style='background-color: cyan; font-size: 12pt;'><u><strong>
+                {citation_data_debate[0]} '{citation_data_debate[1]}<br>
+            </strong></u></span>
+            """
+
+            if CREDS != "":
+                citation += f"""
+                <i>
+                {CREDS}<br>
+                </i>
+                """
+            
+            citation += f"""
+            {citation_data_debate[2]} • {citation_data_debate[3]}<br>
+            {citation_mla}<br>
+            </p>
+            """
+
+            cursor = self.evidence_box.textCursor()
+            cursor.setPosition(0)
+            cursor.insertHtml(citation)
+
         self.emphasize()
+        klembord.init()
+        data = self.toHTML()
+        klembord.set_with_rich_text(data[0], data[1])
 
     def emphasize(self):
         """
@@ -202,8 +273,7 @@ class Ui_MainWindow(object):
         if cursor.hasSelection():
             selection = cursor.selectedText()
             cursor.removeSelectedText()        
-            formatted_selection = f"""
-            <span style='background-color: cyan; font-size: 12pt; font-weight: bold;'><strong><u>{selection}</u></strong></span>"""
+            formatted_selection = f"""<span style='background-color: cyan; font-size: 12pt;'><u><strong>{selection}</strong></u></span>"""
             cursor.insertHtml(formatted_selection)
 
     def highlight(self):
@@ -211,7 +281,7 @@ class Ui_MainWindow(object):
         highlights selected text
         """
 
-        #TODO: use cursor.selection().toHtml to get the HTML of the fragment and do double formatting
+        # TODO: use cursor.selection().toHtml to get the HTML of the fragment and do double formatting
 
         cursor = self.evidence_box.textCursor()
 
@@ -271,10 +341,10 @@ class Ui_MainWindow(object):
         self.creds_label.setText(_translate("MainWindow", "Credentials:"))
         self.link_label.setText(_translate("MainWindow", "Link:"))
         self.card_info_label.setText(_translate("MainWindow", "Card Information: "))
-        self.cutit_label.setText(_translate("MainWindow", "Cut-It"))
-        self.cite_box.setText(_translate("MainWindow", "AutoCite"))
+        self.cutit_button.setText(_translate("MainWindow", "Cut-It"))
+        self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
-        self.version.setText(_translate("MainWindow", "v.0.1.0"))
+        self.version.setText(_translate("MainWindow", "v.0.1.1"))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
