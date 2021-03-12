@@ -35,9 +35,12 @@ class cite:
         self.lastName = self.response["creators"][0]["lastName"]
         self.title = self.response["title"]
         self.date = self.response["date"]
+        self.date = self.date.replace('-', '/')
+        self.date = self.date.split('/')
+        self.date = self.date[1] + "/" + self.date[2] + "/" + self.date[0]
 
         #Getting last 2 digits of publication year
-        self.split_date = self.date.split('-')
+        self.split_date = self.date.split('/')
         self.year = None
         for _ in self.split_date:
             if len(_) == 4:
@@ -46,6 +49,8 @@ class cite:
             self.year = self.split_date[2]
 
         self.accessed = self.response["accessDate"]
+        self.accessed = self.accessed.split('/')
+        self.accessed = self.accessed[1] + "/" + self.accessed[0] + "/" + self.accessed[2]
         self.publication = self.response["websiteTitle"]
         self.url = self.response["url"]
 
@@ -61,4 +66,5 @@ class cite:
         """
         @Description: Returns an MLA 8 citation
         """
+
         return f'{self.lastName}, {self.firstName}. "{self.title}" {self.publication}, {self.date}, {self.url}. Accessed {self.accessed}.'

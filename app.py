@@ -1,15 +1,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5.QtCore import *
-from api.resource import PATH
-from api.version import check
-from bs4 import BeautifulSoup
 import sys
 import klembord
+from api.resource import PATH
+from api.version import check
 from api.citer import cite
+from api.texter import news
+from bs4 import BeautifulSoup
 
 # TODO add OSX clipboard rich support https://pypi.org/project/richxerox/ 
 # TODO font selector (css not recognized), https://forum.qt.io/topic/35999/solved-qplaintextedit-how-to-change-the-font-to-be-monospaced/7 
+# TODO threading in cut_it
 
 class Ui_MainWindow(object):
 
@@ -34,6 +36,9 @@ class Ui_MainWindow(object):
 
         self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+S'), self.evidence_box)
         self.cutit_shortcut.activated.connect(self.cut_it)
+
+        self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+S'), self.evidence_box)
+        self.cutit_shortcut.activated.connect(self.enableAutocite)
 
         self.evidence_box.setGeometry(QtCore.QRect(330, 20, 541, 481))
         self.evidence_box.setObjectName("evidence_box")
@@ -206,9 +211,14 @@ class Ui_MainWindow(object):
         soup = BeautifulSoup(doc.toHtml(), 'html.parser')
         html = str(soup.find('p'))
         html = html.replace('600', 'bold')
+
         text = str(soup.text)
 
         return [text, html]
+
+    def enableAutocite(self):
+        self.autocite_box.setCheckState(True)
+        self.cut_it()
 
     def cut_it(self):
 
@@ -223,6 +233,8 @@ class Ui_MainWindow(object):
             c = cite(URL)
             citation_data_debate = c.debate()
             citation_mla = c.mla()
+
+            article = news.paper(URL)
 
             citation = f"""
             <p>
@@ -250,7 +262,8 @@ class Ui_MainWindow(object):
             
             citation += f"""
             {citation_data_debate[2]} • {citation_data_debate[3]}<br>
-            {citation_mla}<br>
+            {citation_mla}<br><br>
+            {article}
             </p>
             """
 
