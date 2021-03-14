@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from newsfetch.news import newspaper
+from resources.newzpaper import Article
 
 # Text class depreciated
 """
@@ -60,9 +60,10 @@ class text:
 
         return text
 
-# TODO fix apostrophes not showing up in article string
 class news:
     @staticmethod
     def paper(URL):
-        n = newspaper(URL)
-        return n.article
+        article = Article(URL)
+        article.download()
+        article.parse()
+        return article.text
