@@ -144,11 +144,7 @@ class Ui_MainWindow(object):
                              "border-radius:10px;"
                              "}"
                              ) 
-        # self.cutit_button.setStyleSheet("background-color: rgb(140, 84, 255);\n"
-        # "color: #130e2c;\n"
-        # "border-radius:10px;\n"
-        # "\n"
-        # "")
+
         self.cutit_button.setObjectName("cutit_button")
         self.cutit_button.clicked.connect(self.cut_it)
 
@@ -157,6 +153,12 @@ class Ui_MainWindow(object):
         self.autocite_box.setGeometry(QtCore.QRect(10, 270, 70, 17))
         self.autocite_box.setStyleSheet("color: rgb(169, 204, 227)")
         self.autocite_box.setObjectName("autocite_box")
+
+        #Setting up autopoll checkbox
+        self.autopoll_box = QtWidgets.QCheckBox(self.centralwidget)
+        self.autopoll_box.setGeometry(QtCore.QRect(80, 270, 70, 17))
+        self.autopoll_box.setStyleSheet("color: rgb(169, 204, 227)")
+        self.autopoll_box.setObjectName("cite_box_2") 
 
         #Adding Offtime Logo
         self.OTR_logo = QtWidgets.QLabel(self.centralwidget)
@@ -196,8 +198,8 @@ class Ui_MainWindow(object):
         self.autocite_box.raise_()
         self.OTR_brand_label.raise_()
         self.version.raise_()
+        self.autopoll_box.raise_()
 
-        
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -358,6 +360,7 @@ class Ui_MainWindow(object):
         self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
         self.version.setText(_translate("MainWindow", "v.0.1.1"))
+        self.autopoll_box.setText(_translate("MainWindow", "AutoPoll"))
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
