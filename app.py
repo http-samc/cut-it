@@ -37,8 +37,14 @@ class Ui_MainWindow(object):
         self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+S'), self.evidence_box)
         self.cutit_shortcut.activated.connect(self.cut_it)
 
-        self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+S'), self.evidence_box)
-        self.cutit_shortcut.activated.connect(self.enableAutocite)
+        self.autocite_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+S'), self.evidence_box)
+        self.autocite_shortcut.activated.connect(self.enableAutocite)
+
+        self.autopoll_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Alt+S'), self.evidence_box)
+        self.autopoll_shortcut.activated.connect(self.enableAutopoll)
+
+        self.AIO_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+X'), self.evidence_box)
+        self.AIO_shortcut.activated.connect(self.enableAIO)
 
         self.evidence_box.setGeometry(QtCore.QRect(330, 20, 541, 481))
         self.evidence_box.setObjectName("evidence_box")
@@ -222,13 +228,31 @@ class Ui_MainWindow(object):
         self.autocite_box.setCheckState(True)
         self.cut_it()
 
+    def enableAutopoll(self):
+        self.autopoll_box.setCheckState(True)
+        self.cut_it()
+
+    def enableAIO(self):
+        self.autocite_box.setCheckState(True)
+        self.autopoll_box.setCheckState(True)
+        self.cut_it()
+
     def cut_it(self):
 
-        if self.autocite_box.isChecked() is True:
+        URL = self.link_input.text()
+        
+        citation = f"""
+        <p>
+        """
 
+        #Both Checked
+        if (self.autocite_box.isChecked() is True) and (self.autopoll_box.isChecked() is True):
+
+            #De-checking both boxes
             self.autocite_box.setCheckState(False)
+            self.autopoll_box.setCheckState(False)
 
-            URL = self.link_input.text()
+            #Inputting Cite
             CREDS = self.creds_input.text()
             TAG = self.warrant_input.text()
 
@@ -236,17 +260,11 @@ class Ui_MainWindow(object):
             citation_data_debate = c.debate()
             citation_mla = c.mla()
 
-            article = news.paper(URL)
-
-            citation = f"""
-            <p>
-            """
-
             if TAG != "":
                 citation += f"""
-                <span style='background-color: cyan; font-size: 12pt;'><u><strong>
+                <span style='background-color: yellow; font-size: 12pt;'><u><strong>
                     {TAG}
-                </strong></u></span>
+                </strong></u></span><br>
                 """
             
             citation += f"""
@@ -261,18 +279,81 @@ class Ui_MainWindow(object):
                 {CREDS}<br>
                 </i>
                 """
-            
+    
             citation += f"""
             {citation_data_debate[2]} • {citation_data_debate[3]}<br>
             {citation_mla}<br><br>
-            {article}
+            """
+
+            #Inputting Article Text
+            article = news.paper(URL)
+            citation += article + "</p>"
+
+            #Inserting Text
+            cursor = self.evidence_box.textCursor()
+            cursor.setPosition(0)
+            cursor.insertHtml(citation)  
+
+        #AutoCite checked Only
+        elif self.autocite_box.isChecked() is True:
+            
+            #De-checking box
+            self.autocite_box.setCheckState(False)
+
+            #Inputting Cite
+            CREDS = self.creds_input.text()
+            TAG = self.warrant_input.text()
+
+            c = cite(URL)
+            citation_data_debate = c.debate()
+            citation_mla = c.mla()
+
+            if TAG != "":
+                citation += f"""
+                <span style='background-color: yellow; font-size: 12pt;'><u><strong>
+                    {TAG}
+                </strong></u></span><br>
+                """
+            
+            citation += f"""
+            <span style='background-color: cyan; font-size: 12pt;'><u><strong>
+                {citation_data_debate[0]} '{citation_data_debate[1]}<br>
+            </strong></u></span>
+            """
+
+            if CREDS != "":
+                citation += f"""
+                <i>
+                {CREDS}<br>
+                </i>
+                """
+    
+            citation += f"""
+            {citation_data_debate[2]} • {citation_data_debate[3]}<br>
+            {citation_mla}<br><br>
             </p>
             """
 
+            #Inserting Text
             cursor = self.evidence_box.textCursor()
             cursor.setPosition(0)
-            cursor.insertHtml(citation)
+            cursor.insertHtml(citation) 
 
+        #Autopoll Checked Only
+        elif self.autopoll_box.isChecked() is True:
+            
+            #De-checking box
+            self.autopoll_box.setCheckState(False)
+
+            #Getting article, inputting it
+            article = news.paper(URL)
+            citation += article + "</p>"
+
+            #Inserting Text
+            cursor = self.evidence_box.textCursor()
+            cursor.setPosition(0)
+            cursor.insertHtml(citation)    
+        
         self.emphasize()
         klembord.init()
         data = self.toHTML()
@@ -359,7 +440,7 @@ class Ui_MainWindow(object):
         self.cutit_button.setText(_translate("MainWindow", "Cut-It"))
         self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
-        self.version.setText(_translate("MainWindow", "v.0.1.1"))
+        self.version.setText(_translate("MainWindow", "v.0.1.2"))
         self.autopoll_box.setText(_translate("MainWindow", "AutoPoll"))
 
 if __name__ == "__main__":
