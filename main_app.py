@@ -13,6 +13,7 @@ from bs4 import BeautifulSoup
 # TODO add OSX clipboard rich support https://pypi.org/project/richxerox/ 
 # TODO font selector (css not recognized), https://forum.qt.io/topic/35999/solved-qplaintextedit-how-to-change-the-font-to-be-monospaced/7 
 # TODO threading in cut_it
+# TODO break up resources folder into images and code
 
 class Ui_MainWindow(object):
 
