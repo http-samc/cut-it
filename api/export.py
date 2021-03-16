@@ -1,5 +1,5 @@
 from sys import path
-from resources.converter.xhtml2pdf import pisa
+from resources.converter import pisa
 #from xhtml2pdf import pisa             
 from docx import Document
 from htmldocx import HtmlToDocx
