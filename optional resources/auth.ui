@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>461</width>
-    <height>281</height>
+    <width>421</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,12 +17,12 @@
    <string notr="true">background-color: #130e2c;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="brand_label">
+   <widget class="QLabel" name="auth_label">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>20</y>
-      <width>381</width>
+      <x>30</x>
+      <y>10</y>
+      <width>361</width>
       <height>51</height>
      </rect>
     </property>
@@ -31,49 +31,13 @@
 color: rgb(140, 84, 255);</string>
     </property>
     <property name="text">
-     <string>Cut-It, by Offtime Roadmap</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="pass_input">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>160</y>
-      <width>381</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(234, 242, 248);
-color: rgb(26, 82, 118);
-border-radius:5px;</string>
-    </property>
-    <property name="text">
-     <string>Password</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="email_input">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>100</y>
-      <width>381</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(234, 242, 248);
-color: rgb(26, 82, 118);
-border-radius:5px;</string>
-    </property>
-    <property name="text">
-     <string>Email</string>
+     <string>Please Authenticate Below</string>
     </property>
    </widget>
    <widget class="QPushButton" name="sign_up_button">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>220</y>
       <width>181</width>
       <height>23</height>
@@ -89,10 +53,28 @@ border-radius:10px;
      <string>Sign Up</string>
     </property>
    </widget>
+   <widget class="QLineEdit" name="email_input">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>100</y>
+      <width>381</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+border-radius:5px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
    <widget class="QPushButton" name="log_in_button">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>220</x>
       <y>220</y>
       <width>181</width>
       <height>23</height>
@@ -106,6 +88,82 @@ border-radius:10px;
     </property>
     <property name="text">
      <string>Log In</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="email_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font: 10pt;
+</string>
+    </property>
+    <property name="text">
+     <string>Email: </string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="pass_input">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>170</y>
+      <width>381</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+border-radius:5px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::Password</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pass_label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font: 10pt;
+</string>
+    </property>
+    <property name="text">
+     <string>Password: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="msg_box">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>381</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font: 9pt;
+</string>
+    </property>
+    <property name="text">
+     <string>Welcome! Please sign up with a valid email and password
+(8 characters, 1 uppercase, 1 lowercase) or log in.</string>
     </property>
    </widget>
   </widget>

@@ -10,7 +10,7 @@ class check:
         }
 
         r = requests.post("https://api.flare-software.live/otr/cut-it/version", data=data)
-        r = int(str(r).replace('<Response [', '').replace(']>', ''))
+        r = r.status_code
 
         if r == 200:
             return True

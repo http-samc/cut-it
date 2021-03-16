@@ -1,14 +1,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QPlainTextEdit, QApplication, QShortcut, QWidget)
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtCore import *
 import sys
+import os
 import klembord
+from bs4 import BeautifulSoup
 from api.resource import PATH
 from api.version import check
 from api.citer import cite
 from api.texter import text
 from api.texter import news
-from bs4 import BeautifulSoup
+from api.export import make
 
 # TODO add OSX clipboard rich support https://pypi.org/project/richxerox/ 
 # TODO font selector (css not recognized), https://forum.qt.io/topic/35999/solved-qplaintextedit-how-to-change-the-font-to-be-monospaced/7 
@@ -36,6 +39,7 @@ class Ui_MainWindow(object):
         #Setting up evidence box
         self.evidence_box = QPlainTextEdit(self.centralwidget)
 
+        #Setting up shortcuts
         self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+S'), self.evidence_box)
         self.cutit_shortcut.activated.connect(self.cut_it)
 
@@ -47,6 +51,9 @@ class Ui_MainWindow(object):
 
         self.AIO_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+X'), self.evidence_box)
         self.AIO_shortcut.activated.connect(self.enableAIO)
+
+        self.toPDF_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+P'), self.evidence_box)
+        self.toPDF_shortcut.activated.connect(self.print)
 
         self.evidence_box.setGeometry(QtCore.QRect(330, 20, 541, 481))
         self.evidence_box.setObjectName("evidence_box")
@@ -145,10 +152,18 @@ class Ui_MainWindow(object):
                              "color: #130e2c;"
                              "border-radius:10px;"
                              "}"
+                             "QPushButton:hover:!pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(140, 84, 255);"
+                             "border: 1px solid rgb(140, 84, 255);"
+                             "border-radius:10px;"
+                             "}"
                              "QPushButton::pressed"
                              "{"
-                             "background-color : rgb(140, 84, 255);"
-                             "color: #ffffff;"
+                             "background-color : #130e2c;"
+                             "color: rgb(169, 204, 227);"
+                             "border: 1px solid rgb(169, 204, 227);"
                              "border-radius:10px;"
                              "}"
                              ) 
@@ -167,6 +182,34 @@ class Ui_MainWindow(object):
         self.autopoll_box.setGeometry(QtCore.QRect(80, 270, 70, 17))
         self.autopoll_box.setStyleSheet("color: rgb(169, 204, 227)")
         self.autopoll_box.setObjectName("cite_box_2") 
+
+        #Setting up settings button
+        
+        self.settings_button = QtWidgets.QPushButton(self.centralwidget)
+        self.settings_button.setGeometry(QtCore.QRect(150, 270, 141, 21))
+        self.settings_button.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #130e2c;"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton:hover:!pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(140, 84, 255);"
+                             "border: 1px solid rgb(140, 84, 255);"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(169, 204, 227);"
+                             "border: 1px solid rgb(169, 204, 227);"
+                             "border-radius:10px;"
+                             "}"
+                             ) 
+
+        self.settings_button.setObjectName("cutit_button")
 
         #Adding Offtime Logo
         self.OTR_logo = QtWidgets.QLabel(self.centralwidget)
@@ -207,6 +250,7 @@ class Ui_MainWindow(object):
         self.OTR_brand_label.raise_()
         self.version.raise_()
         self.autopoll_box.raise_()
+        self.settings_button.raise_()
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -221,10 +265,32 @@ class Ui_MainWindow(object):
         soup = BeautifulSoup(doc.toHtml(), 'html.parser')
         html = str(soup.find('p'))
         html = html.replace('600', 'bold')
-
+        html = '<body style="font-family: Times">' + html + '</body>'
         text = str(soup.text)
 
         return [text, html]
+
+    def print(self):
+        
+        # Getting Current Dir
+        startingDir = os.getcwd()
+
+        # Getting User Input for Target Dir
+        destDir = QFileDialog.getExistingDirectory(None, 
+                                                'Folder To Save In', 
+                                                startingDir, 
+                                                QFileDialog.ShowDirsOnly)
+
+        # Getting HTML, filename
+        html = self.toHTML()[1] 
+        filename = destDir + '/' + self.warrant_input.text() + '.pdf'
+        
+        # Making PDF
+        try:
+            make.pdf(html, filename)
+        
+        except Exception:
+            pass
 
     def enableAutocite(self):
         self.autocite_box.setCheckState(True)
@@ -446,9 +512,10 @@ class Ui_MainWindow(object):
         self.link_label.setText(_translate("MainWindow", "Link:"))
         self.card_info_label.setText(_translate("MainWindow", "Card Information: "))
         self.cutit_button.setText(_translate("MainWindow", "Cut-It"))
+        self.settings_button.setText(_translate("MainWindow", "Settings"))
         self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
-        self.version.setText(_translate("MainWindow", "v.0.1.2"))
+        self.version.setText(_translate("MainWindow", "v.0.1.3"))
         self.autopoll_box.setText(_translate("MainWindow", "AutoPoll"))
 
 if __name__ == "__main__":

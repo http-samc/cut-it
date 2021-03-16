@@ -222,22 +222,6 @@ border-radius:10px;
      <string>Cut-It</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="cite_box">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>270</y>
-      <width>70</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(169, 204, 227)</string>
-    </property>
-    <property name="text">
-     <string>AutoCite</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="OTR_logo">
     <property name="geometry">
      <rect>
@@ -293,13 +277,49 @@ border-radius:10px;
      <string>v.1.0.0 </string>
     </property>
    </widget>
+   <widget class="QPushButton" name="settings_button">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>270</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(140, 84, 255);
+color: #130e2c;
+border-radius:10px;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Settings</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="cite_box">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>270</y>
+      <width>70</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227)</string>
+    </property>
+    <property name="text">
+     <string>AutoCite</string>
+    </property>
+   </widget>
    <widget class="QCheckBox" name="cite_box_2">
     <property name="geometry">
      <rect>
       <x>80</x>
       <y>270</y>
       <width>70</width>
-      <height>17</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -321,9 +341,10 @@ border-radius:10px;
    <zorder>link_label</zorder>
    <zorder>card_info_label</zorder>
    <zorder>cutit_label</zorder>
-   <zorder>cite_box</zorder>
    <zorder>OTR_brand_label</zorder>
    <zorder>version</zorder>
+   <zorder>settings_button</zorder>
+   <zorder>cite_box</zorder>
    <zorder>cite_box_2</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
