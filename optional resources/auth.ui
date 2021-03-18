@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>421</width>
-    <height>319</height>
+    <height>327</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -151,13 +151,17 @@ font: 10pt;
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>250</y>
+      <y>260</y>
       <width>381</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(169, 204, 227);
+     <string notr="true">text-align: center;
+background-color: rgb(140, 84, 255);
+color: rgb(26, 82, 118);
+border-radius:10px;
+color: #130e2c;
 font: 9pt;
 </string>
     </property>

@@ -1,5 +1,5 @@
 from sys import path
-from resources.converter import pisa
+#from resources.converter import pisa
 #from xhtml2pdf import pisa             
 from docx import Document
 from htmldocx import HtmlToDocx
@@ -28,16 +28,19 @@ class make:
     @staticmethod
     def convert_html_to_pdf(source_html, output_filename):
 
-        result_file = open(output_filename, "w+b")
+        with open(output_filename, 'w') as f:
+            f.write(source_html)
+    
+        # result_file = open(output_filename, "w+b")
 
-        pisa_status = pisa.CreatePDF(
-                source_html,                
-                dest=result_file)           
+        # pisa_status = pisa.CreatePDF(
+        #         source_html,                
+        #         dest=result_file)           
 
-        result_file.close()                 
+        # result_file.close()                 
 
-        if pisa_status.err == None:
-            return True
+        # if pisa_status.err == None:
+        #     return True
 
-        else:
-            return False
+        # else:
+        #     return False

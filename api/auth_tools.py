@@ -27,7 +27,7 @@ class tools:
             "email" : email,
             "pass" : password,
         }
-
+        
         r = requests.post('http://api.flare-software.live/otr/cut-it/auth', data=data)
 
         if r.status_code == 202:
@@ -61,7 +61,7 @@ class tools:
             "email" : email,
             "pass" : password,
         }
-
+        
         r = requests.post('http://api.flare-software.live/otr/cut-it/auth', data=data)
 
         if r.status_code == 202:
