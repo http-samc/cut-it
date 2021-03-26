@@ -67,8 +67,16 @@ class store:
     @staticmethod
     def check_login():
         data = store.getData()
+        
+        if (data["login"]["exists"]) and (data["stay_logged_in"] == True):
+            return True
+        
+        elif (data["login"]["exists"]) and (data["stay_logged_in"] == False):
+            store.log_out()
+            return False
 
-        return data["login"]["exists"]
+        else:
+            return data["login"]["exists"]
 
     @staticmethod
     def log_out():
