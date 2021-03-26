@@ -462,7 +462,7 @@ class MainWindow(object):
         html = html.replace('600', 'bold')
         html = f'<body style="font-family: {store.get_font()}">' + html + '</body>'
         text = str(soup.text)
-
+        print(html)
         return [text, html]
 
     def print(self):

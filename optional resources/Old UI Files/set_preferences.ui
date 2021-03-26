@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>561</width>
+    <height>502</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #130e2c;
+border-radius: 15px;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QComboBox" name="primary_highlight_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>130</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Cyan</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Green</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Magenta</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Blue</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Purple</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Yellow</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="options_label">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>50</y>
+      <width>281</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Options</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="set_preferences_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI Semilight</family>
+      <pointsize>24</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 24pt &quot;Segoe UI Semilight&quot;;
+color: rgb(140, 84, 255)</string>
+    </property>
+    <property name="text">
+     <string>Set Preferences:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="primary_emphasis_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>330</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Primary)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Primary) + Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Italicized</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="font_size_cut_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>210</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>14</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>16</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QPushButton" name="save_button">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>450</y>
+      <width>221</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(140, 84, 255);
+color: #130e2c;
+border-radius:10px;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="category_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Category</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="font_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Font</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="primary_highlight_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Primary Highlight Color</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="font_size_cut_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Font Size of Primary Emphasis</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="font_size_normal_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Font Size of Normal Text</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="font_size_min_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>290</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Font Size of Minimized Text</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="primary_emphasis_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>330</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Primary Emphasis Settings</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="secondary_emphasis_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>370</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Secondary Emphasis Settings</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="tertiary_emphasis_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>410</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Tertiary Emphasis Settings</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="secondary_highlight_label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>241</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(169, 204, 227);
+font-size: 12pt;</string>
+    </property>
+    <property name="text">
+     <string>Secondary Highlight Color</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="secondary_highlight_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>170</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Green</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Cyan</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Magenta</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Blue</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Purple</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Yellow</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="font_size_normal_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>250</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>14</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>16</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="font_size_min_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>290</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>6</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>8</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>10</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>11</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>12</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>14</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>16</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="secondary_emphasis_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>370</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Bold</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Secondary)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Secondary) + Italicized</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="tertiary_emphasis_box">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>410</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Italicized</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Secondary)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Bold + Underline + Highlight (Secondary) + Italicized</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QFontComboBox" name="fontComboBox">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>90</y>
+      <width>281</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(234, 242, 248);
+color: rgb(26, 82, 118);
+</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,4 +1,3 @@
-from os import stat
 from api.resource import PATH
 from api.auth_tools import tools
 import json
@@ -97,6 +96,15 @@ class store:
         store.setData(data)
     
     @staticmethod
+    def add_misc(fixed_win, stay_logged_in):
+        data = store.getData()
+
+        data["fixed_win"] = fixed_win
+        data["stay_logged_in"] = stay_logged_in
+
+        store.setData(data)
+
+    @staticmethod
     def add_prefs(prefs):
         data = store.getData()
 
@@ -104,6 +112,7 @@ class store:
 
         store.setData(data)
 
+    # Depreciated
     @staticmethod
     def add_shorts(shorts):
 
@@ -113,6 +122,7 @@ class store:
 
         store.setData(data)
     
+    # Make everything after this its own class!
     @staticmethod
     def get_font():
         return store.getData()["settings"]["preferences"]["Font"]
@@ -148,3 +158,5 @@ class store:
     @staticmethod
     def tes():
         return store.getData()["settings"]["preferences"]["Tertiary Emphasis Settings"]
+
+store.init()
