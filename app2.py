@@ -164,7 +164,6 @@ class AuthWindow(QMainWindow):
             tools.log_out(EMAIL, PASSWORD)
 
         if tools.log_in(EMAIL, PASSWORD) == True:
-            store.init()
             store.add_login(EMAIL, PASSWORD)
             self.MainWin()
 
@@ -215,7 +214,6 @@ class MainWindow(object):
     def setupUi(self, MainWindow):
         
         self.settings_window = None
-        store.init()
         
         #Setting up MainWindow
         MainWindow.setObjectName("MainWindow")
@@ -717,7 +715,7 @@ class MainWindow(object):
         self.settings_button.setText(_translate("MainWindow", "Settings"))
         self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
-        self.version.setText(_translate("MainWindow", "v.0.1.3"))
+        self.version.setText(_translate("MainWindow", "v.0.1.4"))
         self.autopoll_box.setText(_translate("MainWindow", "AutoPoll"))
 
 class SettingsWindow(object):
@@ -1032,7 +1030,6 @@ class SettingsWindow(object):
         send_feedback(store.getData()["login"]["email"], self.feedback.toPlainText())
 
     def log_out(self):
-        store.init()
         store.log_out()
         quit()
 
@@ -1060,7 +1057,6 @@ class SettingsWindow(object):
                              )
 
     def load_config(self):
-        store.init()
         masterdata = store.getData()
 
         self.window_size_box.setCheckState(masterdata["fixed_win"])
@@ -1090,7 +1086,6 @@ class SettingsWindow(object):
             "Secondary Emphasis Settings" : self.secondary_emphasis_box.currentText(),
             "Tertiary Emphasis Settings" : self.tertiary_emphasis_box.currentText(),
         }
-        store.init()
         store.add_prefs(data)
         store.add_misc(self.window_size_box.isChecked(), self.stay_logged_in_box.isChecked())
 
@@ -1281,8 +1276,6 @@ class Shortcuts(object):
         self.record_shortcut.setText(_translate("Dialog", "Click & Record A New Shortcut (if desired)"))
 
 if __name__ == '__main__':
-
-    store.init()
 
     # Checking if login exists
 
