@@ -1,21 +1,22 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog
-from PyQt5.QtCore import *
-import sys
-import os
-import klembord
+from api.feedback import send_feedback
+from api.export import make, PrintPDF
+from api.settings import Settings
+from api.QBrowser import Browser
+from api.auth_tools import tools
 from bs4 import BeautifulSoup
 from api.resource import PATH
 from api.version import check
+from PyQt5.QtCore import *
 from api.citer import cite
 from api.texter import text
 from api.texter import news
-from api.export import make
-from api.auth_tools import tools
 from api.data import store
-from api.feedback import send_feedback
-from api.settings import Settings
+import klembord
+import sys
+import os
 
 global settings
 settings = Settings()
@@ -188,6 +189,15 @@ class AuthWindow(QMainWindow):
         self.Auth_window.close()
 
     def sign_up(self):
+
+        self.widget = QWidget()
+        self.browser = Browser()
+        self.browser.setupUi(self.widget)
+        self.browser.setURL("http://api.flare-software.live/otr/cut-it/signup")
+        self.browser.show()
+        self.Auth_window.close()
+
+    def sign_up_(self):
 
         EMAIL = self.email_input.text()
         PASSWORD = self.pass_input.text()
@@ -519,7 +529,6 @@ class MainWindow(object):
         html = html.replace('600', 'bold')
         html = f'<body style="font-family: {store.get_font()}">' + html + '</body>'
         text = str(soup.text)
-        print(html)
         return [text, html]
 
     def auto(self, autoCite, autoPoll):
@@ -701,20 +710,24 @@ class MainWindow(object):
 
         # Getting User Input for Target Dir
         destDir = QFileDialog.getExistingDirectory(None, 
-                                                'Folder To Save In', 
-                                                startingDir, 
-                                                QFileDialog.ShowDirsOnly)
+                'Folder To Save In', 
+                startingDir, 
+                QFileDialog.ShowDirsOnly)
 
         # Getting HTML, filename
         html = self.toHTML()[1] 
         filename = destDir + '/' + self.warrant_input.text() + '.pdf'
-        
+        print(filename)
         # Making PDF
-        try:
-            make.pdf(html, filename)
-        
-        except Exception:
-            pass
+
+        if filename != "/.pdf":
+            try:
+                self.widget = QWidget()
+                self.browser = PrintPDF(html, filename)
+                self.browser.setupUi(self.widget)
+            
+            except Exception:
+                pass
 
     def quit_(self):
         if settings.LI() == False:

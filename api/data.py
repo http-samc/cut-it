@@ -23,9 +23,9 @@ class store:
                     },
                     "settings": {
                         "preferences": {
-                            "Font": "MS Shell Dlg 2",
+                            "Font": "Times New Roman",
                             "Primary Highlight Color": "Cyan",
-                            "Secondary Highlight Color": "Green",
+                            "Secondary Highlight Color": "Yellow",
                             "Font Size of Primary Emphasis": "12",
                             "Font Size of Normal Text": "8",
                             "Font Size of Minimized Text": "2",
@@ -43,13 +43,12 @@ class store:
                             "AutoPoll + AutoCite": "CTRL+ALT+D",
                             "Save As PDF": "CTRL+P",
                             "Save Card In Progress": "CTRL+SHIFT+P",
-                            "Open Shortcuts": "ALT+S",
-                            "Open Preferences": "ALT+P",
+                            "Open Settings": "ALT+S",
                             "Close Window": "CTRL+W"
                         }
                     },
-                    "fixed_win": False,
-                    "stay_logged_in": False
+                    "fixed_win": True,
+                    "stay_logged_in": True
                 }
 
                 json.dump(data, f)
