@@ -2,7 +2,7 @@
     "login": {
         "email": null,
         "pass": null,
-        "exists": false
+        "exists": true
     },
     "settings": {
         "preferences": {
@@ -31,5 +31,6 @@
         }
     },
     "fixed_win": true,
-    "stay_logged_in": true
+    "stay_logged_in": true,
+    "zoom": 0
 }

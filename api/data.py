@@ -2,9 +2,9 @@ from api.resource import PATH
 from api.auth_tools import tools
 import json
 
-global path
+global path, card_path
 path = PATH.get('resources/data.json')
-
+card_path = PATH.get('resources/cards.json')
 class store:
 
     @staticmethod
@@ -48,10 +48,43 @@ class store:
                         }
                     },
                     "fixed_win": True,
-                    "stay_logged_in": True
+                    "stay_logged_in": True,
+                    "zoom": "0"
                 }
 
                 json.dump(data, f)
+        
+        try:
+            with open(card_path, 'r') as f:
+                pass
+        
+        except Exception:
+            with open(card_path, 'w') as f:
+                data = {
+                    "cards" : [""]
+                }
+
+                json.dump(data, f)
+
+    @staticmethod
+    def getCardData():
+        with open(card_path, 'r') as f:
+            data = json.loads(f.read())
+        
+        return data
+
+    @staticmethod
+    def getCard():
+        return store.getCardData()["cards"][0]
+        
+    @staticmethod
+    def addCard(card):
+        data =  store.getCardData()
+        
+        data["cards"].insert(0, card)
+
+        with open(card_path, 'w') as f:
+            json.dump(data, f)
 
     @staticmethod
     def getData():
@@ -111,6 +144,14 @@ class store:
 
         store.setData(data)
 
+    @staticmethod  
+    def setZoom(zoom):
+        data = store.getData()
+
+        data["zoom"] = zoom
+
+        store.setData(data)
+
     @staticmethod
     def add_prefs(prefs):
         data = store.getData()
@@ -118,52 +159,5 @@ class store:
         data["settings"]["preferences"] = prefs
 
         store.setData(data)
-
-    # Depreciated
-    @staticmethod
-    def add_shorts(shorts):
-
-        data = store.getData()
-
-        data["settings"]["shortcuts"] = shorts
-
-        store.setData(data)
-    
-    # Make everything after this its own class!
-    @staticmethod
-    def get_font():
-        return store.getData()["settings"]["preferences"]["Font"]
-
-    @staticmethod
-    def phc():
-        return store.getData()["settings"]["preferences"]["Primary Highlight Color"]
-
-    @staticmethod
-    def shc():
-        return store.getData()["settings"]["preferences"]["Secondary Highlight Color"]
-
-    @staticmethod
-    def fspe():
-        return store.getData()["settings"]["preferences"]["Font Size of Primary Emphasis"]
-
-    @staticmethod
-    def fsnt():
-        return store.getData()["settings"]["preferences"]["Font Size of Normal Text"]
-
-    @staticmethod
-    def fsmt():
-        return store.getData()["settings"]["preferences"]["Font Size of Minimized Text"]
-
-    @staticmethod
-    def pes():
-        return store.getData()["settings"]["preferences"]["Primary Emphasis Settings"]
-
-    @staticmethod
-    def ses():
-        return store.getData()["settings"]["preferences"]["Secondary Emphasis Settings"]
-
-    @staticmethod
-    def tes():
-        return store.getData()["settings"]["preferences"]["Tertiary Emphasis Settings"]
 
 store.init()

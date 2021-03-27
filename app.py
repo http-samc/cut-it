@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import (QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QFileDialog
 from api.feedback import send_feedback
 from api.export import make, PrintPDF
@@ -198,12 +197,15 @@ class AuthWindow(QMainWindow):
     def sign_up(self):
 
         self.widget = QWidget()
-        self.browser = Browser()
+        self.browser = Browser('Sign Up - Cut-It™')
         self.browser.setupUi(self.widget)
         self.browser.setURL("http://api.flare-software.live/otr/cut-it/signup")
         self.browser.show()
         self.Auth_window.close()
 
+    """
+    Depreciated (for direct in-app signup)
+    """
     def sign_up_(self):
 
         EMAIL = self.email_input.text()
@@ -241,6 +243,7 @@ class MainWindow(object):
         self.settings_window = None
         
         #Setting up MainWindow
+        MainWindow.closeEvent = self.closeEvent
         MainWindow.setObjectName("MainWindow")
 
         if settings.WS():
@@ -271,9 +274,10 @@ class MainWindow(object):
         "")
 
         font = QtGui.QFont()
-        font.setFamily(store.get_font())
-        font.setWeight(int(store.fsnt()))
+        font.setFamily(settings.font())
+        font.setWeight(int(settings.FSNT()))
         self.evidence_box.setFont(font)
+        self.evidence_box.zoomIn(store.getData()["zoom"])
 
         #Setting up tagline input
         self.warrant_input = QtWidgets.QLineEdit(self.centralwidget)
@@ -466,6 +470,7 @@ class MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.shortcuts()
+        self.loadCard()
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -473,10 +478,42 @@ class MainWindow(object):
     """
     Utils
     """
+    def closeEvent(self, event):
+
+        evidence_data = self.toHTML()
+        tag = self.warrant_input.text()
+        cite = self.cite_input.text()
+        creds = self.creds_input.text()
+        link = self.link_input.text()
+
+        card = {
+            "tag" : tag,
+            "cite" : cite,
+            "creds" : creds,
+            "link" : link,
+            "html" : evidence_data[1]
+        }
+
+        if card != store.getCard():
+            store.addCard(card)
+
+        event.accept()
+
+    def loadCard(self):
+        card = store.getCard()
+        self.warrant_input.setText(card["tag"])
+        self.cite_input.setText(card["cite"])
+        self.creds_input.setText(card["creds"])
+        self.link_input.setText(card["link"])
+        cursor = self.evidence_box.textCursor()
+        cursor.insertHtml(card["html"])
+        cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
+        self.evidence_box.setTextCursor(cursor)
+
     def shortcuts(self):
 
-        Z = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
-        Z.activated.connect(self.clearFormatting)
+        CF = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
+        CF.activated.connect(self.clearFormatting)
 
         # PE DONE
         PE = QShortcut(QtGui.QKeySequence(settings.PE()), self.evidence_box)
@@ -537,7 +574,7 @@ class MainWindow(object):
         soup = BeautifulSoup(doc.toHtml(), 'html.parser')
         html = str(soup.find('p'))
         html = html.replace('600', 'bold')
-        html = f'<body style="font-family: {store.get_font()}">' + html + '</body>'
+        html = f'<body style="font-family: {settings.font()}">' + html + '</body>'
         text = str(soup.text)
         return [text, html]
 
@@ -1213,6 +1250,7 @@ class SettingsWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.save_button.clicked.connect(self.save_config)
+        self.updates_button.clicked.connect(self.open_beta)
         self.edit_shorts.clicked.connect(self.open_shortcuts)
         self.log_out_button.clicked.connect(self.log_out)
         self.retranslateUi(MainWindow)
@@ -1284,6 +1322,12 @@ class SettingsWindow(object):
         }
         store.add_prefs(data)
         store.add_misc(self.window_size_box.isChecked(), self.stay_logged_in_box.isChecked())
+
+    def open_beta(self):
+        self.dialog = QtWidgets.QDialog()
+        self.beta = Beta()
+        self.beta.setupUi(self.dialog)
+        self.dialog.exec_()
 
     def open_shortcuts(self):
         self.dialog = QtWidgets.QDialog()
@@ -1469,6 +1513,140 @@ class Shortcuts(object):
         self.window_label.setText(_translate("Dialog", "Record & View Shortcuts:"))
         self.select_shortcut.setText(_translate("Dialog", "Select a Shortcut"))
         self.record_shortcut.setText(_translate("Dialog", "Click & Record A New Shortcut (if desired)"))
+
+class Beta(object):
+
+    def setupUi(self, Dialog):
+        Dialog.setWindowIcon(QtGui.QIcon(QtGui.QPixmap(PATH.get('resources/otr_icon.png'))))
+        Dialog.setObjectName("Dialog")
+        Dialog.resize(364, 280)
+        Dialog.setStyleSheet("background-color: #130e2c;\n"
+        "")
+        self.zoom = QtWidgets.QSpinBox(Dialog)
+        self.zoom.setGeometry(QtCore.QRect(180, 90, 161, 21))
+        self.zoom.setStyleSheet("background-color:   #130e2c; \n"
+        "color: rgb(169, 204, 227);\n"
+        "border: none;\n"
+        "outline: none;\n"
+        "padding: 5px;")
+        self.zoom.setObjectName("zoom")
+        self.window_label = QtWidgets.QLabel(Dialog)
+        self.window_label.setGeometry(QtCore.QRect(50, 20, 261, 41))
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI Semilight")
+        font.setPointSize(24)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.window_label.setFont(font)
+        self.window_label.setStyleSheet("font: 24pt \"Segoe UI Semilight\";\n"
+        "color: rgb(140, 84, 255)")
+        self.window_label.setObjectName("window_label")
+        self.zoom_label = QtWidgets.QLabel(Dialog)
+        self.zoom_label.setGeometry(QtCore.QRect(30, 90, 121, 21))
+        self.zoom_label.setStyleSheet("color: rgb(169, 204, 227);\n"
+        "font-size: 12pt;")
+        self.zoom_label.setObjectName("zoom_label")
+        self.updates_button = QtWidgets.QPushButton(Dialog)
+        self.updates_button.setGeometry(QtCore.QRect(30, 170, 311, 23))
+        self.updates_button.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #130e2c;"
+                             "border-radius:10px;"
+                             "border: none;"
+                             "outline: none;"
+                             "}"
+                             "QPushButton:hover:!pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(140, 84, 255);"
+                             "border: 1px solid rgb(140, 84, 255);"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(169, 204, 227);"
+                             "border: 1px solid rgb(169, 204, 227);"
+                             "border-radius:10px;"
+                             "}"
+                             ) 
+        self.updates_button.setObjectName("updates_button")
+        self.legal = QtWidgets.QLabel(Dialog)
+        self.legal.setGeometry(QtCore.QRect(40, 210, 291, 51))
+        self.legal.setStyleSheet("QLabel"
+                             "{"
+                             "color: rgb(169, 204, 227);"
+                             "font: 9.5pt;"
+                             "}"
+                             "QLabel::hover"
+                             "{"
+                             "color: rgb(26, 82, 118);"
+                             "font: 9.5pt;"
+                             "}"
+                             )
+        self.legal.setObjectName("legal")
+        self.sam_plug = QtWidgets.QPushButton(Dialog)
+        self.sam_plug.setGeometry(QtCore.QRect(30, 130, 311, 23))
+        self.sam_plug.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #130e2c;"
+                             "border-radius:10px;"
+                             "border: none;"
+                             "outline: none;"
+                             "}"
+                             "QPushButton:hover:!pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(140, 84, 255);"
+                             "border: 1px solid rgb(140, 84, 255);"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(169, 204, 227);"
+                             "border: 1px solid rgb(169, 204, 227);"
+                             "border-radius:10px;"
+                             "}"
+                             ) 
+        self.sam_plug.setObjectName("sam_plug")
+        self.sam_plug.clicked.connect(self.open_sam_plug)
+        self.updates_button.clicked.connect(self.open_updates)
+        self.zoom.setValue(store.getData()["zoom"])
+        self.zoom.valueChanged.connect(self.save_config)
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def save_config(self):
+        store.setZoom(self.zoom.value())
+
+    def open_updates(self):
+        self.widget = QWidget()
+        self.browser = Browser('Versions - Cut-It™')
+        self.browser.setupUi(self.widget)
+        self.browser.setURL("https://cut-it.gitbook.io/cut-it/")
+        self.browser.show()
+    
+    def open_sam_plug(self):
+        self.widget = QWidget()
+        self.browser = Browser('http://sam-c.me/')
+        self.browser.setupUi(self.widget)
+        self.browser.setURL("http://sam-c.me/")
+        self.browser.show()
+
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Beta - Cut-It™"))
+        self.window_label.setText(_translate("Dialog", "Beta Settings/Info:"))
+        self.zoom_label.setText(_translate("Dialog", "Text Zoom Level"))
+        self.updates_button.setText(_translate("Dialog", "Updates and Patches"))
+        self.legal.setText(_translate("Dialog", "Beta Versions are available to *authorized* users. \n"
+        "Offtime Roadmap, LLC is not responsible for any\n"
+        "damages that may incur while in the Beta phase."))
+        self.sam_plug.setText(_translate("Dialog", "Developed by Samarth Chitgopekar (click for info)"))
 
 if __name__ == '__main__':
 

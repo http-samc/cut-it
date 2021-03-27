@@ -7,6 +7,9 @@ import sys
 
 class Browser:
     
+    def __init__(self, title):
+        self.title = title
+        
     def setupUi(self, Widget):
         self.widget = Widget
         self.widget.setGeometry(800,500,500,630)
@@ -17,7 +20,7 @@ class Browser:
         self.webEngineView = QWebEngineView()
         vbox.addWidget(self.webEngineView)
         self.widget.setWindowTitle('QWebEngineView')
-        self.widget.setWindowTitle('Sign Up - Cut-It™')
+        self.widget.setWindowTitle(self.title)
         self.widget.setWindowIcon(QtGui.QIcon(QtGui.QPixmap(PATH.get('resources/otr_icon.png'))))
 
     def show(self):
