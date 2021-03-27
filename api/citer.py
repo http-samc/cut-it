@@ -35,22 +35,31 @@ class cite:
         self.lastName = self.response["creators"][0]["lastName"]
         self.title = self.response["title"]
         self.date = self.response["date"]
-        self.date = self.date.replace('-', '/')
-        self.date = self.date.split('/')
-        self.date = self.date[1] + "/" + self.date[2] + "/" + self.date[0]
 
-        #Getting last 2 digits of publication year
-        self.split_date = self.date.split('/')
-        self.year = None
-        for _ in self.split_date:
-            if len(_) == 4:
-                self.year = _[2:4]
-        if self.year == None:
-            self.year = self.split_date[2]
+        if self.date is not None:
+            self.date = self.date.replace('-', '/')
+            self.date = self.date.split('/')
+            self.date = self.date[1] + "/" + self.date[2] + "/" + self.date[0]
+            
+            #Getting last 2 digits of publication year
 
-        self.accessed = self.response["accessDate"]
-        self.accessed = self.accessed.split('/')
-        self.accessed = self.accessed[1] + "/" + self.accessed[0] + "/" + self.accessed[2]
+            self.split_date = self.date.split('/')
+            self.year = None
+            for _ in self.split_date:
+                if len(_) == 4:
+                    self.year = _[2:4]
+            if self.year == None:
+                self.year = self.split_date[2]
+
+            self.accessed = self.response["accessDate"]
+            self.accessed = self.accessed.split('/')
+            self.accessed = self.accessed[1] + "/" + self.accessed[0] + "/" + self.accessed[2]
+        
+        else:
+            self.date = ""
+            self.year = ""
+            self.accessed = ""
+
         self.publication = self.response["websiteTitle"]
         self.url = self.response["url"]
 

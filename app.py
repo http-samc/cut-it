@@ -15,6 +15,10 @@ from api.export import make
 from api.auth_tools import tools
 from api.data import store
 from api.feedback import send_feedback
+from api.settings import Settings
+
+global settings
+settings = Settings()
 
 class AuthWindow(QMainWindow):
     
@@ -81,6 +85,8 @@ class AuthWindow(QMainWindow):
                              "background-color : rgb(140, 84, 255);"
                              "color: #130e2c;"
                              "border-radius:10px;"
+                             "border: none;"
+                             "outline: none;"
                              "}"
                              "QPushButton:hover:!pressed"
                              "{"
@@ -108,6 +114,8 @@ class AuthWindow(QMainWindow):
                              "background-color : rgb(140, 84, 255);"
                              "color: #130e2c;"
                              "border-radius:10px;"
+                             "border: none;"
+                             "outline: none;"
                              "}"
                              "QPushButton:hover:!pressed"
                              "{"
@@ -217,7 +225,13 @@ class MainWindow(object):
         
         #Setting up MainWindow
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(890, 580)
+
+        if settings.WS():
+            MainWindow.setFixedSize(890, 580)
+        
+        else:
+            MainWindow.resize(890, 580)
+
         MainWindow.setWindowIcon(QtGui.QIcon(QtGui.QPixmap(PATH.get('resources/otr_icon.png'))))
         font = QtGui.QFont()
         font.setFamily("MS Serif")
@@ -450,9 +464,66 @@ class MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.shortcuts()
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def shortcuts(self):
+
+        # PE DONE
+        PE = QShortcut(QtGui.QKeySequence(settings.PE()), self.evidence_box)
+        PE.activated.connect(self.cut_it)
+
+        # SE
+
+        SE = QShortcut(QtGui.QKeySequence(settings.SE()), self.evidence_box)
+        SE.activated.connect(self.cut_it)
+
+        # TE
+
+        TE = QShortcut(QtGui.QKeySequence(settings.TE()), self.evidence_box)
+        TE.activated.connect(self.cut_it)
+
+        # MT
+
+        MT = QShortcut(QtGui.QKeySequence(settings.MT()), self.evidence_box)
+        MT.activated.connect(self.cut_it)
+
+        # AP
+
+        AP = QShortcut(QtGui.QKeySequence(settings.AP()), self.evidence_box)
+        AP.activated.connect(self.cut_it)
+
+        # AC
+
+        AC = QShortcut(QtGui.QKeySequence(settings.AC()), self.evidence_box)
+        AC.activated.connect(self.cut_it)
+
+        # AP_AC
+
+        AP_AC = QShortcut(QtGui.QKeySequence(settings.AP_AC()), self.evidence_box)
+        AP_AC.activated.connect(self.cut_it)
+
+        # PDF
+
+        PDF = QShortcut(QtGui.QKeySequence(settings.PDF()), self.evidence_box)
+        PDF.activated.connect(self.cut_it)
+
+        # IP
+
+        IP = QShortcut(QtGui.QKeySequence(settings.IP()), self.evidence_box)
+        IP.activated.connect(self.cut_it)
+
+        # OS DONE
+
+        OS = QShortcut(QtGui.QKeySequence(settings.OS()), self.evidence_box)
+        OS.activated.connect(self.settings)
+
+        # CW
+
+        CW = QShortcut(QtGui.QKeySequence(settings.CW()), self.evidence_box)
+        CW.activated.connect(self.cut_it)
 
     def toHTML(self):
         doc = self.evidence_box.document()
@@ -1028,6 +1099,8 @@ class SettingsWindow(object):
 
     def push_feedback(self):
         send_feedback(store.getData()["login"]["email"], self.feedback.toPlainText())
+        self.feedback.clear()
+        self.feedback.setPlaceholderText("Thank you for submitting your feedback!")
 
     def log_out(self):
         store.log_out()
@@ -1182,7 +1255,8 @@ class SettingsWindow(object):
         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
         "p, li { white-space: pre-wrap; }\n"
         "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Bugs? Feature Requests? Let us know here!</span></p></body></html>"))
+        "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\"></span></p></body></html>"))
+        self.feedback.setPlaceholderText("Bugs? Feature Requests? Tokens of appreciation? Let us know here!")
         self.submit_feedback.setText(_translate("MainWindow", "Submit"))
         self.save_button.setText(_translate("MainWindow", "Save All"))
 
@@ -1200,7 +1274,6 @@ class Shortcuts(object):
         "color: #130e2c;\n"
         "")
         self.shortcuts.setObjectName("shortcuts")
-        self.shortcuts.addItem("")
         self.shortcuts.addItem("")
         self.shortcuts.addItem("")
         self.shortcuts.addItem("")
@@ -1268,9 +1341,8 @@ class Shortcuts(object):
         self.shortcuts.setItemText(6, _translate("Dialog", "AutoPoll + AutoCite"))
         self.shortcuts.setItemText(7, _translate("Dialog", "Save As PDF"))
         self.shortcuts.setItemText(8, _translate("Dialog", "Save Card In Progress"))
-        self.shortcuts.setItemText(9, _translate("Dialog", "Open Shortcuts"))
-        self.shortcuts.setItemText(10, _translate("Dialog", "Open Preferences"))
-        self.shortcuts.setItemText(11, _translate("Dialog", "Close Window"))
+        self.shortcuts.setItemText(9, _translate("Dialog", "Open Settings"))
+        self.shortcuts.setItemText(10, _translate("Dialog", "Close Window"))
         self.window_label.setText(_translate("Dialog", "Record & View Shortcuts:"))
         self.select_shortcut.setText(_translate("Dialog", "Select a Shortcut"))
         self.record_shortcut.setText(_translate("Dialog", "Click & Record A New Shortcut (if desired)"))
