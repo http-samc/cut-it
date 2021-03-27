@@ -246,22 +246,6 @@ class MainWindow(object):
         #Setting up evidence box
         self.evidence_box = QPlainTextEdit(self.centralwidget)
 
-        #Setting up shortcuts
-        self.cutit_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+S'), self.evidence_box)
-        self.cutit_shortcut.activated.connect(self.cut_it)
-
-        self.autocite_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+S'), self.evidence_box)
-        self.autocite_shortcut.activated.connect(self.enableAutocite)
-
-        self.autopoll_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Alt+S'), self.evidence_box)
-        self.autopoll_shortcut.activated.connect(self.enableAutopoll)
-
-        self.AIO_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+Shift+X'), self.evidence_box)
-        self.AIO_shortcut.activated.connect(self.enableAIO)
-
-        self.toPDF_shortcut = QShortcut(QtGui.QKeySequence('Ctrl+P'), self.evidence_box)
-        self.toPDF_shortcut.activated.connect(self.print)
-
         self.evidence_box.setGeometry(QtCore.QRect(330, 20, 541, 481))
         self.evidence_box.setObjectName("evidence_box")
         self.evidence_box.setStyleSheet("background-color: rgb(234, 242, 248);\n"
@@ -469,61 +453,64 @@ class MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+    """
+    Utils
+    """
     def shortcuts(self):
 
         # PE DONE
         PE = QShortcut(QtGui.QKeySequence(settings.PE()), self.evidence_box)
         PE.activated.connect(self.cut_it)
 
-        # SE
+        # SE DONE
 
         SE = QShortcut(QtGui.QKeySequence(settings.SE()), self.evidence_box)
-        SE.activated.connect(self.cut_it)
+        SE.activated.connect(self.secondary_emphasis)
 
-        # TE
+        # TE DONE
 
         TE = QShortcut(QtGui.QKeySequence(settings.TE()), self.evidence_box)
-        TE.activated.connect(self.cut_it)
+        TE.activated.connect(self.tertiary_emphasis)
 
-        # MT
+        # MT DONE
 
         MT = QShortcut(QtGui.QKeySequence(settings.MT()), self.evidence_box)
-        MT.activated.connect(self.cut_it)
+        MT.activated.connect(self.MT)
 
-        # AP
+        # AP DONE
 
         AP = QShortcut(QtGui.QKeySequence(settings.AP()), self.evidence_box)
-        AP.activated.connect(self.cut_it)
+        AP.activated.connect(self.AP)
 
-        # AC
+        # AC DONE
 
         AC = QShortcut(QtGui.QKeySequence(settings.AC()), self.evidence_box)
-        AC.activated.connect(self.cut_it)
+        AC.activated.connect(self.AC)
 
-        # AP_AC
+        # AP_AC DONE
 
         AP_AC = QShortcut(QtGui.QKeySequence(settings.AP_AC()), self.evidence_box)
-        AP_AC.activated.connect(self.cut_it)
+        AP_AC.activated.connect(self.AP_AC)
 
-        # PDF
+        # PDF DONE
 
         PDF = QShortcut(QtGui.QKeySequence(settings.PDF()), self.evidence_box)
-        PDF.activated.connect(self.cut_it)
+        PDF.activated.connect(self.print)
 
-        # IP
+        # IP TODO
 
-        IP = QShortcut(QtGui.QKeySequence(settings.IP()), self.evidence_box)
-        IP.activated.connect(self.cut_it)
+        #IP = QShortcut(QtGui.QKeySequence(settings.IP()), self.evidence_box)
+        #IP.activated.connect(self.cut_it)
 
         # OS DONE
 
         OS = QShortcut(QtGui.QKeySequence(settings.OS()), self.evidence_box)
         OS.activated.connect(self.settings)
 
-        # CW
+        # CW DONE
 
         CW = QShortcut(QtGui.QKeySequence(settings.CW()), self.evidence_box)
-        CW.activated.connect(self.cut_it)
+        CW.activated.connect(self.quit_)
 
     def toHTML(self):
         doc = self.evidence_box.document()
@@ -535,42 +522,11 @@ class MainWindow(object):
         print(html)
         return [text, html]
 
-    def print(self):
-        
-        # Getting Current Dir
-        startingDir = os.getcwd()
-
-        # Getting User Input for Target Dir
-        destDir = QFileDialog.getExistingDirectory(None, 
-                                                'Folder To Save In', 
-                                                startingDir, 
-                                                QFileDialog.ShowDirsOnly)
-
-        # Getting HTML, filename
-        html = self.toHTML()[1] 
-        filename = destDir + '/' + self.warrant_input.text() + '.pdf'
-        
-        # Making PDF
-        try:
-            make.pdf(html, filename)
-        
-        except Exception:
-            pass
-
-    def enableAutocite(self):
-        self.autocite_box.setCheckState(True)
-        self.cut_it()
-
-    def enableAutopoll(self):
-        self.autopoll_box.setCheckState(True)
-        self.cut_it()
-
-    def enableAIO(self):
-        self.autocite_box.setCheckState(True)
-        self.autopoll_box.setCheckState(True)
-        self.cut_it()
-
-    def cut_it(self):
+    def auto(self, autoCite, autoPoll):
+        """
+        Takes in 2 bools that can override the state of the checkboxes for each option,
+        then executes them
+        """
 
         URL = self.link_input.text()
         
@@ -578,8 +534,8 @@ class MainWindow(object):
         <p>
         """
 
-        #Both Checked
-        if (self.autocite_box.isChecked() is True) and (self.autopoll_box.isChecked() is True):
+        # If both Poll/Cite enabled
+        if (self.autocite_box.isChecked() is True or autoCite is True) and (self.autopoll_box.isChecked() is True or autoPoll is True):
 
             #De-checking both boxes
             self.autocite_box.setCheckState(False)
@@ -612,7 +568,7 @@ class MainWindow(object):
                 {CREDS}<br>
                 </i>
                 """
-    
+
             citation += f"""
             {citation_data_debate[2]} • {citation_data_debate[3]}<br>
             {citation_mla}<br><br>
@@ -630,8 +586,10 @@ class MainWindow(object):
             cursor.setPosition(0)
             cursor.insertHtml(citation)  
 
+            return True
+
         #AutoCite checked Only
-        elif self.autocite_box.isChecked() is True:
+        elif (self.autocite_box.isChecked() is True) or (autoCite is True):
             
             #De-checking box
             self.autocite_box.setCheckState(False)
@@ -663,7 +621,7 @@ class MainWindow(object):
                 {CREDS}<br>
                 </i>
                 """
-    
+
             citation += f"""
             {citation_data_debate[2]} • {citation_data_debate[3]}<br>
             {citation_mla}<br><br>
@@ -674,9 +632,11 @@ class MainWindow(object):
             cursor = self.evidence_box.textCursor()
             cursor.setPosition(0)
             cursor.insertHtml(citation) 
+            
+            return True
 
         #Autopoll Checked Only
-        elif self.autopoll_box.isChecked() is True:
+        elif (self.autopoll_box.isChecked() is True) or (autoPoll is True):
             
             #De-checking box
             self.autopoll_box.setCheckState(False)
@@ -691,76 +651,187 @@ class MainWindow(object):
             #Inserting Text
             cursor = self.evidence_box.textCursor()
             cursor.setPosition(0)
-            cursor.insertHtml(citation)    
+            cursor.insertHtml(citation)  
+
+            return True
+
+        else:
+            return False  
+
+    def cut_it(self):
         
-        self.emphasize()
+        # If user has checked one or both auto boxes, it will exec that first. else, it will assume you want to style
+        if self.auto(False, False) == True:
+            return None
+        
+        self.primary_emphasis()
+
+    """
+    Shortcut call wrappers
+    """
+
+    def MT(self):
+        
+        cursor = self.evidence_box.textCursor()
+        if cursor.hasSelection() == False:
+            return None
+        selection = cursor.selectedText()
+        
+        selection = self.size(selection, settings.FSMT())
+        cursor.removeSelectedText()        
+        cursor.insertHtml(selection)
+        
         klembord.init()
         data = self.toHTML()
         klembord.set_with_rich_text(data[0], data[1])
 
-    def emphasize(self):
-        """
-        bolds, highlights, underlines selected text
-        """
+    def AC(self):
+        self.auto(True, False)
 
-        cursor = self.evidence_box.textCursor()
+    def AP(self):
+        self.auto(False, True)   
+    
+    def AP_AC(self):
+        self.auto(True, True)
 
-        if cursor.hasSelection():
-            selection = cursor.selectedText()
-            cursor.removeSelectedText()        
-            formatted_selection = f"""<span style='background-color: {store.phc()}; font-size: {store.fspe()}pt;'><u><strong>{selection}</strong></u></span>"""
-            cursor.insertHtml(formatted_selection)
-
-    def highlight(self):
-        """
-        highlights selected text
-        """
-
-        cursor = self.evidence_box.textCursor()
-
-        if cursor.hasSelection():
-            selection = cursor.selectedText()
-            cursor.removeSelectedText()        
-            formatted_selection = f"<span style='background-color: cyan;'>{selection}</span>"
-            cursor.insertHtml(formatted_selection)
-
-    def bold(self):
-        """
-        bolds selected text
-        """
-        cursor = self.evidence_box.textCursor()
-
-        if cursor.hasSelection():
-            selection = cursor.selectedText()
-            #cursor.removeSelectedText()        
-            formatted_selection = f"<b>{selection}</b>"
-            cursor.insertHtml(formatted_selection)
-
-    def underline(self):
-        """
-        underlines selected text
-        """
-        cursor = self.evidence_box.textCursor()
-
-        if cursor.hasSelection():
-            selection = cursor.selectedText()
-            cursor.removeSelectedText()        
-            formatted_selection = f"<u>{selection}</u>"
-            cursor.insertHtml(formatted_selection)
+    def print(self):
         
-    def italic(self):
+        # Getting Current Dir
+        startingDir = os.getcwd()
+
+        # Getting User Input for Target Dir
+        destDir = QFileDialog.getExistingDirectory(None, 
+                                                'Folder To Save In', 
+                                                startingDir, 
+                                                QFileDialog.ShowDirsOnly)
+
+        # Getting HTML, filename
+        html = self.toHTML()[1] 
+        filename = destDir + '/' + self.warrant_input.text() + '.pdf'
+        
+        # Making PDF
+        try:
+            make.pdf(html, filename)
+        
+        except Exception:
+            pass
+
+    def quit_(self):
+        if settings.LI() == False:
+            store.log_out()
+        quit()
+
+    """
+    emphasis levels
+    """
+    def primary_emphasis(self):
+        """
+        Formats using Primary emphasis
+        """
+
+        cursor = self.evidence_box.textCursor()
+        if cursor.hasSelection() == False:
+            return None
+        selection = cursor.selectedText()
+        config = settings.PES()
+
+        selection = self.italic(selection) if config[0] else selection
+        selection = self.bold(selection) if config[1] else selection
+        selection = self.underline(selection) if config[2] else selection
+        selection = self.highlight(selection, settings.PHC(), settings.FSPE()) if config[3] else self.size(selection, settings.FSPE())
+        
+        cursor.removeSelectedText()        
+        cursor.insertHtml(selection)
+        
+        klembord.init()
+        data = self.toHTML()
+        klembord.set_with_rich_text(data[0], data[1])
+
+    def secondary_emphasis(self):
+        """
+        Formats using Secondary emphasis
+        """
+
+        cursor = self.evidence_box.textCursor()
+        if cursor.hasSelection() == False:
+            return None
+        selection = cursor.selectedText()
+        config = settings.SES()
+
+        selection = self.italic(selection) if config[0] else selection
+        selection = self.bold(selection) if config[1] else selection
+        selection = self.underline(selection) if config[2] else selection
+        selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
+        
+        cursor.removeSelectedText()        
+        cursor.insertHtml(selection)
+
+        klembord.init()
+        data = self.toHTML()
+        klembord.set_with_rich_text(data[0], data[1])
+
+    def tertiary_emphasis(self):
+        """
+        Formats using Tertiary emphasis
+        """
+
+        cursor = self.evidence_box.textCursor()
+        if cursor.hasSelection() == False:
+            return None
+        selection = cursor.selectedText()
+        config = settings.TES()
+
+        selection = self.italic(selection) if config[0] else selection
+        selection = self.bold(selection) if config[1] else selection
+        selection = self.underline(selection) if config[2] else selection
+        selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
+        
+        cursor.removeSelectedText()        
+        cursor.insertHtml(selection)
+
+        klembord.init()
+        data = self.toHTML()
+        klembord.set_with_rich_text(data[0], data[1])
+
+    """
+    styling methods
+    """
+    def italic(self, html):
         """
         italicises selected text
         """
+             
+        return f"<em>{html}</em>"
+
+    def bold(self, html):
+        """
+        adds html bolding to str
+        """
+   
+        return f"<b>{html}</b>"
+
+    def underline(self, html):
+        """
+        adds html underlining to str
+        """  
+
+        return f"<u>{html}</u>"
         
-        cursor = self.evidence_box.textCursor()
+    def highlight(self, html, color, font_size):
+        """
+        adds html highlighting to str
+        """
+        return f"<span style='background-color: {color}; font-size: {font_size}pt;'>{html}</span>"
 
-        if cursor.hasSelection():
-            selection = cursor.selectedText()
-            cursor.removeSelectedText()        
-            formatted_selection = f"<em>{selection}</em>"
-            cursor.insertHtml(formatted_selection)
+    def size(self, html, font_size):
+        """
+        adds html font resizing to str
+        """
+        return f"<span style='font-size: {font_size}pt;'>{html}</span>"
 
+    """
+    Misc.
+    """
     def settings(self):
 
         self.Settings_Window = QMainWindow()
@@ -818,7 +889,9 @@ class SettingsWindow(object):
         self.secondary_emphasis_box = QtWidgets.QComboBox(self.pref_box)
         self.secondary_emphasis_box.setGeometry(QtCore.QRect(290, 370, 281, 22))
         self.secondary_emphasis_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.secondary_emphasis_box.setObjectName("secondary_emphasis_box")
         self.secondary_emphasis_box.addItem("")
         self.secondary_emphasis_box.addItem("")
@@ -830,7 +903,9 @@ class SettingsWindow(object):
         self.font_label = QtWidgets.QLabel(self.pref_box)
         self.font_label.setGeometry(QtCore.QRect(30, 90, 241, 21))
         self.font_label.setStyleSheet("color: rgb(169, 204, 227);\n"
-        "font-size: 12pt;")
+        "font-size: 12pt;\n"
+        "border: none;\n"
+        "outline: none;")
         self.font_label.setObjectName("font_label")
         self.secondary_emphasis_label = QtWidgets.QLabel(self.pref_box)
         self.secondary_emphasis_label.setGeometry(QtCore.QRect(30, 370, 241, 21))
@@ -855,7 +930,9 @@ class SettingsWindow(object):
         self.tertiary_emphasis_box = QtWidgets.QComboBox(self.pref_box)
         self.tertiary_emphasis_box.setGeometry(QtCore.QRect(290, 410, 281, 22))
         self.tertiary_emphasis_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.tertiary_emphasis_box.setObjectName("tertiary_emphasis_box")
         self.tertiary_emphasis_box.addItem("")
         self.tertiary_emphasis_box.addItem("")
@@ -867,7 +944,9 @@ class SettingsWindow(object):
         self.secondary_highlight_box = QtWidgets.QComboBox(self.pref_box)
         self.secondary_highlight_box.setGeometry(QtCore.QRect(290, 170, 281, 22))
         self.secondary_highlight_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.secondary_highlight_box.setObjectName("secondary_highlight_box")
         self.secondary_highlight_box.addItem("")
         self.secondary_highlight_box.addItem("")
@@ -883,12 +962,16 @@ class SettingsWindow(object):
         self.fontComboBox = QtWidgets.QFontComboBox(self.pref_box)
         self.fontComboBox.setGeometry(QtCore.QRect(290, 90, 281, 22))
         self.fontComboBox.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.fontComboBox.setObjectName("fontComboBox")
         self.font_size_cut_box = QtWidgets.QComboBox(self.pref_box)
         self.font_size_cut_box.setGeometry(QtCore.QRect(290, 210, 281, 22))
         self.font_size_cut_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.font_size_cut_box.setObjectName("font_size_cut_box")
         self.font_size_cut_box.addItem("")
         self.font_size_cut_box.addItem("")
@@ -908,7 +991,9 @@ class SettingsWindow(object):
         self.primary_highlight_box.setGeometry(QtCore.QRect(290, 130, 281, 22))
         self.primary_highlight_box.setFocusPolicy(QtCore.Qt.NoFocus)
         self.primary_highlight_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.primary_highlight_box.setObjectName("primary_highlight_box")
         self.primary_highlight_box.addItem("")
         self.primary_highlight_box.addItem("")
@@ -919,7 +1004,9 @@ class SettingsWindow(object):
         self.font_size_min_box = QtWidgets.QComboBox(self.pref_box)
         self.font_size_min_box.setGeometry(QtCore.QRect(290, 290, 281, 22))
         self.font_size_min_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.font_size_min_box.setObjectName("font_size_min_box")
         self.font_size_min_box.addItem("")
         self.font_size_min_box.addItem("")
@@ -933,7 +1020,9 @@ class SettingsWindow(object):
         self.primary_emphasis_box = QtWidgets.QComboBox(self.pref_box)
         self.primary_emphasis_box.setGeometry(QtCore.QRect(290, 330, 281, 22))
         self.primary_emphasis_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.primary_emphasis_box.setObjectName("primary_emphasis_box")
         self.primary_emphasis_box.addItem("")
         self.primary_emphasis_box.addItem("")
@@ -950,7 +1039,9 @@ class SettingsWindow(object):
         self.font_size_normal_box = QtWidgets.QComboBox(self.pref_box)
         self.font_size_normal_box.setGeometry(QtCore.QRect(290, 250, 281, 22))
         self.font_size_normal_box.setStyleSheet("background-color:  rgb(140, 84, 255);\n"
-        "color: #130e2c;")
+        "color: #130e2c;\n"        
+        "border: none;\n"
+        "outline: none;")
         self.font_size_normal_box.setObjectName("font_size_normal_box")
         self.font_size_normal_box.addItem("")
         self.font_size_normal_box.addItem("")
@@ -1096,6 +1187,7 @@ class SettingsWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.load_config()
+        MainWindow.move(100, 350)
 
     def push_feedback(self):
         send_feedback(store.getData()["login"]["email"], self.feedback.toPlainText())
