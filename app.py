@@ -759,7 +759,6 @@ class MainWindow(object):
         selection = self.underline(selection) if config[2] else selection
         selection = self.highlight(selection, settings.PHC(), settings.FSPE()) if config[3] else self.size(selection, settings.FSPE())
         
-        cursor.removeSelectedText()        
         cursor.insertHtml(selection)
         
         klembord.init()
@@ -782,7 +781,6 @@ class MainWindow(object):
         selection = self.underline(selection) if config[2] else selection
         selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
         
-        cursor.removeSelectedText()        
         cursor.insertHtml(selection)
 
         klembord.init()
@@ -805,7 +803,6 @@ class MainWindow(object):
         selection = self.underline(selection) if config[2] else selection
         selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
         
-        cursor.removeSelectedText()        
         cursor.insertHtml(selection)
 
         klembord.init()
