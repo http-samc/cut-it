@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QTextCursor
 from PyQt5.QtWidgets import QFileDialog
 from api.feedback import send_feedback
 from api.export import make, PrintPDF
@@ -474,6 +475,9 @@ class MainWindow(object):
     """
     def shortcuts(self):
 
+        Z = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
+        Z.activated.connect(self.clearFormatting)
+
         # PE DONE
         PE = QShortcut(QtGui.QKeySequence(settings.PE()), self.evidence_box)
         PE.activated.connect(self.cut_it)
@@ -685,6 +689,13 @@ class MainWindow(object):
     Shortcut call wrappers
     """
 
+    def clearFormatting(self):
+        cursor  = self.evidence_box.textCursor()
+        if cursor.hasSelection() == False:
+            return None
+        selection_plain = cursor.selectedText()
+        cursor.insertText(selection_plain)
+
     def MT(self):
         
         cursor = self.evidence_box.textCursor()
@@ -751,6 +762,10 @@ class MainWindow(object):
         cursor = self.evidence_box.textCursor()
         if cursor.hasSelection() == False:
             return None
+        
+        START = cursor.selectionStart()
+        END = cursor.selectionEnd()
+
         selection = cursor.selectedText()
         config = settings.PES()
 
@@ -760,7 +775,7 @@ class MainWindow(object):
         selection = self.highlight(selection, settings.PHC(), settings.FSPE()) if config[3] else self.size(selection, settings.FSPE())
         
         cursor.insertHtml(selection)
-        
+
         klembord.init()
         data = self.toHTML()
         klembord.set_with_rich_text(data[0], data[1])
