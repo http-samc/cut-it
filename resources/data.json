@@ -1,8 +1,8 @@
 {
     "login": {
-        "email": "sam@chitgopekar.tech",
-        "pass": "samartH04",
-        "exists": true
+        "email": null,
+        "pass": null,
+        "exists": false
     },
     "settings": {
         "preferences": {

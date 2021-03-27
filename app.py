@@ -18,6 +18,12 @@ import klembord
 import sys
 import os
 
+# TODO: implement zoom for larger/smaller monitors (for ev box), slider in settings??
+"""
+self.evidence_box.zoomIn(range=5)
+self.evidence_box.zoomOut(range=5)
+"""
+
 global settings
 settings = Settings()
 
