@@ -483,11 +483,9 @@ class MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.selectCard()
 
-
     """
     Utils
     """
-
     def selectCard(self):
         self.dialog = QtWidgets.QDialog()
         self.beta = CardDialog()
@@ -1019,7 +1017,7 @@ class MainWindow(object):
         self.settings_button.setText(_translate("MainWindow", "Settings"))
         self.autocite_box.setText(_translate("MainWindow", "AutoCite"))
         self.OTR_brand_label.setText(_translate("MainWindow", "Cut-It™ by Offtime Roadmap, LLC"))
-        self.version.setText(_translate("MainWindow", "v.0.1.4"))
+        self.version.setText(_translate("MainWindow", "v.0.5.0"))
         self.autopoll_box.setText(_translate("MainWindow", "AutoPoll"))
 
 class SettingsWindow(object):
@@ -1290,6 +1288,7 @@ class SettingsWindow(object):
         self.window_size_box.setGeometry(QtCore.QRect(30, 80, 111, 31))
         self.window_size_box.setStyleSheet("color: rgb(169, 204, 227)")
         self.window_size_box.setObjectName("window_size_box")
+        
         self.stay_logged_in_box = QtWidgets.QCheckBox(self.misc_box)
         self.stay_logged_in_box.setGeometry(QtCore.QRect(180, 80, 111, 31))
         self.stay_logged_in_box.setStyleSheet("color: rgb(169, 204, 227)")

@@ -7,3 +7,4 @@
 - 0.5.2 : add keep selected text
 - 0.5.3 : QDialog class w/ custom message + loading wheel option
 - 0.5.4 : Log in/Sign up rework
+- 0.5.5 : Fix checkbox errors (self.__.setTristate(False)?)

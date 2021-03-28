@@ -51,7 +51,7 @@ class store:
                     },
                     "fixed_win": True,
                     "stay_logged_in": True,
-                    "zoom": "0"
+                    "zoom": 0
                 }
 
                 json.dump(data, f)
