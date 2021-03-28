@@ -3,4 +3,4 @@
 
 ## Beta TODO
 *Implementation of ``@beta`` versioning starts April 1st* \
-[CLICK ME](https://offtime.gitbook.io/cut-it/)
+[CLICK ME](https://offtime.gitbook.io/cut-it/beta)
