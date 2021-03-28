@@ -831,7 +831,6 @@ class MainWindow(object):
         # Getting HTML, filename
         html = self.toHTML()[1] 
         filename = destDir + '/' + self.warrant_input.text() + '.pdf'
-        print(filename)
         # Making PDF
 
         if filename != "/.pdf":
