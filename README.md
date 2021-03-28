@@ -2,7 +2,7 @@
  Repo for Cut-It, by Offtime Roadmap
 
 ## Beta TODO
-*Implementation of ``@beta`` versioning starts June 1st*
+*Implementation of ``@beta`` versioning starts April 1st*
 - 0.5.1 : add ctrl+f
 - 0.5.2 : add keep selected text
 - 0.5.3 : QDialog class w/ custom message + loading wheel option
