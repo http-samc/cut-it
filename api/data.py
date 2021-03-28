@@ -1,3 +1,4 @@
+from os import stat
 from api.resource import PATH
 from api.auth_tools import tools
 import json
@@ -37,12 +38,13 @@ class store:
                             "Cut-It (Primary Emphasis)": "CTRL+S",
                             "Cut-It (Secondary Emphasis)": "CTRL+SHIFT+S",
                             "Cut-It (Tertiary Emphasis)": "CTRL+ALT+S",
+                            "Keep Selected Text" : "Ctrl+K",
                             "Minimize Text": "ALT+M",
                             "AutoPoll": "CTRL+D",
                             "AutoCite": "CTRL+SHIFT+D",
                             "AutoPoll + AutoCite": "CTRL+ALT+D",
                             "Save As PDF": "CTRL+P",
-                            "Save Card In Progress": "CTRL+SHIFT+P",
+                            "Open/Create Card": "CTRL+SHIFT+P",
                             "Open Settings": "ALT+S",
                             "Close Window": "CTRL+W"
                         }
@@ -61,7 +63,15 @@ class store:
         except Exception:
             with open(card_path, 'w') as f:
                 data = {
-                    "cards" : [""]
+                    "cards" : [{
+                        "tag": "",
+                        "cite": "",
+                        "creds": "",
+                        "link": "",
+                        "html": "",
+                        "text": ""
+                    }],
+                    "currentCard" : 0
                 }
 
                 json.dump(data, f)
@@ -75,8 +85,8 @@ class store:
 
     @staticmethod
     def getCard():
-        return store.getCardData()["cards"][0]
-        
+        return store.getCardData()["cards"][store.getCurrentCard()]
+
     @staticmethod
     def addCard(card):
         data =  store.getCardData()
@@ -85,6 +95,33 @@ class store:
 
         with open(card_path, 'w') as f:
             json.dump(data, f)
+
+    @staticmethod
+    def updateCard(card, index):
+        data =  store.getCardData()
+        
+        data["cards"][index] = card
+
+        with open(card_path, 'w') as f:
+            json.dump(data, f)
+
+    @staticmethod
+    def setCurrentCard(index):
+        
+        try:
+            index = int(index)
+        except Exception:
+            index = None
+
+        data = store.getCardData()
+        data["currentCard"] = index
+
+        with open(card_path, 'w') as f:
+            json.dump(data, f)
+    
+    @staticmethod
+    def getCurrentCard():
+        return store.getCardData()["currentCard"]
 
     @staticmethod
     def getData():

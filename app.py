@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5 import QtCore, QtGui, QtWidgets
+from api.QComboBoxPlus import ExtendedComboBox
 from PyQt5.QtWidgets import QFileDialog
 from api.feedback import send_feedback
 from api.export import make, PrintPDF
@@ -18,15 +19,20 @@ import klembord
 import sys
 import os
 
-# TODO: implement zoom for larger/smaller monitors (for ev box), slider in settings??
 """
-self.evidence_box.zoomIn(range=5)
-self.evidence_box.zoomOut(range=5)
+@beta info:
+0.5.1 : add ctrl+f
+0.5.2 : add keep selected text
+0.5.3 : QDialog class w/ custom message + loading wheel
+0.5.4 : Log in/Sign up rework
 """
 
 global settings
 settings = Settings()
 
+"""
+Main Windows
+"""
 class AuthWindow(QMainWindow):
     
     def setupUi(self, MainWindow): 
@@ -194,7 +200,10 @@ class AuthWindow(QMainWindow):
         self.Main_Window.show()
         self.Auth_window.close()
 
-    def sign_up(self):
+    """
+    Appreciated in 0.5.4@beta (for direct in-app signup)
+    """
+    def sign_up_(self):
 
         self.widget = QWidget()
         self.browser = Browser('Sign Up - Cut-It™')
@@ -204,9 +213,9 @@ class AuthWindow(QMainWindow):
         self.Auth_window.close()
 
     """
-    Depreciated (for direct in-app signup)
+    Depreciated in 0.5.4@beta (for direct in-app signup)
     """
-    def sign_up_(self):
+    def sign_up(self):
 
         EMAIL = self.email_input.text()
         PASSWORD = self.pass_input.text()
@@ -470,14 +479,47 @@ class MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.shortcuts()
-        self.loadCard()
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.selectCard()
+
 
     """
     Utils
     """
+
+    def selectCard(self):
+        self.dialog = QtWidgets.QDialog()
+        self.beta = CardDialog()
+        self.beta.setupUi(self.dialog)
+        self.dialog.exec_()
+        self.index = None
+        self.loadCard()
+
+    def loadCard(self):
+        self.index = store.getCurrentCard()
+        
+        document = self.evidence_box.document()
+        document.clear()
+
+        if self.index is None:
+            self.warrant_input.setText("")
+            self.cite_input.setText("")
+            self.creds_input.setText("")
+            self.link_input.setText("")
+            return
+        
+        card = store.getCard()
+        self.warrant_input.setText(card["tag"])
+        self.cite_input.setText(card["cite"])
+        self.creds_input.setText(card["creds"])
+        self.link_input.setText(card["link"])
+        cursor = self.evidence_box.textCursor()
+
+        cursor.insertHtml(card["html"])
+        cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
+        self.evidence_box.setTextCursor(cursor)
+
     def closeEvent(self, event):
 
         evidence_data = self.toHTML()
@@ -491,29 +533,32 @@ class MainWindow(object):
             "cite" : cite,
             "creds" : creds,
             "link" : link,
-            "html" : evidence_data[1]
+            "html" : evidence_data[1],
+            "text" : evidence_data[0]
         }
 
-        if card != store.getCard():
+        if self.index is None:
             store.addCard(card)
+
+        else:
+            store.updateCard(card, self.index)
 
         event.accept()
 
-    def loadCard(self):
-        card = store.getCard()
-        self.warrant_input.setText(card["tag"])
-        self.cite_input.setText(card["cite"])
-        self.creds_input.setText(card["creds"])
-        self.link_input.setText(card["link"])
-        cursor = self.evidence_box.textCursor()
-        cursor.insertHtml(card["html"])
-        cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
-        self.evidence_box.setTextCursor(cursor)
-
     def shortcuts(self):
 
+        # CF DONE
         CF = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
         CF.activated.connect(self.clearFormatting)
+
+        # Find
+        KST = QShortcut(QtGui.QKeySequence('Ctrl+F'), self.evidence_box)
+        KST.activated.connect(self.find)
+        self.cursor_find = self.evidence_box.textCursor()
+
+        # KST TODO
+        KST = QShortcut(QtGui.QKeySequence(settings.KST()), self.evidence_box)
+        KST.activated.connect(self.keepSelectedText)
 
         # PE DONE
         PE = QShortcut(QtGui.QKeySequence(settings.PE()), self.evidence_box)
@@ -554,10 +599,10 @@ class MainWindow(object):
         PDF = QShortcut(QtGui.QKeySequence(settings.PDF()), self.evidence_box)
         PDF.activated.connect(self.print)
 
-        # IP TODO
+        # NC
 
-        #IP = QShortcut(QtGui.QKeySequence(settings.IP()), self.evidence_box)
-        #IP.activated.connect(self.cut_it)
+        NC = QShortcut(QtGui.QKeySequence(settings.IP()), self.evidence_box)
+        NC.activated.connect(self.openNewCard)
 
         # OS DONE
 
@@ -725,6 +770,21 @@ class MainWindow(object):
     """
     Shortcut call wrappers
     """
+    
+    def find(self):
+        # TODO: implement w/ extraselections
+        return None        
+        # document = self.evidence_box.document()
+        # if self.cursor_find.hasSelection():
+        #     FROM = self.cursor_find.selectionEnd()
+        # else:
+        #     FROM = 0
+        # self.cursor_find = document.find("the", FROM)
+        # self.evidence_box.setTextCursor(self.cursor_find)
+
+    def keepSelectedText(self):
+        # TODO Implement
+        return None
 
     def clearFormatting(self):
         cursor  = self.evidence_box.textCursor()
@@ -783,6 +843,30 @@ class MainWindow(object):
             except Exception:
                 pass
 
+    def openNewCard(self):
+        evidence_data = self.toHTML()
+        tag = self.warrant_input.text()
+        cite = self.cite_input.text()
+        creds = self.creds_input.text()
+        link = self.link_input.text()
+
+        card = {
+            "tag" : tag,
+            "cite" : cite,
+            "creds" : creds,
+            "link" : link,
+            "html" : evidence_data[1],
+            "text" : evidence_data[0]
+        }
+
+        if self.index is None:
+            store.addCard(card)
+
+        else:
+            store.updateCard(card, self.index)
+        
+        self.selectCard()
+
     def quit_(self):
         if settings.LI() == False:
             store.log_out()
@@ -801,7 +885,6 @@ class MainWindow(object):
             return None
         
         START = cursor.selectionStart()
-        END = cursor.selectionEnd()
 
         selection = cursor.selectedText()
         config = settings.PES()
@@ -812,6 +895,8 @@ class MainWindow(object):
         selection = self.highlight(selection, settings.PHC(), settings.FSPE()) if config[3] else self.size(selection, settings.FSPE())
         
         cursor.insertHtml(selection)
+        cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
+        self.evidence_box.setTextCursor(cursor)
 
         klembord.init()
         data = self.toHTML()
@@ -825,6 +910,9 @@ class MainWindow(object):
         cursor = self.evidence_box.textCursor()
         if cursor.hasSelection() == False:
             return None
+
+        START = cursor.selectionStart()
+
         selection = cursor.selectedText()
         config = settings.SES()
 
@@ -834,6 +922,8 @@ class MainWindow(object):
         selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
         
         cursor.insertHtml(selection)
+        cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
+        self.evidence_box.setTextCursor(cursor)
 
         klembord.init()
         data = self.toHTML()
@@ -847,6 +937,9 @@ class MainWindow(object):
         cursor = self.evidence_box.textCursor()
         if cursor.hasSelection() == False:
             return None
+        
+        START = cursor.selectionStart()
+
         selection = cursor.selectedText()
         config = settings.TES()
 
@@ -856,6 +949,8 @@ class MainWindow(object):
         selection = self.highlight(selection, settings.SHC(), settings.FSNT()) if config[3] else self.size(selection, settings.FSNT())
         
         cursor.insertHtml(selection)
+        cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
+        self.evidence_box.setTextCursor(cursor)
 
         klembord.init()
         data = self.toHTML()
@@ -1427,6 +1522,9 @@ class SettingsWindow(object):
         self.submit_feedback.setText(_translate("MainWindow", "Submit"))
         self.save_button.setText(_translate("MainWindow", "Save All"))
 
+"""
+Dialogs
+"""
 class Shortcuts(object):
 
     def setupUi(self, Dialog):
@@ -1452,6 +1550,7 @@ class Shortcuts(object):
         self.shortcuts.addItem("")
         self.shortcuts.addItem("")
         self.shortcuts.addItem("")
+        self.shortcuts.addItem("Keep Selected Text")
         self.shortcuts.currentTextChanged.connect(self.updateShortcut)
         self.window_label = QtWidgets.QLabel(Dialog)
         self.window_label.setGeometry(QtCore.QRect(20, 20, 351, 31))
@@ -1507,7 +1606,7 @@ class Shortcuts(object):
         self.shortcuts.setItemText(5, _translate("Dialog", "AutoCite"))
         self.shortcuts.setItemText(6, _translate("Dialog", "AutoPoll + AutoCite"))
         self.shortcuts.setItemText(7, _translate("Dialog", "Save As PDF"))
-        self.shortcuts.setItemText(8, _translate("Dialog", "Save Card In Progress"))
+        self.shortcuts.setItemText(8, _translate("Dialog", "Open/Create Card"))
         self.shortcuts.setItemText(9, _translate("Dialog", "Open Settings"))
         self.shortcuts.setItemText(10, _translate("Dialog", "Close Window"))
         self.window_label.setText(_translate("Dialog", "Record & View Shortcuts:"))
@@ -1647,6 +1746,89 @@ class Beta(object):
         "Offtime Roadmap, LLC is not responsible for any\n"
         "damages that may incur while in the Beta phase."))
         self.sam_plug.setText(_translate("Dialog", "Developed by Samarth Chitgopekar (click for info)"))
+
+class CardDialog(object):
+
+    def setupUi(self, Dialog):
+        self.Dialog = Dialog
+        Dialog.setObjectName("Dialog")
+        Dialog.setFixedSize(331, 121)
+        Dialog.setWindowIcon(QtGui.QIcon(QtGui.QPixmap(PATH.get('resources/otr_icon.png'))))
+        Dialog.setStyleSheet("background-color: #130e2c;\n"
+        "font: 8pt \"Segoe UI Semibold\";")
+        self.submit = QtWidgets.QPushButton(Dialog)
+        self.submit.setGeometry(QtCore.QRect(20, 80, 291, 21))
+        self.submit.setStyleSheet("QPushButton"
+                             "{"
+                             "background-color : rgb(140, 84, 255);"
+                             "color: #130e2c;"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton:hover:!pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(140, 84, 255);"
+                             "border: 1px solid rgb(140, 84, 255);"
+                             "border-radius:10px;"
+                             "}"
+                             "QPushButton::pressed"
+                             "{"
+                             "background-color : #130e2c;"
+                             "color: rgb(169, 204, 227);"
+                             "border: 1px solid rgb(169, 204, 227);"
+                             "border-radius:10px;"
+                             "}"
+                             )
+        self.submit.clicked.connect(self.card_selected)
+        self.submit.setObjectName("submit")
+        self.cards = ExtendedComboBox(Dialog)
+        self.cards.setGeometry(QtCore.QRect(20, 20, 291, 41))
+        self.cards.setStyleSheet("background-color: #130e2c;\n"
+        "color: rgb(140, 84, 255);\n"
+        "border: none;\n"
+        "font-size: 9.5pt;\n"
+        "outline: none;")
+        self.cards.currentIndexChanged.connect(self.reset_position)
+        self.cards.setObjectName("cards")
+        self.cards.addItem("")
+        self.addOptions()
+        self.retranslateUi(Dialog)
+        QtCore.QMetaObject.connectSlotsByName(Dialog)
+
+    def reset_position(self):
+        self.cards.goToStart()
+
+    def addOptions(self):
+        data = store.getCardData()["cards"]
+        i = 0
+
+        for card in data:
+            name = None
+
+            if self.clean(card["tag"]) != "":
+                name = card["tag"]
+
+            elif self.clean(card["text"]) != "":
+                name = card["text"].replace("\n", "")
+            
+            if name != None:
+                self.cards.addItem(f"{i}: {name}")
+            
+            i+=1
+            
+    def clean(self, text):
+        return text.replace(" ", "").replace("\n", "").replace("\t", "")
+    
+    def card_selected(self):
+        self.reset_position()
+        store.setCurrentCard(str(self.cards.currentText())[0])
+        self.Dialog.close()
+        
+    def retranslateUi(self, Dialog):
+        _translate = QtCore.QCoreApplication.translate
+        Dialog.setWindowTitle(_translate("Dialog", "Select Card - Cut-It™"))
+        self.submit.setText(_translate("Dialog", "Start Cutting"))
+        self.cards.setItemText(0, _translate("Dialog", "Cut a new card"))
 
 if __name__ == '__main__':
 

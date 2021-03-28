@@ -154,8 +154,11 @@ class Settings:
         Shortcut for Saving Card In Progress
         """
 
-        return self.data["settings"]["shortcuts"]["Save Card In Progress"]
+        return self.data["settings"]["shortcuts"]["Open/Create Card"]
 
+    def KST(self):
+        return self.data["settings"]["shortcuts"]["Keep Selected Text"]
+        
     def OS(self):
         """
         Shortcut for Opening Settings
