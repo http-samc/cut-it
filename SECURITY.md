@@ -4,9 +4,9 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.5.0.  | :white_check_mark: |
+| v.0.5.0@beta  | :white_check_mark: |
 
 
 ## Reporting a Vulnerability
 
-To report a vulnerability email adithya@offtimeroadmap.com
+To report a vulnerability email sam@chitgopekar.tech
