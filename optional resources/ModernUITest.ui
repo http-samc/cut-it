@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>708</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">color: #d3d3d3;</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="styleSheet">
+       <string notr="true">color: #d3d3d3;</string>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" rowspan="2">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Scrape Custom Data</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Enter Tournament URL's to Scrape (Tabroom Homepage)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPlainTextEdit" name="plainTextEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Enter Division Keywords</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLineEdit" name="lineEdit_2"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Start Scraping</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="title">
+          <string>Generate Competitor Report</string>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Enter Event URL (Tabroom Entries Page)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="lineEdit"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Generate Report</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>User Agreement</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QPlainTextEdit" name="plainTextEdit_2">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="plainText">
+             <string>This agreement defines the relationship between You (the User), the Software (this program), and the Company (Offtime Roadmap, LLC). The software may not be relabled or redistributed by You, the User, in any capacity - regardless of whether or not a monetary gain is involved. The Company makes no guarentee, neither explicit nor implicit, regarding the functionality and the long term support of the Software. The company makes no guarentee that the Software will not crash, and by installing the Software, You, the User, agree to the risk of this occuring and are solely responsible for the damages that could be incurred. The Company is in no way, shape, or form associated with Tabroom.com or the National Speech and Debate association. All information pulled is publicly available. This program was written by Samarth Chitgopekar, the CTO of Offtime Roadmap, LLC. See https://github.com/http-samc for the Source Code to the Software and more. By using the Software to any extent, you agree to these terms and conditions.</string>
+            </property>
+            <property name="textInteractionFlags">
+             <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>Need Help? Click here to Read the Docs</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="cursor">
+       <cursorShape>WaitCursor</cursorShape>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -15,7 +15,10 @@ from api.citer import cite
 from api.texter import text
 from api.texter import news
 from api.data import store
-import klembord
+# For WIN, comment out this line
+from api.clipboard_OSX import clipboard 
+# For OSX, comment out this line
+from api.clipboard_WIN import clipboard 
 import sys
 import os
 
@@ -802,9 +805,8 @@ class MainWindow(object):
         cursor.removeSelectedText()        
         cursor.insertHtml(selection)
         
-        klembord.init()
         data = self.toHTML()
-        klembord.set_with_rich_text(data[0], data[1])
+        clipboard.add(data[0], data[1])
 
     def AC(self):
         self.auto(True, False)
@@ -895,9 +897,8 @@ class MainWindow(object):
         cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
         self.evidence_box.setTextCursor(cursor)
 
-        klembord.init()
         data = self.toHTML()
-        klembord.set_with_rich_text(data[0], data[1])
+        clipboard.add(data[0], data[1])
 
     def secondary_emphasis(self):
         """
@@ -922,9 +923,8 @@ class MainWindow(object):
         cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
         self.evidence_box.setTextCursor(cursor)
 
-        klembord.init()
         data = self.toHTML()
-        klembord.set_with_rich_text(data[0], data[1])
+        clipboard.add(data[0], data[1])
 
     def tertiary_emphasis(self):
         """
@@ -949,9 +949,8 @@ class MainWindow(object):
         cursor.setPosition(START, QtGui.QTextCursor.KeepAnchor)
         self.evidence_box.setTextCursor(cursor)
 
-        klembord.init()
         data = self.toHTML()
-        klembord.set_with_rich_text(data[0], data[1])
+        clipboard.add(data[0], data[1])
 
     """
     styling methods

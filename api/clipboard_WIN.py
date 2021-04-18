@@ -18,5 +18,6 @@ class clipboard():
         Injects both regular text (unformatted)
         and html ('rich' text) to clipboard
         """
+        
         klembord.init()
         klembord.set_with_rich_text(text, html)
