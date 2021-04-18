@@ -5,7 +5,6 @@ Step 3: Use the Config below, Note: Everything has a **PATH TO** (only relative 
 
 ```
 {
- "version": "auto-py-to-exe-configuration_v1",
  "pyinstallerOptions": [
   {
    "optionDest": "noconfirm",
