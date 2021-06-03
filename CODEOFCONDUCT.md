@@ -6,13 +6,13 @@ Please see our software license [here](.../LICENSE). You may use Cut-It commerci
 # 2. Contributing
 If you are interested in contributing to the codebase, you must adhere to the following guidelines:
 - Open an ``Issue`` to discuss what changes you'd like to make (do **not** make a ``Pull Request`` without discussing it first)
-- If approved by a *Member of Offtime Roadmap*, you can write the code
+- If approved by a *Project Manager*, you can write the code
 - After writing the code, you can make a ``Pull Request``
 - If approved, your code will be automatically integrated into the program, and distributed the following release cycle
 - The following stipulations apply:
   - **No** guarentee is made regarding the approval of a ``Pull Request``, regardless of whether or not the ``Issue`` was initially approved
   - **No** guarentee is made that explicit credit will be given in the program itself (all contributers are auto-added to the [contributors section](.../graphs/contributors))
-  - *The Members of Offtime Roadmap with administrative authority* reserve the right to reject any pull request **for any reason, with or without explanation**
+  - *The Project Managers* reserve the right to reject any pull request **for any reason, with or without explanation**
   - ***Any and every instance of homophobia, racism, sexism, or another practice deemed offensive by the Members of Offtime Roadmap will immediately result in a ban on your ability to contribute to the codebase.***
 
 ## Appendix A: Crediting
@@ -33,4 +33,4 @@ https://github.com/Offtime-Roadmap/Cut-It
 *<-- End Credit Text -->*
 
 # Any questions?
-Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)!
+Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech) for any codebase questions, contact [Adithya Vaidyanathan](mailto:adithya@offtimeroadmap.com) for Enterprise questions, for advertising contact [Gabe Seidman](mailto:gabe@offtimeroadmap.com).
