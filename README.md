@@ -14,7 +14,7 @@
 
 ## Current Project Managers
 - Samarth Chitgopekar (Head Developer, Commercial Manager)
-- Adithya Vaidanathan (R&D Lead, Commercial Manager)
+- Adithya Vaidyanathan (R&D Lead, Commercial Manager)
 - Gabriel Seidman (PR)
 
 # Did we miss anything?
