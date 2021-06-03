@@ -21,8 +21,7 @@ Please use the exact text that follows without any modification if you are using
 ```
 The software you are currently using was
 developed by Samarth Chitgopekar under the
-name Cut-It. Other contributors also exist
-who make the project possible. Please refer
+name Cut-It. Adithya Vaidyanathan. Please refer
 to the following URI's for information:
 1. Samarth Chitgopekar's GitHub
 https://github.com/http-samc
