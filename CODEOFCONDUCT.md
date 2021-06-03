@@ -21,7 +21,7 @@ Please use the exact text that follows without any modification if you are using
 ```
 The software you are currently using was developed
 by Samarth Chitgopekar under the name Cut-It, and 
-comanaged by Adithya Vaidyanathan. Please refer to 
+co-managed by Adithya Vaidyanathan. Please refer to 
 the following URI's for information:
 
 1. Samarth Chitgopekar's GitHub
