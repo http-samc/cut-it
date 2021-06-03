@@ -33,7 +33,7 @@ class GUI(QMainWindow):
 
         # Loading UI
         uic.loadUi('modern_ui.ui', self)
-
+    
         # Setting Title
         self.setWindowTitle("Cut-It™ by Offtime Roadmap® v.0.5.1@beta")
 
