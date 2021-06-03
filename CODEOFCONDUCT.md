@@ -36,4 +36,4 @@ https://github.com/Offtime-Roadmap/Cut-It
 *<-- End Credit Text -->*
 
 # Any questions?
-Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech) for any codebase questions, contact [Adithya Vaidyanathan](mailto:adithya@offtimeroadmap.com) for Enterprise questions, for advertising contact [Gabe Seidman](mailto:gabe@offtimeroadmap.com).
+Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech) for any codebase questions, [Adithya Vaidyanathan](mailto:adithya@offtimeroadmap.com) for Enterprise questions, or [Gabe Seidman](mailto:gabe@offtimeroadmap.com) for advertising.
