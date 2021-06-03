@@ -17,4 +17,4 @@
 - Adithya Vaidanathan (R&D Lead, Commercial Manager)
 - Gabriel Seidman (PR)
 # Did we miss anything?
-Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)!
+Contact [Samarth Chitgopekar](mailto:sam@offtimeroadmap.com)!
