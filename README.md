@@ -2,7 +2,7 @@
  The next generation card-cutting tool, written in pure 🐍 using ``🇶🇹``, made possible by:
  <p align="center">
   <img src="https://static.wixstatic.com/media/bb0ec7_3b435e3b0a14461f95327d3df055eb1f~mv2.png/v1/fill/w_66,h_47,al_c,q_85,usm_0.66_1.00_0.01/New%2520Logo%2520(1)_edited.webp">
-  <img src="https://www.speechanddebate.org/wp-content/uploads/NSDA-Logo-OneLine-Tagline.png">
+  <img src="https://www.speechanddebate.org/wp-content/uploads/NSDA_Nats21ONLINE_Logo-300x247-1-300x247.png">
   <img src="http://www.fillmurray.com/460/300">
 </p>
 

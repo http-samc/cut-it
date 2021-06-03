@@ -13,20 +13,23 @@ If you are interested in contributing to the codebase, you must adhere to the fo
   - **No** guarentee is made regarding the approval of a ``Pull Request``, regardless of whether or not the ``Issue`` was initially approved
   - **No** guarentee is made that explicit credit will be given in the program itself (all contributers are auto-added to the [contributors section](.../graphs/contributors))
   - *The Project Managers* reserve the right to reject any pull request **for any reason, with or without explanation**
-  - ***Any and every instance of homophobia, racism, sexism, or another practice deemed offensive by the Members of Offtime Roadmap will immediately result in a ban on your ability to contribute to the codebase.***
+  - ***Any and every instance of homophobia, racism, sexism, or another practice deemed offensive by the Project Managers will immediately result in a ban on your ability to contribute to the codebase.***
 
 ## Appendix A: Crediting
 Please use the exact text that follows without any modification if you are using Cut-It in a manner described in [Section 1](#1-legalese). Failure to do so will result in action/penalty. The text must be placed in a manner that will be viewed by all users, regardless of the action they take with the program (eg. a startup menu/notification).\
 *<-- Begin Credit Text -->*
 ```
-The software you are currently using was
-developed by Samarth Chitgopekar under the
-name Cut-It. Adithya Vaidyanathan. Please refer
-to the following URI's for information:
+The software you are currently using was developed
+by Samarth Chitgopekar under the name Cut-It, and 
+comanaged by Adithya Vaidyanathan. Please refer to 
+the following URI's for information:
+
 1. Samarth Chitgopekar's GitHub
 https://github.com/http-samc
+
 2. Cut-It's home page
 https://cutit.cards
+
 3. The home repository for Cut-It
 https://github.com/Offtime-Roadmap/Cut-It
 ```
