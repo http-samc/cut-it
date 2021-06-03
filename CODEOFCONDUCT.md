@@ -14,6 +14,7 @@ If you are interested in contributing to the codebase, you must adhere to the fo
   - **No** guarentee is made that explicit credit will be given in the program itself (all contributers are auto-added to the [contributors section](.../graphs/contributors))
   - *The Members of Offtime Roadmap with administrative authority* reserve the right to reject any pull request **for any reason, with or without explanation**
   - ***Any and every instance of homophobia, racism, sexism, or another practice deemed offensive by the Members of Offtime Roadmap will immediately result in a ban on your ability to contribute to the codebase.***
+
 ## Appendix A: Crediting
 Please use the exact text that follows without any modification if you are using Cut-It in a manner described in [Section 1](#1-legalese). Failure to do so will result in action/penalty. The text must be placed in a manner that will be viewed by all users, regardless of the action they take with the program (eg. a startup menu/notification).\
 *<-- Begin Credit Text -->*
@@ -31,3 +32,6 @@ https://cutit.cards
 https://github.com/Offtime-Roadmap/Cut-It
 ```
 *<-- End Credit Text -->*
+
+# Any questions?
+Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)!
