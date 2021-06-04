@@ -6,7 +6,7 @@ Cut-It is a software utility designed to make preparing evidence and resources f
 ## Need a custom solution for your camp or team?
 We can provide a free solution for you! Contact [Adithya Vaidyanathan](mailto:adithya@offtimeroadmap.com) to get started.
 
-## How you can I use Cut-It?
+## How can I use Cut-It?
 We encourage everyone to download and use Cut-It (see [releases](/releases)). You are also free to download the source code and run the raw app.py file if you so choose (might be an option for Linux users). 
 
 ## How can I help?
