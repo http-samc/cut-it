@@ -11,5 +11,14 @@ If you are interested in contributing to the codebase, you must adhere to the fo
   - *The Project Managers* reserve the right to reject any pull request **for any reason, with or without explanation**
   - ***Any and every instance of homophobia, racism, sexism, or another practice deemed offensive by the Project Managers will immediately result in a ban on your ability to contribute to the codebase.***
 
+# Contributing FAQ
+Here are some quick basics about the project:
+- The codebase is in Python 3.X, and the GUI interface used is PyQt6. These are mainstays of the codebase and thus will not likely be changed by any requested PRs. 
+- The app is designed to be deployed on Windows and MacOS.
+- The Resources folder contains raw UI files (straight from the Qt Designer tool), UI images, and any other nonessential utilities (these are not included in builds).
+- The Utils folder contains various API resources that enable Cut-It's functionality. A short description of each class is found at the top of their respective files.
+- ``app.py`` is the main file, and is what the build is based off of. Anytime a binary is generated, a *temporary* ``app.py`` is generated with the converted UI code to avoid bundling raw UI files.
+- If you'd like to contribute but don't have any ideas, feel free to check the ``Issues`` tab and filter for the ``Enhancement`` tag, which will show you uncoded TODOs.
+  
 # Any questions?
 Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)! 
