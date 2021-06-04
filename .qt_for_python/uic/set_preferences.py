@@ -3,14 +3,24 @@
 ################################################################################
 ## Form generated from reading UI file 'set_preferences.ui'
 ##
+<<<<<<< Updated upstream
 ## Created by: Qt User Interface Compiler version 6.0.3
+=======
+## Created by: Qt User Interface Compiler version 5.15.2
+>>>>>>> Stashed changes
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
+<<<<<<< Updated upstream
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
+=======
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+>>>>>>> Stashed changes
 
 
 class Ui_MainWindow(object):
@@ -47,6 +57,10 @@ class Ui_MainWindow(object):
         font.setPointSize(24)
         font.setBold(False)
         font.setItalic(False)
+<<<<<<< Updated upstream
+=======
+        font.setWeight(50)
+>>>>>>> Stashed changes
         self.set_preferences_label.setFont(font)
         self.set_preferences_label.setStyleSheet(u"font: 24pt \"Segoe UI Semilight\";\n"
 "color: rgb(140, 84, 255)")
