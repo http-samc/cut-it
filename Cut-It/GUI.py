@@ -6,6 +6,7 @@
 
 from PyQt5.QtWidgets import (QDialog, QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt 
 from utils.distro import version, tag
 import qtmodern.windows
 import qtmodern.styles
@@ -40,8 +41,8 @@ class MAIN(QMainWindow):
 
 class CARD_DIALOG(QDialog):
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent=parent)
 
         # Loading UI
         uic.loadUi('cardHistory.ui', self)
@@ -52,7 +53,7 @@ class CARD_DIALOG(QDialog):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     qtmodern.styles.light(app)
-    gui = MAIN()
+    gui = CARD_DIALOG()
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())

@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget, QDialog)
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import Qt
 import qtmodern.windows
 import qtmodern.styles
 from GUI import MAIN, CARD_DIALOG
@@ -16,13 +17,14 @@ class main(MAIN):
         self.bold.clicked.connect(self.createPopup)
     
     def createPopup(self):
-        #self.cardHistory = dlg()
-        self.cardHistory = qtmodern.windows.ModernDialog(QDialog())
-        self.cardHistory.exec_()
+        self.cardHistory = dlg(parent=self)
+        self.cardHistory = qtmodern.windows.ModernWindow(self.cardHistory, parent=self, hide_window_buttons=True)
+        self.cardHistory.setWindowModality(Qt.Qt.WindowModal)
+        self.cardHistory.show()
 
 class dlg(CARD_DIALOG):
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent=parent)
 
 # Starts program with QtModern Styling
 if __name__ == "__main__":
