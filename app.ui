@@ -22,7 +22,7 @@
   <widget class="QWidget" name="central_grid_layout">
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
-     <widget class="QTabWidget" name="about_tab">
+     <widget class="QTabWidget" name="tab_master">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -43,7 +43,7 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="about_tab">
        <attribute name="title">
         <string>About</string>
        </attribute>
@@ -1247,7 +1247,7 @@ p, li { white-space: pre-wrap; }
           <property name="title">
            <string>Preferences</string>
           </property>
-          <layout class="QFormLayout" name="formLayout">
+          <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0">
             <widget class="QLabel" name="font_label">
              <property name="styleSheet">
@@ -1259,172 +1259,110 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QFontComboBox" name="fontComboBox">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
+            <widget class="QComboBox" name="font">
+             <item>
+              <property name="text">
+               <string>Arial</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Arial Narrow</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Calibri</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Cambria</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Candara</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Courier New</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Copperplate</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Didot</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Geneva</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Georgia</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Garamond</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Helvetica</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Lucida Bright</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Optima</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Perpetua</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Times</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Tahoma</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Trebuchet MS</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Times New Roman</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Verdana</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="primary_highlight_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Primary Highlight Color</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QComboBox" name="primary_highlight_box">
-             <property name="focusPolicy">
-              <enum>Qt::NoFocus</enum>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <item>
-              <property name="text">
-               <string>Cyan</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Green</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Magenta</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Blue</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Purple</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Yellow</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="secondary_highlight_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Secondary Highlight Color</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="secondary_highlight_box">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <item>
-              <property name="text">
-               <string>Green</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Cyan</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Magenta</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Blue</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Purple</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Yellow</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="font_size_cut_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Font Size of Primary Emphasis</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QComboBox" name="font_size_cut_box">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <item>
-              <property name="text">
-               <string>12</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>2</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>4</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>6</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>8</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>10</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>11</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>14</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>16</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="4" column="0">
             <widget class="QLabel" name="font_size_normal_label">
              <property name="styleSheet">
               <string notr="true"/>
@@ -1434,8 +1372,8 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QComboBox" name="font_size_normal_box">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="font_size_normal">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -1486,7 +1424,7 @@ p, li { white-space: pre-wrap; }
              </item>
             </widget>
            </item>
-           <item row="5" column="0">
+           <item row="2" column="0">
             <widget class="QLabel" name="font_size_min_label">
              <property name="styleSheet">
               <string notr="true"/>
@@ -1496,8 +1434,8 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QComboBox" name="font_size_min_box">
+           <item row="2" column="1">
+            <widget class="QComboBox" name="font_size_min">
              <property name="styleSheet">
               <string notr="true"/>
              </property>
@@ -1548,160 +1486,346 @@ p, li { white-space: pre-wrap; }
              </item>
             </widget>
            </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="primary_emphasis_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
+           <item row="3" column="0">
+            <widget class="QLabel" name="zoom_label">
              <property name="text">
-              <string>Primary Emphasis Settings</string>
+              <string>Text Zoom</string>
              </property>
             </widget>
            </item>
-           <item row="6" column="1">
-            <widget class="QComboBox" name="primary_emphasis_box">
-             <property name="styleSheet">
-              <string notr="true"/>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="spinBox_4">
+             <property name="maximum">
+              <number>12</number>
              </property>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Highlight (Primary)</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Highlight (Primary) + Italicized</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Italicized</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Underline</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Italicized</string>
-              </property>
-             </item>
             </widget>
            </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="secondary_emphasis_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
+           <item row="4" column="0">
+            <widget class="QLabel" name="highlight_1_label">
              <property name="text">
-              <string>Secondary Emphasis Settings</string>
+              <string>Highlight Color #1</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
-            <widget class="QComboBox" name="secondary_emphasis_box">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="highlight_1">
              <item>
               <property name="text">
-               <string>Bold</string>
+               <string>Green</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Underline</string>
+               <string>Cyan</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Italicized</string>
+               <string>Magenta</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Bold + Underline</string>
+               <string>Blue</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Bold + Underline + Italicized</string>
+               <string>Purple</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>Bold + Underline + Highlight (Secondary)</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Highlight (Secondary) + Italicized</string>
+               <string>Yellow</string>
               </property>
              </item>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="tertiary_emphasis_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
+           <item row="5" column="0">
+            <widget class="QLabel" name="highlight_2_label">
              <property name="text">
-              <string>Tertiary Emphasis Settings</string>
+              <string>Highlight Color #2</string>
              </property>
             </widget>
            </item>
-           <item row="8" column="1">
-            <widget class="QComboBox" name="tertiary_emphasis_box">
-             <property name="styleSheet">
-              <string notr="true"/>
+           <item row="5" column="1">
+            <widget class="QComboBox" name="highlight_2">
+             <item>
+              <property name="text">
+               <string>Green</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Cyan</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Magenta</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Blue</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Purple</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Yellow</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QGroupBox" name="PrimaryEmSettings">
+             <property name="title">
+              <string>Primary Emphasis</string>
              </property>
-             <item>
-              <property name="text">
-               <string>Underline</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Italicized</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Italicized</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Highlight (Secondary)</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Bold + Underline + Highlight (Secondary) + Italicized</string>
-              </property>
-             </item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QCheckBox" name="primary_bold">
+                <property name="text">
+                 <string>Bold</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="primary_underline">
+                <property name="text">
+                 <string>Underline</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="primary_italicised">
+                <property name="text">
+                 <string>Italicised</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="primary_highlight_2">
+                <item>
+                 <property name="text">
+                  <string>None</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Green</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Cyan</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Magenta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Blue</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Purple</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Yellow</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="primary_size">
+                <property name="specialValueText">
+                 <string>16</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>26</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QGroupBox" name="SecondaryEmSettings">
+             <property name="title">
+              <string>Secondary Emphasis</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QCheckBox" name="secondary_bold">
+                <property name="text">
+                 <string>Bold</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="secondary_underline">
+                <property name="text">
+                 <string>Underline</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="secondary_italicised">
+                <property name="text">
+                 <string>Italicised</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="secondary_highlight_2">
+                <item>
+                 <property name="text">
+                  <string>None</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Green</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Cyan</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Magenta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Blue</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Purple</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Yellow</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="secondary_size">
+                <property name="specialValueText">
+                 <string>16</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>26</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="2">
+            <widget class="QGroupBox" name="TertiaryEmSettings">
+             <property name="title">
+              <string>Tertiary Emphasis</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QCheckBox" name="tertiary_bold">
+                <property name="text">
+                 <string>Bold</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tertiary_underline">
+                <property name="text">
+                 <string>Underline</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tertiary_italicised">
+                <property name="text">
+                 <string>Italicised</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="tertiary_highlight">
+                <item>
+                 <property name="text">
+                  <string>None</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Green</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Cyan</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Magenta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Blue</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Purple</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Yellow</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="tertiary_size">
+                <property name="specialValueText">
+                 <string>16</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>26</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
