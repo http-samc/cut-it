@@ -1,216 +1,231 @@
 """
-    - Utility to store user preferences between sessions
-    - TODO: make a logical card access protocol
+    - Manages User Preferences and Card History
+    - TODO: Make Card a dataclass?
 """
 
+from typing import Dict
+from schema import Schema, And, Use, Optional, SchemaError
 from utils.resource import PATH
+from utils.card import Card
 import json
 
-global path, card_path
-path = PATH.get('resources/data.json') # the path to the settings storage file
-card_path = PATH.get('resources/cards.json') # the path to the card storage file
+P_PATH = PATH.get('resources/data.json') # Preferences Storage Path
+C_PATH = PATH.get('resources/cards.json') # Card History Storage Path
 
-class store:
+# Defining Schema for the preferences and shortcuts section of Preferences
+PREFS_SCHEMA = Schema([{
+    "Font": And(str, len),
+    "Primary Highlight Color": And(str, len),
+    "Secondary Highlight Color": And(str, len),
+    "Font Size of Primary Emphasis": And(Use(int)),
+    "Font Size of Normal Text": And(Use(int)),
+    "Font Size of Minimized Text": And(Use(int)),
+    "Primary Emphasis Settings": And(list),
+    "Secondary Emphasis Settings": And(list),
+    "Tertiary Emphasis Settings": And(list)
+}])
+
+SHORTCUTS_SCHEMA = Schema([{
+    "Primary Emphasis": And(str, len),
+    "Secondary Emphasis": And(str, len),
+    "Tertiary Emphasis": And(str, len),
+    "Keep Selected Text" : And(str, len),
+    "Minimize Text": And(str, len),
+    "AutoPoll": And(str, len),
+    "AutoCite": And(str, len),
+    "AutoPoll + AutoCite": And(str, len),
+    "Save As PDF": And(str, len),
+    "Close Window": And(str, len)
+}])
+
+# Data validator/fixer
+def init():
     """
-        Class to access preferences data
+        Initializes both Card and Preferences storage
     """
 
-    @staticmethod
-    def init():
-        """
-            Checks for existing preference file, creates one IFF DNE
-        """
-
-        try:
-            with open(path, 'r') as f:
-                pass
-
-        except Exception:
-            with open(path, 'w') as f:
-                data = {
-                    "login": {
-                        "email": None,
-                        "pass": None,
-                        "exists": False
-                    },
-                    "settings": {
-                        "preferences": {
-                            "Font": "Times New Roman",
-                            "Primary Highlight Color": "Cyan",
-                            "Secondary Highlight Color": "Yellow",
-                            "Font Size of Primary Emphasis": "12",
-                            "Font Size of Normal Text": "8",
-                            "Font Size of Minimized Text": "2",
-                            "Primary Emphasis Settings": "Bold + Underline + Highlight (Primary)",
-                            "Secondary Emphasis Settings": "Bold",
-                            "Tertiary Emphasis Settings": "Underline"
-                        },
-                        "shortcuts": {
-                            "Cut-It (Primary Emphasis)": "CTRL+S",
-                            "Cut-It (Secondary Emphasis)": "CTRL+SHIFT+S",
-                            "Cut-It (Tertiary Emphasis)": "CTRL+ALT+S",
-                            "Keep Selected Text" : "Ctrl+K",
-                            "Minimize Text": "ALT+M",
-                            "AutoPoll": "CTRL+D",
-                            "AutoCite": "CTRL+SHIFT+D",
-                            "AutoPoll + AutoCite": "CTRL+ALT+D",
-                            "Save As PDF": "CTRL+P",
-                            "Open/Create Card": "CTRL+SHIFT+P",
-                            "Open Settings": "ALT+S",
-                            "Close Window": "CTRL+W"
-                        }
-                    },
-                    "fixed_win": True,
-                    "stay_logged_in": True,
-                    "zoom": 0
-                }
-
-                json.dump(data, f)
-        
-        try:
-            with open(card_path, 'r') as f:
-                pass
-        
-        except Exception:
-            with open(card_path, 'w') as f:
-                data = {
-                    "cards" : [{
-                        "tag": "",
-                        "cite": "",
-                        "creds": "",
-                        "link": "",
-                        "html": "",
-                        "text": ""
-                    }],
-                    "currentCard" : 0
-                }
-
-                json.dump(data, f)
-
-    @staticmethod
-    def getCardData():
-        """
-            Returns all the stored cards
-        """
-
-        with open(card_path, 'r') as f:
+    # Preferences
+    try:
+        with open(P_PATH, 'r') as f:
             data = json.loads(f.read())
-        
-        return data
+            PREFS_SCHEMA.validate(data["preferences"])
+            SHORTCUTS_SCHEMA.validate(data["shortcuts"])
 
-    @staticmethod
-    def getCard():
+    except Exception:
+        with open(P_PATH, 'w') as f:
+            """
+                Em. Settings in the form:
+                [
+                    (bool) bold,
+                    (bool) italicised,
+                    (bool) underlined,
+                    (str) highlight color || None,
+                ]
 
-        return store.getCardData()["cards"][store.getCurrentCard()]
-
-    @staticmethod
-    def addCard(card):
-        data =  store.getCardData()
-        
-        data["cards"].insert(0, card)
-
-        with open(card_path, 'w') as f:
+            """
+            data = {
+                "preferences": {
+                    "Font": "Times New Roman",
+                    "Primary Highlight Color": "Cyan",
+                    "Secondary Highlight Color": "Yellow",
+                    "Font Size of Primary Emphasis": 12,
+                    "Font Size of Normal Text": 8,
+                    "Font Size of Minimized Text": 2,
+                    "Primary Emphasis Settings": [
+                        True,
+                        True,
+                        True,
+                        "Cyan"
+                    ],
+                    "Secondary Emphasis Settings": [
+                        True,
+                        False,
+                        False,
+                        False,
+                        None
+                    ],
+                    "Tertiary Emphasis Settings": [
+                        False,
+                        False,
+                        True,
+                        None
+                    ]
+                },
+                "shortcuts": {
+                    "Primary Emphasis": "CTRL+S",
+                    "Secondary Emphasis": "CTRL+SHIFT+S",
+                    "Tertiary Emphasis": "CTRL+ALT+S",
+                    "Keep Selected Text" : "Ctrl+K",
+                    "Minimize Text": "ALT+M",
+                    "AutoPoll": "CTRL+D",
+                    "AutoCite": "CTRL+SHIFT+D",
+                    "AutoPoll + AutoCite": "CTRL+ALT+D",
+                    "Save As PDF": "CTRL+P",
+                    "Close Window": "CTRL+W"
+                }
+            }
             json.dump(data, f)
 
-    @staticmethod
-    def updateCard(card, index):
-        data =  store.getCardData()
-        
-        data["cards"][index] = card
-
-        with open(card_path, 'w') as f:
-            json.dump(data, f)
-
-    @staticmethod
-    def setCurrentCard(index):
-        
-        try:
-            index = int(index)
-        except Exception:
-            index = None
-
-        data = store.getCardData()
-        data["currentCard"] = index
-
-        with open(card_path, 'w') as f:
-            json.dump(data, f)
+    # Card History
+    try:
+        with open(C_PATH, 'r') as f:
+            json.loads(f.read())['cards']
     
-    @staticmethod
-    def getCurrentCard():
-        return store.getCardData()["currentCard"]
+    except Exception:
+        with open(C_PATH, 'w') as f:
+            json.dump({"cards":[]}, f)
 
-    @staticmethod
-    def getData():
-        with open(path, 'r') as f:
-            return json.loads(f.read())
+"""
+    Preferences Methods
+"""
 
-    @staticmethod
-    def setData(data):
-        with open(path, 'w') as f:
-            json.dump(data, f)
+# Getters and Setters
 
-    @staticmethod
-    def check_login():
-        data = store.getData()
-        
-        if (data["login"]["exists"]) and (data["stay_logged_in"] == True):
-            return True
-        
-        elif (data["login"]["exists"]) and (data["stay_logged_in"] == False):
-            store.log_out()
-            return False
+def getPrefData() -> dict:
+    """
+        Returns a dict of data.json
+    """
 
-        else:
-            return data["login"]["exists"]
+    with open(P_PATH, 'r') as f:
+        return json.loads(f.read())
 
-    @staticmethod
-    def log_out():
-        data = store.getData()
+def setPrefData(data) -> None:
+    """
+        Writes to data.json
+    """
 
-        EMAIL = data["login"]["email"]
-        PASS = data["login"]["pass"]
+    with open(P_PATH, 'w') as f:
+        json.dump(data, f)
 
-        tools.log_out(EMAIL, PASS)
-        
-        data["login"]["email"] =  None
-        data["login"]["pass"] = None
-        data["login"]["exists"] = False
+# Functions
 
-        store.setData(data)
+def getPref(key: str) -> any:
+    """
+        Returns the value of the inputted preference key
+    """
 
-    @staticmethod
-    def add_login(EMAIL, PASSWORD):
-        data = store.getData()
+    return getPrefData()["preferences"][key]
 
-        data["login"]["email"] = EMAIL
-        data["login"]["pass"] = PASSWORD
-        data["login"]["exists"] = True
+def setPref(key: str, val: any) -> None:
+    """
+        Sets the value of the inputted preference key to the
+        inputted value
+    """
 
-        store.setData(data)
-    
-    @staticmethod
-    def add_misc(fixed_win, stay_logged_in):
-        data = store.getData()
+    data = getPrefData()
+    data["preferences"][key] = val
+    setPrefData(data)
 
-        data["fixed_win"] = fixed_win
-        data["stay_logged_in"] = stay_logged_in
+def getShort(key: str) -> any:
+    """
+        Returns the value of the inputted shortcut key
+    """
 
-        store.setData(data)
+    return getPrefData["shortcuts"][key]
 
-    @staticmethod  
-    def setZoom(zoom):
-        data = store.getData()
+def setShort(key: str, val: any) -> None:
+    """
+        Sets the value of the inputted shortcut key to the
+        inputted value
+    """
 
-        data["zoom"] = zoom
+    data = getPrefData()
+    data["shortcuts"][key] = val
+    setPrefData(data)
 
-        store.setData(data)
+"""
+    Card Methods
+"""
 
-    @staticmethod
-    def add_prefs(prefs):
-        data = store.getData()
+# Getters and Setters
 
-        data["settings"]["preferences"] = prefs
+def getCardData() -> dict:
+    """
+        Returns a dict of cards.json
+    """
 
-        store.setData(data)
+    with open(C_PATH, 'r') as f:
+        return json.loads(f.read())
 
-store.init()
+def setCardData(data) -> None:
+    """
+        Writes to cards.json
+    """
+
+    with open(C_PATH, 'w') as f:
+        json.dump(data, f)
+
+# Functions
+
+def getCard(idx: int = 0) -> Card:
+    """
+        Returns card at start OR at supplied index
+    """
+
+    return Card(**getCardData()["cards"][idx])
+
+def addCard(card: Card, idx: int = None) -> None:
+    """
+        Checks if a card contains information, if so adds it
+        at the first pos of cards.json, or if an index is 
+        supplied it will overwrite the card at that pos
+    """
+
+    data = getCardData()
+    if idx:
+        data["cards"][idx] = Card.getDict()
+
+    else:
+        data["cards"].insert(0, Card.getDict())
+
+    setCardData(data)
+
+def removeCard(idx: int) -> None:
+    """
+        Removes card at specified index
+    """
+
+    data = getCardData()
+    del data["cards"][idx]
+
+    setCardData(data)
