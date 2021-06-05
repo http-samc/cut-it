@@ -22,6 +22,21 @@ class GUI(QMainWindow):
 
         # Setting Title
         self.setWindowTitle(f"Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
+        self.distro.setText(self.getDistroDetails())
+    
+    def getDistroDetails(self) -> str:
+        """
+            Returns a formatted String to be inserted into the Distro box in the about section
+        """
+
+        distroDetails = f"""<p align="center">
+🚀Cut-It FAQ🚀 || Version 📝: {version()} || Tag🏷️: @{tag()} 
+|| Website🌐: https://cutit.cards || GitHub Repository📚: https://github.com/http-samc/cut-it 
+|| Contributors👐: https://github.com/http-samc/cut-it/graphs/contributors 
+|| Current Project Managers👷: Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
+</p>""".replace('\n','')
+
+        return distroDetails
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

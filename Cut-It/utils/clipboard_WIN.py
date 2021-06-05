@@ -1,5 +1,5 @@
 """
-    Utility to inject rich text into the clipboard (Windows only)
+    - Utility to inject rich text into the clipboard (Windows only)
 """
 
 import klembord 

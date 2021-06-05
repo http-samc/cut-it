@@ -1,5 +1,5 @@
 """
-    Contains set details that will change between verisons
+    - Contains set details that will change between verisons
 """
 
 VERSION = "1.0.0"

@@ -1,5 +1,5 @@
 """
-returns type-appropriate values for each settings (shortcuts & preferences) in data.json
+    - Returns type-appropriate values for each settings (shortcuts & preferences) in data.json
 """
 
 from api.data import store

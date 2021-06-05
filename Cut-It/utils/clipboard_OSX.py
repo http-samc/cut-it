@@ -1,5 +1,5 @@
 """
-    Utility to inject rich text into the clipboard (MacOS only)
+    - Utility to inject rich text into the clipboard (MacOS only)
 """
 
 from richxerox import *

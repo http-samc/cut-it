@@ -1,6 +1,6 @@
 """
-    Utility to store user preferences between sessions
-    TODO: make a logical card access protocol
+    - Utility to store user preferences between sessions
+    - TODO: make a logical card access protocol
 """
 
 from os import stat

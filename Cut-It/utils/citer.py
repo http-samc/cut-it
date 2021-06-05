@@ -2,7 +2,7 @@ import requests
 import json
 
 """
-    Utility to generate citations based off QuickCite (Chitgopekar '21)
+    - Utility to generate citations based off QuickCite (Chitgopekar '21)
 """
 
 class cite:
