@@ -1,19 +1,14 @@
-# https://pypi.org/project/richxerox/
+"""
+    Utility to inject rich text into the clipboard (Windows only)
+"""
 
-# To Check OS Type
-from sys import platform
-
-# For Windows Clipboard
 import klembord 
-
-# For Mac Clipboard
-#from richxerox import *
 
 class clipboard():
 
     @staticmethod
-    
     def add(text, html):
+
         """
         Injects both regular text (unformatted)
         and html ('rich' text) to clipboard

@@ -1,10 +1,11 @@
 import requests
 import json
 
+"""
+    Utility to generate citations based off QuickCite (Chitgopekar '21)
+"""
+
 class cite:
-    """
-    create MLA citations with ease!
-    """
 
     def __init__(self, URL):
         """

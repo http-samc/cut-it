@@ -1,15 +1,27 @@
+"""
+    Utility to store user preferences between sessions
+    TODO: make a logical card access protocol
+"""
+
 from os import stat
-from api.resource import PATH
-from api.auth_tools import tools
+from utils.resource import PATH
 import json
 
 global path, card_path
-path = PATH.get('resources/data.json')
-card_path = PATH.get('resources/cards.json')
+path = PATH.get('resources/data.json') # the path to the settings storage file
+card_path = PATH.get('resources/cards.json') # the path to the card storage file
+
 class store:
+    """
+        Class to access preferences data
+    """
 
     @staticmethod
     def init():
+        """
+            Checks for existing preference file, creates one IFF DNE
+        """
+
         try:
             with open(path, 'r') as f:
                 pass
@@ -78,6 +90,10 @@ class store:
 
     @staticmethod
     def getCardData():
+        """
+            Returns all the stored cards
+        """
+
         with open(card_path, 'r') as f:
             data = json.loads(f.read())
         
@@ -85,6 +101,7 @@ class store:
 
     @staticmethod
     def getCard():
+
         return store.getCardData()["cards"][store.getCurrentCard()]
 
     @staticmethod
