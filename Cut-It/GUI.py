@@ -22,7 +22,7 @@ class MAIN(QMainWindow):
         uic.loadUi('app.ui', self)
 
         # Setting Title
-        self.setWindowTitle(f"Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
+        self.setWindowTitle(f"                    Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
         self.distro.setText(self.getDistroDetails())
     
     def getDistroDetails(self) -> str:
@@ -38,22 +38,11 @@ class MAIN(QMainWindow):
 </p>""".replace('\n','')
 
         return distroDetails
-
-class CARD_DIALOG(QDialog):
-
-    def __init__(self, parent=None) -> None:
-        super().__init__(parent=parent)
-
-        # Loading UI
-        uic.loadUi('cardHistory.ui', self)
-
-        # Setting Title
-        self.setWindowTitle(f"Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
         
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    qtmodern.styles.light(app)
-    gui = CARD_DIALOG()
+    qtmodern.styles.dark(app)
+    gui = MAIN()
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())
