@@ -172,19 +172,3 @@ class Settings:
         """
 
         return self.data["settings"]["shortcuts"]["Close Window"]
-
-    """
-    Misc getters
-    """
-
-    def WS(self):
-        """
-        Returns (bool) fixed win size
-        """
-        return self.data["fixed_win"]
-    
-    def LI(self):
-        """
-        Returns (bool) stay logged in
-        """
-        return self.data["stay_logged_in"]

@@ -3,7 +3,6 @@
     - TODO: make a logical card access protocol
 """
 
-from os import stat
 from utils.resource import PATH
 import json
 
