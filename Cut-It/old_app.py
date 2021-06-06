@@ -3,7 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from api.QComboBoxPlus import ExtendedComboBox
 from PyQt5.QtWidgets import QFileDialog
 from api.feedback import send_feedback
-from api.export import make, PrintPDF
+from api.export import PrintPDF
 from api.settings import Settings
 from api.QBrowser import Browser
 from api.auth_tools import tools
@@ -16,7 +16,7 @@ from api.texter import text
 from api.texter import news
 from api.data import store
 # For WIN, comment out this line
-from api.clipboard_OSX import clipboard 
+#from api.clipboard_OSX import clipboard 
 # For OSX, comment out this line
 from api.clipboard_WIN import clipboard 
 import sys

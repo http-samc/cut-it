@@ -9,7 +9,6 @@ from htmldocx import HtmlToDocx
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QVBoxLayout
 from PyQt5 import QtCore, QtGui, QtWidgets
-from api.resource import PATH
 from PyQt5.QtWidgets import QApplication
 import sys
 import time
@@ -58,48 +57,48 @@ class PrintPDF(object):
         time.sleep(1)
         self.widget.close()
 
-class make:
+# class make:
 
-    @staticmethod
-    def html(html, filename):
-        with open(filename, 'w') as f:
-            f.write(html)
+#     @staticmethod
+#     def html(html, filename):
+#         with open(filename, 'w') as f:
+#             f.write(html)
 
-    @staticmethod
-    def docx(html, filename):
+#     @staticmethod
+#     def docx(html, filename):
 
-        document = Document()
+#         document = Document()
 
-        new_parser = HtmlToDocx()
+#         new_parser = HtmlToDocx()
 
-        new_parser.add_html_to_document(html, document)
+#         new_parser.add_html_to_document(html, document)
 
-        document.save(filename)
+#         document.save(filename)
 
-    @staticmethod
-    def pdf(html, filename):
+#     @staticmethod
+#     def pdf(html, filename):
         
-        if filename.endswith('.pdf') == False:
-            html += '.pdf'
+#         if filename.endswith('.pdf') == False:
+#             html += '.pdf'
 
-        return make.convert_html_to_pdf(html, filename)
+#         return make.convert_html_to_pdf(html, filename)
 
-    @staticmethod
-    def convert_html_to_pdf(source_html, output_filename):
+#     @staticmethod
+#     def convert_html_to_pdf(source_html, output_filename):
 
-        with open(output_filename, 'w') as f:
-            f.write(source_html)
+#         with open(output_filename, 'w') as f:
+#             f.write(source_html)
     
-        # result_file = open(output_filename, "w+b")
+#         # result_file = open(output_filename, "w+b")
 
-        # pisa_status = pisa.CreatePDF(
-        #         source_html,                
-        #         dest=result_file)           
+#         # pisa_status = pisa.CreatePDF(
+#         #         source_html,                
+#         #         dest=result_file)           
 
-        # result_file.close()                 
+#         # result_file.close()                 
 
-        # if pisa_status.err == None:
-        #     return True
+#         # if pisa_status.err == None:
+#         #     return True
 
-        # else:
-        #     return False
+#         # else:
+#         #     return False
