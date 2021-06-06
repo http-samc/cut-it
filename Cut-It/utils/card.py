@@ -24,6 +24,7 @@ class Card:
             (self.URL.replace(' ','') != "") or
             (self.TEXT.replace(' ','') != "")):
             return True
+            
         else:
             return False
 

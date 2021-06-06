@@ -3,23 +3,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import Qt
 import qtmodern.windows
 import qtmodern.styles
-from GUI import MAIN
+from GUI import GUI
 import sys
 
-class main(MAIN):
+class main(GUI):
 
     """
-        Adds logic to the GUI
+        Adds logic to the GUI (inherited from GUI)
     """
 
     def __init__(self) -> None:
         super().__init__()
-        self.bold.clicked.connect(self.s)
-    
-    def s(self):
-        print(self.geometry())
 
-# Starts program with QtModern Styling
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     qtmodern.styles.dark(app)

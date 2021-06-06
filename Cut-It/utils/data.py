@@ -1,6 +1,5 @@
 """
     - Manages User Preferences and Card History
-    - TODO: Make Card a dataclass?
 """
 
 from typing import Dict
@@ -22,7 +21,8 @@ PREFS_SCHEMA = Schema([{
     "Font Size of Minimized Text": And(Use(int)),
     "Primary Emphasis Settings": And(list),
     "Secondary Emphasis Settings": And(list),
-    "Tertiary Emphasis Settings": And(list)
+    "Tertiary Emphasis Settings": And(list),
+    "Theme": And(str)
 }])
 
 SHORTCUTS_SCHEMA = Schema([{
@@ -89,7 +89,8 @@ def init():
                         False,
                         True,
                         None
-                    ]
+                    ],
+                    "Theme" : "dark"
                 },
                 "shortcuts": {
                     "Primary Emphasis": "CTRL+S",

@@ -13,7 +13,7 @@ import qtmodern.styles
 from PyQt5 import uic
 import sys
 
-class MAIN(QMainWindow):
+class GUI(QMainWindow):
 
     def __init__(self) -> None:
         super().__init__()
@@ -31,10 +31,10 @@ class MAIN(QMainWindow):
         """
 
         distroDetails = f"""<p align="center">
-🚀Cut-It FAQ🚀 || Version 📝: {version()} || Tag🏷️: @{tag()} 
-|| Website🌐: https://cutit.cards || GitHub Repository📚: https://github.com/http-samc/cut-it 
-|| Contributors👐: https://github.com/http-samc/cut-it/graphs/contributors 
-|| Current Project Managers👷: Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
+🚀Cut-It FAQ🚀 || Version 📝 {version()} || Tag🏷️ @{tag()} 
+|| Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it 
+|| Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors 
+|| Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
 </p>""".replace('\n','')
 
         return distroDetails
@@ -42,7 +42,7 @@ class MAIN(QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     qtmodern.styles.dark(app)
-    gui = MAIN()
+    gui = GUI()
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())
