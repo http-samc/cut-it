@@ -894,7 +894,7 @@ p, li { white-space: pre-wrap; }
                 <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
-                <string>✂️</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -934,7 +934,7 @@ p, li { white-space: pre-wrap; }
                 <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
-                <string>H₂</string>
+                <string>H²</string>
                </property>
               </widget>
              </item>
@@ -1007,17 +1007,17 @@ p, li { white-space: pre-wrap; }
                 <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
-                <string>H₁</string>
+                <string>H¹</string>
                </property>
               </widget>
              </item>
              <item row="1" column="10">
-              <widget class="QPushButton" name="copy">
+              <widget class="QPushButton" name="minimize">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
                <property name="text">
-                <string>📋</string>
+                <string>M</string>
                </property>
               </widget>
              </item>
@@ -1047,47 +1047,7 @@ p, li { white-space: pre-wrap; }
             <property name="title">
              <string>Card History</string>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QComboBox" name="comboBox">
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>0</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="delete_card">
-               <property name="minimumSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string>❌</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="save_card">
-               <property name="maximumSize">
-                <size>
-                 <width>20</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>📂</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <layout class="QHBoxLayout" name="horizontalLayout"/>
            </widget>
           </item>
           <item>
