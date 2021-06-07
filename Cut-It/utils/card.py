@@ -10,19 +10,19 @@ class Card:
     CITE: str
     CREDS: str
     URL: str
-    HTML: str
     TEXT: str
+    HTML: str
 
     def isCard(self) -> bool:
         """
             Returns (bool) if the card actually has data
         """
 
-        if ((self.TAG.replace(' ','') != "") or 
-            (self.CITE.replace(' ','') != "") or 
-            (self.CREDS.replace(' ','') != "") or 
-            (self.URL.replace(' ','') != "") or
-            (self.TEXT.replace(' ','') != "")):
+        if ((self.TAG.replace(' ','').replace('\n','').replace('\t','') != "") or 
+            (self.CITE.replace(' ','').replace('\n','').replace('\t','') != "") or 
+            (self.CREDS.replace(' ','').replace('\n','').replace('\t','') != "") or 
+            (self.URL.replace(' ','').replace('\n','').replace('\t','') != "") or
+            (self.TEXT.replace(' ','').replace('\n','').replace('\t','') != "")):
             return True
             
         else:

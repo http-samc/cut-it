@@ -8,24 +8,26 @@ from utils.resource import PATH
 from utils.card import Card
 import json
 
-P_PATH = PATH.get('resources/data.json') # Preferences Storage Path
-C_PATH = PATH.get('resources/cards.json') # Card History Storage Path
+P_PATH = PATH.get('userData/data.json') # Preferences Storage Path
+C_PATH = PATH.get('userData/cards.json') # Card History Storage Path
 
 # Defining Schema for the preferences and shortcuts section of Preferences
-PREFS_SCHEMA = Schema([{
+PREFS_SCHEMA = Schema({
     "Font": And(str, len),
     "Primary Highlight Color": And(str, len),
     "Secondary Highlight Color": And(str, len),
     "Font Size of Primary Emphasis": And(Use(int)),
+    "Font Size of Secondary Emphasis": And(Use(int)),
+    "Font Size of Tertiary Emphasis": And(Use(int)),
     "Font Size of Normal Text": And(Use(int)),
     "Font Size of Minimized Text": And(Use(int)),
     "Primary Emphasis Settings": And(list),
     "Secondary Emphasis Settings": And(list),
     "Tertiary Emphasis Settings": And(list),
     "Theme": And(str)
-}])
+})
 
-SHORTCUTS_SCHEMA = Schema([{
+SHORTCUTS_SCHEMA = Schema({
     "Primary Emphasis": And(str, len),
     "Secondary Emphasis": And(str, len),
     "Tertiary Emphasis": And(str, len),
@@ -36,7 +38,7 @@ SHORTCUTS_SCHEMA = Schema([{
     "AutoPoll + AutoCite": And(str, len),
     "Save As PDF": And(str, len),
     "Close Window": And(str, len)
-}])
+})
 
 # Data validator/fixer
 def init():
@@ -48,10 +50,11 @@ def init():
     try:
         with open(P_PATH, 'r') as f:
             data = json.loads(f.read())
+            data["Card Index"]
             PREFS_SCHEMA.validate(data["preferences"])
             SHORTCUTS_SCHEMA.validate(data["shortcuts"])
 
-    except Exception:
+    except Exception as E:
         with open(P_PATH, 'w') as f:
             """
                 Em. Settings in the form:
@@ -61,25 +64,26 @@ def init():
                     (bool) underlined,
                     (str) highlight color || None,
                 ]
-
             """
+
             data = {
                 "preferences": {
                     "Font": "Times New Roman",
                     "Primary Highlight Color": "Cyan",
                     "Secondary Highlight Color": "Yellow",
                     "Font Size of Primary Emphasis": 12,
+                    "Font Size of Secondary Emphasis": 8,
+                    "Font Size of Tertiary Emphasis": 8,
                     "Font Size of Normal Text": 8,
                     "Font Size of Minimized Text": 2,
                     "Primary Emphasis Settings": [
                         True,
-                        True,
+                        False,
                         True,
                         "Cyan"
                     ],
                     "Secondary Emphasis Settings": [
                         True,
-                        False,
                         False,
                         False,
                         None
@@ -103,7 +107,8 @@ def init():
                     "AutoPoll + AutoCite": "CTRL+ALT+D",
                     "Save As PDF": "CTRL+P",
                     "Close Window": "CTRL+W"
-                }
+                },
+                "Card Index": None
             }
             json.dump(data, f)
 
@@ -111,10 +116,19 @@ def init():
     try:
         with open(C_PATH, 'r') as f:
             json.loads(f.read())['cards']
+            
     
     except Exception:
         with open(C_PATH, 'w') as f:
             json.dump({"cards":[]}, f)
+
+def getIndex() -> int:
+    """
+        Returns (int) current card index
+    """
+
+    with open(P_PATH, 'r') as f:
+        return json.loads(f.read())["Card Index"]
 
 """
     Preferences Methods
@@ -153,6 +167,9 @@ def setPref(key: str, val: any) -> None:
         inputted value
     """
 
+    if val.isInstance(list) and val[3] == "None":
+        val[3] = None
+
     data = getPrefData()
     data["preferences"][key] = val
     setPrefData(data)
@@ -162,7 +179,7 @@ def getShort(key: str) -> any:
         Returns the value of the inputted shortcut key
     """
 
-    return getPrefData["shortcuts"][key]
+    return getPrefData()["shortcuts"][key]
 
 def setShort(key: str, val: any) -> None:
     """
@@ -214,16 +231,16 @@ def addCard(card: Card, idx: int = None) -> None:
 
     data = getCardData()
     if idx:
-        data["cards"][idx] = Card.getDict()
+        data["cards"][idx] = card.getDict()
 
     else:
-        data["cards"].insert(0, Card.getDict())
+        data["cards"].insert(0, card.getDict())
 
     setCardData(data)
 
-def removeCard(idx: int) -> None:
+def deleteCard(idx: int) -> None:
     """
-        Removes card at specified index
+        Deletes card at specified index
     """
 
     data = getCardData()

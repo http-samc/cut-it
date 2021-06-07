@@ -1087,7 +1087,7 @@ p, li { white-space: pre-wrap; }
              <bool>true</bool>
             </property>
             <property name="plainText">
-             <string>Welcome to Cut-It! If you have any questions about a specific function, click on the item while holding Shift+F1 for a quick description.</string>
+             <string>Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: docs.cutit.cards!</string>
             </property>
            </widget>
           </item>

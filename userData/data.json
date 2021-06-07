@@ -1,0 +1,44 @@
+{
+    "preferences": {
+        "Font": "Times New Roman",
+        "Primary Highlight Color": "Cyan",
+        "Secondary Highlight Color": "Yellow",
+        "Font Size of Primary Emphasis": 12,
+        "Font Size of Secondary Emphasis": 8,
+        "Font Size of Tertiary Emphasis": 8,
+        "Font Size of Normal Text": 8,
+        "Font Size of Minimized Text": 6,
+        "Primary Emphasis Settings": [
+            true,
+            false,
+            true,
+            "Cyan"
+        ],
+        "Secondary Emphasis Settings": [
+            true,
+            false,
+            false,
+            null
+        ],
+        "Tertiary Emphasis Settings": [
+            false,
+            false,
+            true,
+            null
+        ],
+        "Theme": "dark"
+    },
+    "shortcuts": {
+        "Primary Emphasis": "CTRL+S",
+        "Secondary Emphasis": "CTRL+SHIFT+S",
+        "Tertiary Emphasis": "CTRL+ALT+S",
+        "Keep Selected Text": "Ctrl+K",
+        "Minimize Text": "ALT+M",
+        "AutoPoll": "CTRL+D",
+        "AutoCite": "CTRL+SHIFT+D",
+        "AutoPoll + AutoCite": "CTRL+ALT+D",
+        "Save As PDF": "CTRL+P",
+        "Close Window": "CTRL+W"
+    },
+    "Card Index": null
+}
