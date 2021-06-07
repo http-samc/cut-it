@@ -98,6 +98,10 @@ class GUI(QMainWindow):
         <code>Card Information</code> section prior to AutoCutting - <em>they won't fill in afterwards</em>!
         """)
 
+        # Setting up message box
+        self.msg.setCurrentFont(QtGui.QFont("Roboto"))
+        self.msg.insertHtml("Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <a>docs.cutit.cards!")
+
         # Adding Icons
         self.autocut.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/cut_icon.png')))
         self.open_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/open_icon.png')))

@@ -128,6 +128,18 @@ def getIndex() -> int:
     with open(P_PATH, 'r') as f:
         return json.loads(f.read())["Card Index"]
 
+def setIndex(idx: int)  -> None:
+    """
+        Sets the stored card index
+    """
+
+    with open(P_PATH, 'r') as f:
+        data =  json.loads(f.read())
+    
+    data["Card Index"] = idx
+
+    with open(P_PATH, 'w') as f:
+        json.dump(data, f)
 """
     Preferences Methods
 """
@@ -223,16 +235,17 @@ def getCard(idx: int = 0) -> Card:
 def addCard(card: Card, idx: int = None) -> None:
     """
         Checks if a card contains information, if so adds it
-        at the first pos of cards.json, or if an index is 
+        to the end of cards.json, or if an index is 
         supplied it will overwrite the card at that pos
     """
 
     data = getCardData()
-    if idx:
+
+    if isinstance(idx, int):
         data["cards"][idx] = card.getDict()
 
     else:
-        data["cards"].insert(0, card.getDict())
+        data["cards"].append(card.getDict())
 
     setCardData(data)
 
@@ -242,6 +255,10 @@ def deleteCard(idx: int) -> None:
     """
 
     data = getCardData()
+
+    if idx is None:
+        return
+        
     del data["cards"][idx]
 
     setCardData(data)

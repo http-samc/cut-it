@@ -47,23 +47,26 @@ class main(GUI):
         self.shortcut_input.editingFinished.connect(self._saveShortcut)
         self.evidence_box.textChanged.connect(self._addDelimiter)
         self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
-        self.tab_master.currentChanged.connect(self._saveSettings)
+        self.tab_master.currentChanged.connect(self._tabChanged)
         self.theme.clicked.connect(self._toggleTheme)
+        self.open_card.clicked.connect(self._loadCard)
+        self.delete_card.clicked.connect(self._deleteCard)
 
         # Other __init__ reqs
-        self._loadSettings()
+        self._loadSettings(initialLoad = True)
         self._loadShortcuts()
-        self._loadCard()
+        self.__loadAllCards()
+        self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
     
     """
         Data Functions
     """
-    def _loadSettings(self):
+    def _loadSettings(self, initialLoad = False):
         """
             Loads all user data into instance vars
+            Fills in UI with Settings if initialLoad
         """
-        # TODO separate this into 2 functions (one only for instance vars) so changes can be applied w/o reboot
 
         # Adding Preferences
         self._font_ = data.getPref("Font")
@@ -97,6 +100,13 @@ class main(GUI):
         #self.zoom.setValue() TODO add zoom function
         self.highlight_1.setCurrentText(self.Primary_Highlight_Color)
         self.highlight_2.setCurrentText(self.Secondary_Highlight_Color)
+
+        self.__loadSettingsUI() if initialLoad else ... # We don't need to reapply settings to UI if user has already selected them
+
+    def __loadSettingsUI(self):
+        """
+            Loads the Settings into the GUI
+        """
 
         self.primary_bold.setCheckState(self.Primary_Em[0])
         self.primary_bold.setTristate(False)
@@ -134,7 +144,9 @@ class main(GUI):
             Updates shortcut when user wants to view a separate one
         """
 
-        newSequence = data.getShort(self.shortcuts.currentText())
+        newSequence = data.getShort(self.shortcuts.currentText()) 
+        if newSequence == 'Choose a shortcut to view/edit . . . (applies on reload)':
+            return
         self.shortcut_input.setKeySequence(newSequence)
 
     def _saveShortcut(self):
@@ -149,38 +161,37 @@ class main(GUI):
         """
             Inits custom keybindings for all user-defined shortcuts
         """
-        
+
         # TODO Keep Selected Text, Find (ctrl+f)
+        self.clearFormatting_ = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
+        self.clearFormatting_.activated.connect(self._clearFormatting)
+ 
+        self.primaryEmphasis_ = QShortcut(QtGui.QKeySequence(self.primaryEmphasis), self.evidence_box)
+        self.primaryEmphasis_.activated.connect(self._primaryEmphasis)
 
-        clearFormatting = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
-        clearFormatting.activated.connect(self._clearFormatting)
+        self.secondaryEmphasis_ = QShortcut(QtGui.QKeySequence(self.secondaryEmphasis), self.evidence_box)
+        self.secondaryEmphasis_.activated.connect(self._secondaryEmphasis)
 
-        primaryEmphasis = QShortcut(QtGui.QKeySequence(self.primaryEmphasis), self.evidence_box)
-        primaryEmphasis.activated.connect(self._primaryEmphasis)
+        self.tertiaryEmphasis_ = QShortcut(QtGui.QKeySequence(self.tertiaryEmphasis), self.evidence_box)
+        self.tertiaryEmphasis_.activated.connect(self._tertiaryEmphasis)
 
-        secondaryEmphasis = QShortcut(QtGui.QKeySequence(self.secondaryEmphasis), self.evidence_box)
-        secondaryEmphasis.activated.connect(self._secondaryEmphasis)
+        self.minimizeText_ = QShortcut(QtGui.QKeySequence(self.minimizeText), self.evidence_box)
+        self.minimizeText_.activated.connect(self._minimizeText)
 
-        tertiaryEmphasis = QShortcut(QtGui.QKeySequence(self.tertiaryEmphasis), self.evidence_box)
-        tertiaryEmphasis.activated.connect(self._tertiaryEmphasis)
+        self.autoPoll_ = QShortcut(QtGui.QKeySequence(self.autoPoll), self.evidence_box)
+        self.autoPoll_.activated.connect(self._autoPoll)
 
-        minimizeText = QShortcut(QtGui.QKeySequence(self.minimizeText), self.evidence_box)
-        minimizeText.activated.connect(self._minimizeText)
+        self.autoCite_ = QShortcut(QtGui.QKeySequence(self.autoCite), self.evidence_box)
+        self.autoCite_.activated.connect(self._autoCite)
 
-        autoPoll = QShortcut(QtGui.QKeySequence(self.autoPoll), self.evidence_box)
-        autoPoll.activated.connect(self._autoPoll)
+        self.autoCiteAndPoll_ = QShortcut(QtGui.QKeySequence(self.autoCiteAndPoll), self.evidence_box)
+        self.autoCiteAndPoll_.activated.connect(self._autoCiteAndPoll)
 
-        autoCite = QShortcut(QtGui.QKeySequence(self.autoCite), self.evidence_box)
-        autoCite.activated.connect(self._autoCite)
+        self.print_ = QShortcut(QtGui.QKeySequence(self.print), self.evidence_box)
+        self.print_.activated.connect(self._print)
 
-        autoCiteAndPoll = QShortcut(QtGui.QKeySequence(self.autoCiteAndPoll), self.evidence_box)
-        autoCiteAndPoll.activated.connect(self._autoCiteAndPoll)
-
-        print = QShortcut(QtGui.QKeySequence(self.print), self.evidence_box)
-        print.activated.connect(self._print)
-
-        closeWindow = QShortcut(QtGui.QKeySequence(self.closeWindow), self.evidence_box)
-        closeWindow.activated.connect(self._closeWindow)
+        self.closeWindow_ = QShortcut(QtGui.QKeySequence(self.closeWindow), self.evidence_box)
+        self.closeWindow_.activated.connect(self._closeWindow)
 
     def _saveSettings(self):
         """
@@ -193,23 +204,23 @@ class main(GUI):
         data.setPref("Font Size of Normal Text", self.font_size_normal.value())
         data.setPref("Font Size of Minimized Text", self.font_size_min.value())
         data.setPref("Primary Emphasis Settings", [
-            self.primary_bold.checkState(),
-            self.primary_italicised.checkState(),
-            self.primary_underline.checkState(),
+            self.primary_bold.isChecked(),
+            self.primary_italicised.isChecked(),
+            self.primary_underline.isChecked(),
             self.primary_highlight_2.currentText(),
             self.primary_size.value()
         ])
         data.setPref("Secondary Emphasis Settings", [
-            self.secondary_bold.checkState(),
-            self.secondary_italicised.checkState(),
-            self.secondary_underline.checkState(),
+            self.secondary_bold.isChecked(),
+            self.secondary_italicised.isChecked(),
+            self.secondary_underline.isChecked(),
             self.secondary_highlight_2.currentText(),
             self.secondary_size.value()
         ])
         data.setPref("Tertiary Emphasis Settings", [
-            self.tertiary_bold.checkState(),
-            self.tertiary_italicised.checkState(),
-            self.tertiary_underline.checkState(),
+            self.tertiary_bold.isChecked(),
+            self.tertiary_italicised.isChecked(),
+            self.tertiary_underline.isChecked(),
             self.tertiary_highlight.currentText(),
             self.tertiary_size.value()
         ])
@@ -264,7 +275,7 @@ class main(GUI):
         """
 
         doc = self.evidence_box.document()
-        soup = BeautifulSoup(doc.toHtml(), 'html.parser')
+        soup = BeautifulSoup(doc.toHtml().replace('<br>', ' '), 'html.parser')
         html = str(soup.find('p'))
         html = html.replace('600', 'bold')
         html = f'<body style="font-family: {self._font_}">' + html + '</body>'
@@ -300,10 +311,12 @@ class main(GUI):
                     for attr in missingAttrs:
                         msgStr += attr + ", "
 
-                    self.msg.setPlainText(msgStr[:-2])
+                    self.msg.clear()
+                    self.msg.setText(msgStr[:-2])
             
             except Exception:
-                self.msg.setPlainText("Sorry, there was an error getting your citation.")
+                self.msg.clear()
+                self.msg.setText("Sorry, there was an error getting your citation.")
                 return
 
             debate_citation = citation.debate()
@@ -344,7 +357,8 @@ class main(GUI):
                 html += article
 
             except Exception:
-                self.msg.setPlainText(f"Sorry, we can't support {URL}! Please use our Chrome Extension instead.")
+                self.msg.clear()
+                self.msg.setText(f"Sorry, we can't support {URL}! Please use our Chrome Extension instead.")
 
             html += "</p>"
         
@@ -375,11 +389,43 @@ class main(GUI):
         """
 
         self._saveSettings()
-        # Call foo method described in _loadsettings
-        
+        self._loadSettings()
+
     """
         Card History Utilities
     """
+    def __loadAllCards(self):
+        """
+            Adds all cards to card history selector
+        """
+        
+        # Clearing all data in combobox
+        self.cardSelector.clear()
+        self.cardSelector.addItem("Cut a new card")
+
+        cards = data.getCardData()["cards"]
+        
+        # Running Index counter
+        self.cardIndex = 0 # current max index of card selector
+
+        for card in cards:
+
+            card = Card(**card) # Construct Card from dict
+
+            # If we have a tagline, use that as a primary identifier
+            TAG = card.TAG.replace('\t', '').replace('\n', '')
+            TEXT = card.TEXT.replace('\t', '').replace('\n', '')
+
+            if TAG.replace(' ', '') != "":
+                self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
+            
+            # Or just use the card text
+            else:
+                self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
+            
+            # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
+            self.cardIndex += 1
+
     def _saveCard(self) -> bool:
         """
             Saves current card if it has data (is not blank)
@@ -409,13 +455,31 @@ class main(GUI):
         
         return
 
-    def _loadCard(self):
+    def _loadCard(self, initialLoad = False):
         """
-            Loads most recent card
+            Loads most recent card (saves previous one as well and adds to card selector)
         """
 
+        # Save card
+        self._saveCard()
+
+        # Add to selector
+        if not initialLoad:
+            self._addToCardSelector()
+        
         # Get index of most recent card
-        self.index = data.getIndex()
+        if len(self.cardSelector.currentText()) >= 1:
+            self.index = data.getIndex() if initialLoad else self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
+        
+        else:
+            self.index = None
+
+        # Convert to int if appropriate
+        try:
+            self.index = int(self.index)
+
+        except Exception:
+            self.index = None
         
         # Clear Fields
         document = self.evidence_box.document()
@@ -449,31 +513,103 @@ class main(GUI):
         """
 
         if self.hasClickedDeleteOnce:
-            data.deleteCard(self.index)
+            
+            data.deleteCard(self.index) 
+
+            # Clearing fields
+            self.msg.clear()
+            self.warrant.setText("")
+            self.cite.setText("")
+            self.creds.setText("")
+            self.link.setText("")
+            document = self.evidence_box.document()
+            document.clear()
+
+            # Removing from card selector
+            try:
+                if len(self.cardSelector.currentText()) > 0:
+                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
+                else:
+                    currentIndex = None
+
+            except Exception:
+                currentIndex = None
+            
+            self.cardSelector.removeItem(currentIndex + 1) if currentIndex is not None else self.cardSelector.setCurrentIndex(0)
+
             self.msg.setText("Card deleted successfully!")
             self.hasClickedDeleteOnce = False
+            
+            # Reload all cards to avoid index errors
+            self.__loadAllCards()
 
         else:
-            
+            # FIXME update card history after delete
             # If the card in Card Selector isn't what is actually open, alert user.
-            if self.cards.currentText()[0] != self.index:
-                self.msg.setHtml("""<b>WARNING! You are attempting to delete the card that is currently open,
-                NOT what may be selected in the Card History bar. If you want to proceed, click the delete
-                button again.</b>""")
+            try:
+                if len(self.cardSelector.currentText()) > 0:
+                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
+                
+                else:
+                    currentIndex = None
+
+            except Exception:
+                currentIndex = None
+
+            if currentIndex != self.index:
+                self.msg.clear()
+                message = "<b>WARNING!</b> You are attempting to delete the card that is currently open, "
+                message += "NOT what is selected in the Card History bar. If you want to proceed, click the delete button again."
+                self.msg.insertHtml(message)
             
             else:
-                self.msg.setText("""You are attempting to delete the currently open card.
-                Click the delete button again to confirm.""")
+                self.msg.clear()
+                self.msg.setText("""You are attempting to delete the currently opened card. Click the delete button again to confirm.""")
             
             self.hasClickedDeleteOnce = True
     
+    def _addToCardSelector(self):
+        """
+            Adds current card to card selector
+        """
+
+        # If the card already has an index, it already exists in the selector
+        if self.index is not None:
+            return
+
+        # Create Card
+        evidence_data = self._toHTML()
+
+        card = Card(
+            self.warrant.text(),
+            self.cite.text(),
+            self.creds.text(),
+            self.link.text(),
+            evidence_data[0],
+            evidence_data[1]
+        )
+
+        # If the card isn't a card, don't add it
+        if not card.isCard():
+            return
+
+        # Add card to selector
+        TAG = card.TAG.replace('\t', '').replace('\n', '')
+        TEXT = card.TEXT.replace('\t', '').replace('\n', '')
+
+        if TAG.replace(' ', '') != "":
+            self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
+        else:
+            self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
+
+        self.cardIndex += 1
+
     def _cardSelectionChanged(self):
         """
             Resets the delete status (clicked once) if the selected card changes
-            Saves any changes to the card
+            TODO adds previously selected card to list (if it's new)
         """
         
-        self._saveCard()
         self.hasClickedDeleteOnce = False
 
     """
