@@ -2,7 +2,7 @@
     - Contains set details that will change between verisons
 """
 
-VERSION = "1.0.0"
+VERSION = "1.0"
 TAGS = ["Enterprise", "Release", "Beta"]
 TAG = TAGS[1]
 
