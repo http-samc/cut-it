@@ -1740,7 +1740,7 @@ p, li { white-space: pre-wrap; }
              </property>
              <item>
               <property name="text">
-               <string>Choose a shortcut to view/edit . . . (applies on reboot)</string>
+               <string>Choose a shortcut to view/edit . . . (applies on restart)</string>
               </property>
              </item>
             </widget>

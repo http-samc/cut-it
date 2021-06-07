@@ -41,7 +41,6 @@ class main(GUI):
         self.minimize.clicked.connect(self._minimizeText)
 
             # Misc
-        self.copy.clicked.connect(self._copy)
         self.autocut.clicked.connect(self._autoCiteAndPoll)
         self.shortcuts.currentTextChanged.connect(self._updateShortcut)
         self.shortcut_input.editingFinished.connect(self._saveShortcut)
@@ -51,6 +50,7 @@ class main(GUI):
         self.theme.clicked.connect(self._toggleTheme)
         self.open_card.clicked.connect(self._loadCard)
         self.delete_card.clicked.connect(self._deleteCard)
+        self.copy_card.clicked.connect(self._copy)
 
         # Other __init__ reqs
         self._loadSettings(initialLoad = True)
@@ -70,16 +70,22 @@ class main(GUI):
 
         # Adding Preferences
         self._font_ = data.getPref("Font")
+        self._zoom_ = data.getPref("Zoom")
         self.Primary_Highlight_Color = data.getPref("Primary Highlight Color")
         self.Secondary_Highlight_Color = data.getPref("Secondary Highlight Color")
-        self.Font_Size_Normal = data.getPref("Font Size of Normal Text")
-        self.Font_Size_Min = data.getPref("Font Size of Minimized Text")
+        
+        self.unscaled_Font_Size_Normal = data.getPref("Font Size of Normal Text")
+        self.Font_Size_Normal = self.unscaled_Font_Size_Normal + self._zoom_
+       
+        self.unscaled_Font_Size_Min = data.getPref("Font Size of Minimized Text")
+        self.Font_Size_Min = self._zoom_ + self.unscaled_Font_Size_Min
+        
         self.Primary_Em = data.getPref("Primary Emphasis Settings")
         self.Secondary_Em = data.getPref("Secondary Emphasis Settings")
         self.Tertiary_Em = data.getPref("Tertiary Emphasis Settings")
-        self.Font_Size_Primary_Em = self.Primary_Em[4]
-        self.Font_Size_Secondary_Em = self.Secondary_Em[4]
-        self.Font_Size_Tertiary_Em = self.Tertiary_Em[4]
+        self.Font_Size_Primary_Em = self.Primary_Em[4] + self._zoom_
+        self.Font_Size_Secondary_Em = self.Secondary_Em[4] + self._zoom_
+        self.Font_Size_Tertiary_Em = self.Tertiary_Em[4] + self._zoom_
         self.Theme = data.getPref("Theme")
 
         # Adding Shortcuts
@@ -93,13 +99,8 @@ class main(GUI):
         self.print = data.getShort("Save As PDF")
         self.closeWindow = data.getShort("Close Window")
 
-        # Loading preferences
-        self.font.setCurrentText(self._font_)
-        self.font_size_normal.setValue(self.Font_Size_Normal)
-        self.font_size_min.setValue(self.Font_Size_Min)
-        #self.zoom.setValue() TODO add zoom function
-        self.highlight_1.setCurrentText(self.Primary_Highlight_Color)
-        self.highlight_2.setCurrentText(self.Secondary_Highlight_Color)
+        # Set Zoom
+        self.evidence_box.zoomIn(self._zoom_) if initialLoad else ...
 
         self.__loadSettingsUI() if initialLoad else ... # We don't need to reapply settings to UI if user has already selected them
 
@@ -107,6 +108,13 @@ class main(GUI):
         """
             Loads the Settings into the GUI
         """
+
+        self.font.setCurrentText(self._font_)
+        self.font_size_normal.setValue(self.unscaled_Font_Size_Normal)
+        self.font_size_min.setValue(self.unscaled_Font_Size_Min)
+        self.zoom.setValue(self._zoom_) 
+        self.highlight_1.setCurrentText(self.Primary_Highlight_Color)
+        self.highlight_2.setCurrentText(self.Secondary_Highlight_Color)
 
         self.primary_bold.setCheckState(self.Primary_Em[0])
         self.primary_bold.setTristate(False)
@@ -145,7 +153,7 @@ class main(GUI):
         """
 
         newSequence = data.getShort(self.shortcuts.currentText()) 
-        if newSequence == 'Choose a shortcut to view/edit . . . (applies on reload)':
+        if newSequence == 'Choose a shortcut to view/edit . . . (applies on restart)':
             return
         self.shortcut_input.setKeySequence(newSequence)
 
@@ -199,6 +207,8 @@ class main(GUI):
         """
 
         data.setPref("Font", self.font.currentText())
+        # Allow zoom reapplication w/o reboot
+        data.setPref("Zoom", self.zoom.value())
         data.setPref("Primary Highlight Color", self.highlight_1.currentText())
         data.setPref("Secondary Highlight Color", self.highlight_2.currentText())
         data.setPref("Font Size of Normal Text", self.font_size_normal.value())
@@ -268,7 +278,7 @@ class main(GUI):
             cursor.setPosition(START+1, QtGui.QTextCursor.MoveAnchor)
             self.evidence_box.setTextCursor(cursor)
 
-    def _toHTML(self, copy = False):
+    def _toHTML(self, copy = False, isForExport = False):
         """
             Returns list: [text of card, html of card]
             Copies plain & rich text to clipboard IFF :param: copy -> True
@@ -277,8 +287,18 @@ class main(GUI):
         doc = self.evidence_box.document()
         soup = BeautifulSoup(doc.toHtml().replace('<br>', ' '), 'html.parser')
         html = str(soup.find('p'))
-        html = html.replace('600', 'bold')
+
+        # Formatting for export
+        if copy or isForExport:
+            html = html.replace('font-weight:600;', 'font-weight:bold;')
+            html = html.replace(f'font-size:{self.Font_Size_Min}pt;', f'font-size:{self.unscaled_Font_Size_Min}pt;')
+            html = html.replace(f'font-size:{self.Font_Size_Normal}pt;', f'font-size:{self.unscaled_Font_Size_Normal}pt;')
+            html = html.replace(f'font-size:{self.Font_Size_Primary_Em}pt;', f'font-size:{self.Primary_Em[4]}pt;')
+            html = html.replace(f'font-size:{self.Font_Size_Secondary_Em}pt;', f'font-size:{self.Secondary_Em[4]}pt;')
+            html = html.replace(f'font-size:{self.Font_Size_Tertiary_Em}pt;', f'font-size:{self.Tertiary_Em[4]}pt;')
+
         html = f'<body style="font-family: {self._font_}">' + html + '</body>'
+
         text = str(soup.text)
 
         clipboard.add(text, html) if copy else ...
@@ -544,7 +564,7 @@ class main(GUI):
             self.__loadAllCards()
 
         else:
-            # FIXME update card history after delete
+
             # If the card in Card Selector isn't what is actually open, alert user.
             try:
                 if len(self.cardSelector.currentText()) > 0:
@@ -556,7 +576,7 @@ class main(GUI):
             except Exception:
                 currentIndex = None
 
-            if currentIndex != self.index:
+            if (currentIndex is not None) and (currentIndex != self.index):
                 self.msg.clear()
                 message = "<b>WARNING!</b> You are attempting to delete the card that is currently open, "
                 message += "NOT what is selected in the Card History bar. If you want to proceed, click the delete button again."
@@ -607,7 +627,6 @@ class main(GUI):
     def _cardSelectionChanged(self):
         """
             Resets the delete status (clicked once) if the selected card changes
-            TODO adds previously selected card to list (if it's new)
         """
         
         self.hasClickedDeleteOnce = False
@@ -724,6 +743,7 @@ class main(GUI):
         text = f'<span style="font-size:{self.Font_Size_Primary_Em}pt">{text}</span>'
 
         self.__addText(text, selection_data[0])
+        self._toHTML(copy = True)
     
     def _secondaryEmphasis(self):
         """
@@ -742,6 +762,7 @@ class main(GUI):
         text = f'<span style="font-size:{self.Font_Size_Secondary_Em}">{text}</span>'
 
         self.__addText(text, selection_data[0])
+        self._toHTML(copy = True)
 
     def _tertiaryEmphasis(self):
         """
@@ -760,6 +781,7 @@ class main(GUI):
         text = f'<span style="font-size:{self.Font_Size_Tertiary_Em}">{text}</span>'
 
         self.__addText(text, selection_data[0])
+        self._toHTML(copy = True)
 
     def _highlightP(self):
         """
@@ -771,6 +793,7 @@ class main(GUI):
             return
         HTML = f"<span style='background-color: {self.Primary_Highlight_Color}'>{selection_data[1]}</span>"
         self.__addText(HTML, selection_data[0])
+        self._toHTML(copy = True)
 
     def _highlightS(self):
         """
@@ -782,6 +805,7 @@ class main(GUI):
             return
         HTML = f"<span style='background-color: {self.Secondary_Highlight_Color}'>{selection_data[1]}</span>"
         self.__addText(HTML, selection_data[0])
+        self._toHTML(copy = True)
 
     def _bold_(self):
         """
@@ -792,6 +816,7 @@ class main(GUI):
         if selection_data == None:
             return
         self.__addText(self._bold(selection_data[1]), selection_data[0])
+        self._toHTML(copy = True)
     
     def _underline_(self):
         """
@@ -802,6 +827,7 @@ class main(GUI):
         if selection_data == None:
             return
         self.__addText(self._underline(selection_data[1]), selection_data[0])
+        self._toHTML(copy = True)
 
     def _italic_(self):
         """
@@ -812,6 +838,7 @@ class main(GUI):
         if selection_data == None:
             return
         self.__addText(self._italic(selection_data[1]), selection_data[0])
+        self._toHTML(copy = True)
 
     def _clearFormatting(self):
         """
@@ -823,6 +850,7 @@ class main(GUI):
             return
         cursor = self.evidence_box.textCursor()
         cursor.insertText(selection_data[1])
+        self._toHTML(copy = True)
 
     def _minimizeText(self):
         """
@@ -834,6 +862,7 @@ class main(GUI):
             return
         HTML = f'<span style="font-size: {self.Font_Size_Min}pt;">{selection_data[1]}</span>'
         self.__addText(HTML, selection_data[0])
+        self._toHTML(copy = True)
 
     """
         Low-Level Emphasis Functions

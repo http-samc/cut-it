@@ -14,6 +14,7 @@ C_PATH = PATH.get('userData/cards.json') # Card History Storage Path
 # Defining Schema for the preferences and shortcuts section of Preferences
 PREFS_SCHEMA = Schema({
     "Font": And(str, len),
+    "Zoom": And(Use(int)),
     "Primary Highlight Color": And(str, len),
     "Secondary Highlight Color": And(str, len),
     "Font Size of Normal Text": And(Use(int)),
@@ -67,6 +68,7 @@ def init():
             data = {
                 "preferences": {
                     "Font": "Times New Roman",
+                    "Zoom": 0,
                     "Primary Highlight Color": "Cyan",
                     "Secondary Highlight Color": "Yellow",
                     "Font Size of Normal Text": 8,
@@ -242,7 +244,10 @@ def addCard(card: Card, idx: int = None) -> None:
     data = getCardData()
 
     if isinstance(idx, int):
-        data["cards"][idx] = card.getDict()
+        try:
+            data["cards"][idx] = card.getDict()
+        except Exception:
+            return
 
     else:
         data["cards"].append(card.getDict())

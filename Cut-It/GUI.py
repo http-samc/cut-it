@@ -61,11 +61,11 @@ class GUI(QMainWindow):
         self.delete_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.delete_card)
 
-        self.copy = QtWidgets.QPushButton()
-        self.copy.setObjectName(u"copy")
-        self.copy.setMinimumSize(QSize(15, 15))
-        self.copy.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.copy)
+        self.copy_card = QtWidgets.QPushButton()
+        self.copy_card.setObjectName(u"copy")
+        self.copy_card.setMinimumSize(QSize(15, 15))
+        self.copy_card.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.horizontalLayout.addWidget(self.copy_card)
         
         self.save_card = QtWidgets.QPushButton()
         self.save_card.setObjectName(u"save_card")
@@ -100,13 +100,13 @@ class GUI(QMainWindow):
 
         # Setting up message box
         self.msg.setCurrentFont(QtGui.QFont("Roboto"))
-        self.msg.insertHtml("Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <a>docs.cutit.cards!")
+        self.msg.insertHtml("<p>Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <b>docs.cutit.cards</b>!</p>")
 
         # Adding Icons
         self.autocut.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/cut_icon.png')))
         self.open_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/open_icon.png')))
         self.delete_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/delete_icon.png')))
-        self.copy.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
+        self.copy_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
         self.save_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/save_icon.png')))
 
     def addDistroDetails(self) -> str:
