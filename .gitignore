@@ -116,3 +116,5 @@ dmypy.json
 .vscode/settings.json
 Cut-It/old_app.py
 userData/
+userData/cards.json
+userData/data.json

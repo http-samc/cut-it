@@ -63,6 +63,7 @@ class main(GUI):
         """
             Loads all user data into instance vars
         """
+        # TODO separate this into 2 functions (one only for instance vars) so changes can be applied w/o reboot
 
         # Adding Preferences
         self._font_ = data.getPref("Font")
@@ -216,7 +217,6 @@ class main(GUI):
     """
         Misc. Utils
     """
-
     def _toggleTheme(self):
         """
             Changes theme from current to reciprocal (applies on reboot)
@@ -366,6 +366,7 @@ class main(GUI):
         """
 
         self._saveCard()
+        self._saveSettings()
         event.accept()
 
     def _tabChanged(self):
@@ -374,8 +375,8 @@ class main(GUI):
         """
 
         self._saveSettings()
-        data.init()
-
+        # Call foo method described in _loadsettings
+        
     """
         Card History Utilities
     """
