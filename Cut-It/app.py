@@ -14,8 +14,6 @@ import validators
 import sys
 import os
 
-# TODO add init data protocols for cards and prefs
-
 class main(GUI):
     """
         Adds logic to the GUI class
@@ -45,12 +43,14 @@ class main(GUI):
             # Misc
         self.copy.clicked.connect(self._copy)
         self.autocut.clicked.connect(self._autoCiteAndPoll)
-
-        # Signals
+        self.shortcuts.currentTextChanged.connect(self._updateShortcut)
+        self.shortcut_input.editingFinished.connect(self._saveShortcut)
         self.evidence_box.textChanged.connect(self._addDelimiter)
         self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
+        self.tab_master.currentChanged.connect(self._saveSettings)
+        self.theme.clicked.connect(self._toggleTheme)
 
-        # Other _init_ reqs
+        # Other __init__ reqs
         self._loadSettings()
         self._loadShortcuts()
         self._loadCard()
@@ -65,17 +65,17 @@ class main(GUI):
         """
 
         # Adding Preferences
-        self.font = data.getPref("Font")
+        self._font_ = data.getPref("Font")
         self.Primary_Highlight_Color = data.getPref("Primary Highlight Color")
         self.Secondary_Highlight_Color = data.getPref("Secondary Highlight Color")
-        self.Font_Size_Primary_Em = data.getPref("Font Size of Primary Emphasis")
-        self.Font_Size_Secondary_Em = data.getPref("Font Size of Secondary Emphasis")
-        self.Font_Size_Tertiary_Em = data.getPref("Font Size of Tertiary Emphasis")
         self.Font_Size_Normal = data.getPref("Font Size of Normal Text")
         self.Font_Size_Min = data.getPref("Font Size of Minimized Text")
         self.Primary_Em = data.getPref("Primary Emphasis Settings")
         self.Secondary_Em = data.getPref("Secondary Emphasis Settings")
         self.Tertiary_Em = data.getPref("Tertiary Emphasis Settings")
+        self.Font_Size_Primary_Em = self.Primary_Em[4]
+        self.Font_Size_Secondary_Em = self.Secondary_Em[4]
+        self.Font_Size_Tertiary_Em = self.Tertiary_Em[4]
         self.Theme = data.getPref("Theme")
 
         # Adding Shortcuts
@@ -88,6 +88,61 @@ class main(GUI):
         self.autoCiteAndPoll = data.getShort("AutoPoll + AutoCite")
         self.print = data.getShort("Save As PDF")
         self.closeWindow = data.getShort("Close Window")
+
+        # Loading preferences
+        self.font.setCurrentText(self._font_)
+        self.font_size_normal.setValue(self.Font_Size_Normal)
+        self.font_size_min.setValue(self.Font_Size_Min)
+        #self.zoom.setValue() TODO add zoom function
+        self.highlight_1.setCurrentText(self.Primary_Highlight_Color)
+        self.highlight_2.setCurrentText(self.Secondary_Highlight_Color)
+
+        self.primary_bold.setCheckState(self.Primary_Em[0])
+        self.primary_bold.setTristate(False)
+        self.primary_italicised.setCheckState(self.Primary_Em[1])
+        self.primary_italicised.setTristate(False)
+        self.primary_underline.setCheckState(self.Primary_Em[2])
+        self.primary_underline.setTristate(False)
+        self.primary_highlight_2.setCurrentText(str(self.Primary_Em[3]))
+        self.primary_size.setValue(self.Primary_Em[4])
+
+        self.secondary_bold.setCheckState(self.Secondary_Em[0])
+        self.secondary_bold.setTristate(False)
+        self.secondary_italicised.setCheckState(self.Secondary_Em[1])
+        self.secondary_italicised.setTristate(False)
+        self.secondary_underline.setCheckState(self.Secondary_Em[2])
+        self.secondary_underline.setTristate(False)
+        self.secondary_highlight_2.setCurrentText(str(self.Secondary_Em[3]))
+        self.secondary_size.setValue(self.Secondary_Em[4])
+
+        self.tertiary_bold.setCheckState(self.Tertiary_Em[0])
+        self.tertiary_bold.setTristate(False)
+        self.tertiary_italicised.setCheckState(self.Tertiary_Em[1])
+        self.tertiary_italicised.setTristate(False)
+        self.tertiary_underline.setCheckState(self.Tertiary_Em[2])
+        self.tertiary_underline.setTristate(False)
+        self.tertiary_highlight.setCurrentText(str(self.Tertiary_Em[3]))
+        self.tertiary_size.setValue(self.Tertiary_Em[4])
+
+        all_shortcuts = data.getPrefData()["shortcuts"]
+        for shortcut in list(all_shortcuts.keys()):
+            self.shortcuts.addItem(shortcut)
+        
+    def _updateShortcut(self):
+        """
+            Updates shortcut when user wants to view a separate one
+        """
+
+        newSequence = data.getShort(self.shortcuts.currentText())
+        self.shortcut_input.setKeySequence(newSequence)
+
+    def _saveShortcut(self):
+        """
+            Saves shortcut to memory when user is done editing
+        """
+
+        currentSequence = self.shortcut_input.keySequence()
+        data.setShort(self.shortcuts.currentText(), currentSequence.toString())
 
     def _loadShortcuts(self):
         """
@@ -126,9 +181,58 @@ class main(GUI):
         closeWindow = QShortcut(QtGui.QKeySequence(self.closeWindow), self.evidence_box)
         closeWindow.activated.connect(self._closeWindow)
 
+    def _saveSettings(self):
+        """
+            Saves settings to data.json 
+        """
+
+        data.setPref("Font", self.font.currentText())
+        data.setPref("Primary Highlight Color", self.highlight_1.currentText())
+        data.setPref("Secondary Highlight Color", self.highlight_2.currentText())
+        data.setPref("Font Size of Normal Text", self.font_size_normal.value())
+        data.setPref("Font Size of Minimized Text", self.font_size_min.value())
+        data.setPref("Primary Emphasis Settings", [
+            self.primary_bold.checkState(),
+            self.primary_italicised.checkState(),
+            self.primary_underline.checkState(),
+            self.primary_highlight_2.currentText(),
+            self.primary_size.value()
+        ])
+        data.setPref("Secondary Emphasis Settings", [
+            self.secondary_bold.checkState(),
+            self.secondary_italicised.checkState(),
+            self.secondary_underline.checkState(),
+            self.secondary_highlight_2.currentText(),
+            self.secondary_size.value()
+        ])
+        data.setPref("Tertiary Emphasis Settings", [
+            self.tertiary_bold.checkState(),
+            self.tertiary_italicised.checkState(),
+            self.tertiary_underline.checkState(),
+            self.tertiary_highlight.currentText(),
+            self.tertiary_size.value()
+        ])
+
     """
         Misc. Utils
     """
+
+    def _toggleTheme(self):
+        """
+            Changes theme from current to reciprocal (applies on reboot)
+            (eg. light -> dark, dark -> light)
+        """
+        
+        # Define current theme, new theme
+        currentTheme = data.getPref("Theme")
+        newTheme = "light" if currentTheme == "dark" else "dark"
+
+        # Change theme on current instance
+        qtmodern.styles.light(app) if newTheme == "light" else qtmodern.styles.dark(app)
+
+        # Store new preference for future instances
+        data.setPref("Theme", newTheme)
+
     def _addDelimiter(self):
         """
             Triggered when the evidence box's text changes
@@ -163,7 +267,7 @@ class main(GUI):
         soup = BeautifulSoup(doc.toHtml(), 'html.parser')
         html = str(soup.find('p'))
         html = html.replace('600', 'bold')
-        html = f'<body style="font-family: {self.font}">' + html + '</body>'
+        html = f'<body style="font-family: {self._font_}">' + html + '</body>'
         text = str(soup.text)
 
         clipboard.add(text, html) if copy else ...
@@ -190,7 +294,13 @@ class main(GUI):
 
             try:
                 citation = cite(URL)
-                # TODO check for missing information by notifying user
+                missingAttrs = citation.getMissingAttrs()
+                if missingAttrs:
+                    msgStr = "We weren't able to find the following information from the URL - you'll have to enter it manually: "
+                    for attr in missingAttrs:
+                        msgStr += attr + ", "
+
+                    self.msg.setPlainText(msgStr[:-2])
             
             except Exception:
                 self.msg.setPlainText("Sorry, there was an error getting your citation.")
@@ -257,7 +367,15 @@ class main(GUI):
 
         self._saveCard()
         event.accept()
-    
+
+    def _tabChanged(self):
+        """
+            Saves settings and reapplies them on tab change
+        """
+
+        self._saveSettings()
+        data.init()
+
     """
         Card History Utilities
     """
@@ -612,10 +730,24 @@ class main(GUI):
         return f"<span style='background-color: {color}'>{text}</span>"
     
 if __name__ == "__main__":
+    
+    # Initialize User Data
     data.init()
+
+    # Create App
+    global app
     app = QtWidgets.QApplication(sys.argv)
-    qtmodern.styles.light(app)
-    gui = main(isLight=True)
+
+    # Handling themes
+    if data.getPref("Theme") == "light":
+        qtmodern.styles.light(app)
+        isLight = True
+
+    else:
+        qtmodern.styles.dark(app)
+        isLight = False
+    
+    gui = main(isLight=isLight)
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())

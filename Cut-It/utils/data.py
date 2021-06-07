@@ -16,9 +16,6 @@ PREFS_SCHEMA = Schema({
     "Font": And(str, len),
     "Primary Highlight Color": And(str, len),
     "Secondary Highlight Color": And(str, len),
-    "Font Size of Primary Emphasis": And(Use(int)),
-    "Font Size of Secondary Emphasis": And(Use(int)),
-    "Font Size of Tertiary Emphasis": And(Use(int)),
     "Font Size of Normal Text": And(Use(int)),
     "Font Size of Minimized Text": And(Use(int)),
     "Primary Emphasis Settings": And(list),
@@ -54,7 +51,8 @@ def init():
             PREFS_SCHEMA.validate(data["preferences"])
             SHORTCUTS_SCHEMA.validate(data["shortcuts"])
 
-    except Exception as E:
+    except Exception:
+
         with open(P_PATH, 'w') as f:
             """
                 Em. Settings in the form:
@@ -71,28 +69,28 @@ def init():
                     "Font": "Times New Roman",
                     "Primary Highlight Color": "Cyan",
                     "Secondary Highlight Color": "Yellow",
-                    "Font Size of Primary Emphasis": 12,
-                    "Font Size of Secondary Emphasis": 8,
-                    "Font Size of Tertiary Emphasis": 8,
                     "Font Size of Normal Text": 8,
                     "Font Size of Minimized Text": 2,
                     "Primary Emphasis Settings": [
                         True,
                         False,
                         True,
-                        "Cyan"
+                        "Cyan",
+                        12
                     ],
                     "Secondary Emphasis Settings": [
                         True,
                         False,
                         False,
-                        None
+                        None,
+                        8
                     ],
                     "Tertiary Emphasis Settings": [
                         False,
                         False,
                         True,
-                        None
+                        None,
+                        8
                     ],
                     "Theme" : "dark"
                 },
@@ -167,7 +165,7 @@ def setPref(key: str, val: any) -> None:
         inputted value
     """
 
-    if val.isInstance(list) and val[3] == "None":
+    if isinstance(val, list) and val[3] == "None":
         val[3] = None
 
     data = getPrefData()

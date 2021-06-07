@@ -9,8 +9,8 @@ class cite:
 
     def __init__(self, URL):
         """
-        @PARAM: URL (str) - the URL for your citation
-        @Description: creates citation
+            :param: URL (str) - the URL for your citation
+            :desc: creates citation
         """
 
         self.data = {"url" : str(URL)}
@@ -21,7 +21,7 @@ class cite:
 
     def cite(self):
         """
-        @Description: gets raw citation data from API
+            gets raw citation data from API
         """
         r = requests.post(url = self.BASE, data = self.data)
         self.response = dict(json.loads(r.text))
@@ -29,7 +29,7 @@ class cite:
 
     def format(self):
         """
-        @Description: formats raw citation date
+            formats raw citation date
         """
 
         self.firstName = self.response["creators"][0]["firstName"]
@@ -64,9 +64,35 @@ class cite:
         self.publication = self.response["websiteTitle"]
         self.url = self.response["url"]
 
+    def getMissingAttrs(self) -> list:
+        """
+            Returns a list of missing attributes (key) or None (if all present)
+        """
+
+        excludedData = ['abstractNote', 'websiteTitle', 'websiteType', 'shortTitle', 'language', 'rights', 'extra', 'tags', 'collections']
+        retList = []
+
+        for key in list(self.response.keys()):
+
+            if key in excludedData:
+                continue
+            
+            element = self.response[key]
+
+            if isinstance(element, list) and len(element) == 0:
+                retList.append(key)
+
+            elif (element is None) or (element == ''):
+                retList.append(key)
+        
+        if len(retList) == 0:
+            return None
+
+        return retList
+
     def debate(self):
         """
-        @Description: Returns a simplified debate-ready citation
+            Returns a simplified debate-ready citation
         """
 
         data = [self.lastName, self.year, self.publication, self.url]
@@ -74,7 +100,7 @@ class cite:
     
     def mla(self):
         """
-        @Description: Returns an MLA 8 citation
+            Returns an MLA 8 citation
         """
 
         return f'{self.lastName}, {self.firstName}. "{self.title}" {self.publication}, {self.date}, {self.url}. Accessed {self.accessed}.'
