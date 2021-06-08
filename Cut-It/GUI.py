@@ -8,6 +8,7 @@ from utils.ext_combobox import ExtendedComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from utils.distro import version, tag
+from utils.MainWindow import RAW_UI
 from utils.resource import PATH
 from PyQt5.QtCore import QSize
 import qtmodern.windows
@@ -15,7 +16,7 @@ import qtmodern.styles
 from PyQt5 import uic
 import sys
 
-class GUI(QMainWindow):
+class GUI(QMainWindow): # RAW_UI for builds
 
     def __init__(self, isLight = False) -> None:
         """
@@ -27,8 +28,10 @@ class GUI(QMainWindow):
         # Storing theme
         self.isLight = isLight
 
+        self.setWindowIcon(QtGui.QIcon(PATH.get('Cut-It/images/otr_icon.png')))
+
         # Loading UI
-        uic.loadUi('app.ui', self)
+        uic.loadUi('Cut-It/app.ui', self)
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
         SPACES = "                    "

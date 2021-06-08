@@ -1,7 +1,7 @@
 """
     - Logic to export a card (in HTML form) to various filetypes (docx, pdf)
     - TODO: add docx support
-    - FIXME: PDF builder with QWebEngineView not working in Binary
+    - Fix bugs from rollback (compile ready -> dev)
 """
 
 from PyQt5.QtWebEngineWidgets import QWebEngineView

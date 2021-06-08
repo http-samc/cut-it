@@ -1,7 +1,13 @@
-from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
-from PyQt5 import QtCore, QtGui, QtWidgets
-from utils.clipboard_WIN import clipboard  
+"""
+    Main App
+"""
+
+from PyQt5.QtWidgets import (QFileDialog, QShortcut)
+from utils.clipboard_WIN import clipboard 
+from utils.feedback import send_feedback
+from utils.version_check import check 
 from utils.text_scraper import text
+from PyQt5 import QtGui, QtWidgets
 from utils.export import PrintPDF
 from bs4 import BeautifulSoup
 from utils.citer import cite
@@ -53,6 +59,8 @@ class main(GUI):
         self.delete_card.clicked.connect(self._deleteCard)
         self.copy_card.clicked.connect(self._copy)
         self.save_card.clicked.connect(self._print)
+        self.updates.clicked.connect(self._updates)
+        self.submit_feedback.clicked.connect(self._feedback)
 
         # Other __init__ reqs
         self._loadSettings(initialLoad = True)
@@ -240,6 +248,21 @@ class main(GUI):
     """
         Misc. Utils
     """
+    def _updates(self):
+        """
+            Changes text of button to notify if update is needed or not
+        """
+
+        self.updates.setText(check())
+    
+    def _feedback(self):
+        """
+            Submits feedback
+        """
+
+        send_feedback(self.feedback.toPlainText())
+        self.feedback.clear()
+
     def _toggleTheme(self):
         """
             Changes theme from current to reciprocal (applies on reboot)
@@ -701,13 +724,13 @@ class main(GUI):
         filepath = destDir + '/' + filename + '.pdf'
         
         try:
-            PrintPDF(html, filepath, parent=self)
+            PrintPDF(html, filepath, parent = self)
             self.msg.clear()
             self.msg.setText("Saved PDF Successfully!")
 
         except Exception:
             self.msg.clear()
-            self.msg.setText("There was an error saving your PDF.")
+            self.msg.setText("There was an error saving your .pdf.")
 
     """
         High-Level Emphasis Functions

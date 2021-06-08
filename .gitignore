@@ -118,3 +118,5 @@ Cut-It/old_app.py
 userData/
 userData/cards.json
 userData/data.json
+output/
+dist/

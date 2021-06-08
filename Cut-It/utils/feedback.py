@@ -1,20 +1,21 @@
 """
     - Sends feedback from the Misc. box in the Settings page to a server (private)
-    - TODO: Clean up the backend code
 """
 
+from utils.distro import version
 import requests
 
-BASE = "http://api.flare-software.live/otr/cut-it/feedback"
+BASE = "https://api.flare-software.live/otr/cut-it/feedback"
 
-def send_feedback(email, message):
+def send_feedback(message):
 
     data = {
-        "email" : email,
-        "msg" : message
+        "version" : float(version()),
+        "response" : message
     }
 
     try:
         r = requests.post(BASE, data=data)
+        
     except Exception:
         pass

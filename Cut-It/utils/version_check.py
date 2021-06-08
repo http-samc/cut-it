@@ -3,23 +3,13 @@
 """
 
 import requests
-from utils.distro import version, tag
+from utils.distro import version
 
-class check:
+def check() -> str:
+
+    try:
+        r = requests.get(f"https://api.flare-software.live/otr/cut-it/version%{version()}")
+        return r.text
     
-    @staticmethod
-    def support(version):
-
-        data = {
-            "tag" : tag(),
-            "version" : version(),
-        }
-
-        r = requests.post("TODO: update backend support", data=data)
-        r = r.status_code
-
-        if r == 200:
-            return True
-
-        else:
-            return False
+    except Exception:
+        return "Error. Please see update.cutit.cards."
