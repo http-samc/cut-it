@@ -1,5 +1,5 @@
 # TODO List
-1. Update App.UI location & Icon locations in GUI
+1. Figure out why single .msi compiler w/ AutoInstaller changes raw QtWebEngine files (to revert to single .msi installer w/o CAB)
 2. Threading on AutoCite and AutoPoll (if both checked)
 3. Improve message logging
 4. Switch Evidence Box from ``QPlainTextEdit`` to ``QTextEdit``
