@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import (QFileDialog, QMainWindow, QPlainTextEdit, QApplication, QShortcut, QWidget)
 from PyQt5 import QtCore, QtGui, QtWidgets
-from utils.clipboard_WIN import clipboard # TODO Consolidate to 1 clipboard class
+from utils.clipboard_WIN import clipboard  
 from utils.text_scraper import text
+from utils.export import PrintPDF
 from bs4 import BeautifulSoup
 from utils.citer import cite
 from utils.card import Card
@@ -92,6 +93,7 @@ class main(GUI):
         self.primaryEmphasis = data.getShort("Primary Emphasis")
         self.secondaryEmphasis = data.getShort("Secondary Emphasis")
         self.tertiaryEmphasis = data.getShort("Tertiary Emphasis")
+        self.clearFormatting = data.getShort("Clear Formatting")
         self.minimizeText = data.getShort("Minimize Text")
         self.autoPoll = data.getShort("AutoPoll")
         self.autoCite = data.getShort("AutoCite")
@@ -171,7 +173,8 @@ class main(GUI):
         """
 
         # TODO Keep Selected Text, Find (ctrl+f)
-        self.clearFormatting_ = QShortcut(QtGui.QKeySequence('Ctrl+Z'), self.evidence_box)
+
+        self.clearFormatting_ = QShortcut(QtGui.QKeySequence(self.clearFormatting), self.evidence_box) # Standard alternative
         self.clearFormatting_.activated.connect(self._clearFormatting)
  
         self.primaryEmphasis_ = QShortcut(QtGui.QKeySequence(self.primaryEmphasis), self.evidence_box)
@@ -326,6 +329,8 @@ class main(GUI):
             TAG = self.warrant.text()
 
             try:
+                self.msg.clear()
+                self.msg.setText("Getting citation . . .")
                 citation = cite(URL)
                 missingAttrs = citation.getMissingAttrs()
                 if missingAttrs:
@@ -375,6 +380,8 @@ class main(GUI):
             self.autopoll.setCheckState(False)
             
             try:
+                self.msg.clear()
+                self.msg.setText("Polling text . . .")
                 article = text.scrape(URL)
                 html += article
 
@@ -673,6 +680,9 @@ class main(GUI):
             Triggers User Input for Directory and Saves Card as PDF
         """
 
+        self.msg.clear()
+        self.msg.setText("Printing card . . .")
+
         # Getting Current User's Home Dir
         startingDir = os.path.expanduser("~")
 
@@ -683,15 +693,18 @@ class main(GUI):
                 QFileDialog.ShowDirsOnly)
         
         # Getting HTML, filename
-        html = self._toHTML()[1]
+        html = self._toHTML(isForExport = True)[1]
         filename = self.warrant.text() if self.warrant.text() != "" else "card"
         filepath = destDir + '/' + filename + '.pdf'
-
-        try:
-            ... # make pdf fxn
         
+        try:
+            PrintPDF(html, filepath, parent=self)
+            self.msg.clear()
+            self.msg.setText("Saved PDF Successfully!")
+
         except Exception:
-            pass
+            self.msg.clear()
+            self.msg.setText("There was an error saving your PDF.")
 
     """
         High-Level Emphasis Functions
@@ -855,7 +868,7 @@ class main(GUI):
         if selection_data == None:
             return
         cursor = self.evidence_box.textCursor()
-        cursor.insertText(selection_data[1])
+        cursor.insertHtml(f"<span>{selection_data[1]}</span>")
         self._toHTML(copy = True)
 
     def _minimizeText(self):

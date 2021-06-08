@@ -4,30 +4,25 @@
     - FIXME: PDF builder with QWebEngineView not working in Binary
 """
 
-from docx import Document
-from htmldocx import HtmlToDocx
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtWidgets import QMainWindow, QWidget, QApplication, QVBoxLayout
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication
-import sys
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
+from utils.resource import PATH
+from PyQt5 import QtGui
+import PyQt5
 import time
+import sys
 
-# TODO have PrintPDF inherit from QBrowser
-class PrintPDF(object):
+class PrintPDF(QWidget):
 
-    def __init__(self, html, save_path):
-        
+    def __init__(self, html, save_path, parent = None):
+        super().__init__(parent=parent)
         self.html = html
         self.save_path = save_path
-
-    def setupUi(self, Widget):
-        self.widget = Widget
         self.initUI()
 
     def initUI(self):
 
-        vbox = QVBoxLayout(self.widget)
+        vbox = QVBoxLayout(self)
 
         self.webEngineView = QWebEngineView()
         self.webEngineView.setGeometry(500,500,500,500)
@@ -35,15 +30,12 @@ class PrintPDF(object):
 
         vbox.addWidget(self.webEngineView)
 
-        self.widget.setLayout(vbox)
+        self.setLayout(vbox)
 
-        self.widget.setGeometry(300, 300, 350, 250)
-        self.widget.setWindowTitle('Save as PDF - Cut-It™')
-        self.widget.setWindowIcon(QtGui.QIcon(QtGui.QPixmap(PATH.get('resources/otr_icon.png'))))
-        self.widget.show()
+        self.setGeometry(300, 300, 350, 250)
+        self.show()
 
     def getFile(self):
-        
         self.webEngineView.setHtml(self.html)
         self.webEngineView.loadFinished.connect(self.save)
 
@@ -55,50 +47,11 @@ class PrintPDF(object):
     def finished(self):
         self.webEngineView.close()
         time.sleep(1)
-        self.widget.close()
+        self.close()
 
-# class make:
-
-#     @staticmethod
-#     def html(html, filename):
-#         with open(filename, 'w') as f:
-#             f.write(html)
-
-#     @staticmethod
-#     def docx(html, filename):
-
-#         document = Document()
-
-#         new_parser = HtmlToDocx()
-
-#         new_parser.add_html_to_document(html, document)
-
-#         document.save(filename)
-
-#     @staticmethod
-#     def pdf(html, filename):
-        
-#         if filename.endswith('.pdf') == False:
-#             html += '.pdf'
-
-#         return make.convert_html_to_pdf(html, filename)
-
-#     @staticmethod
-#     def convert_html_to_pdf(source_html, output_filename):
-
-#         with open(output_filename, 'w') as f:
-#             f.write(source_html)
+if __name__ == "__main__":
     
-#         # result_file = open(output_filename, "w+b")
-
-#         # pisa_status = pisa.CreatePDF(
-#         #         source_html,                
-#         #         dest=result_file)           
-
-#         # result_file.close()                 
-
-#         # if pisa_status.err == None:
-#         #     return True
-
-#         # else:
-#         #     return False
+    app = PyQt5.QtWidgets.QApplication(sys.argv)
+    p = PrintPDF("""
+    <body style="font-family: Times New Roman"><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:12pt; font-weight:bold; text-decoration: underline; background-color:#00ffff;">big</span> <span style=" font-weight:bold;">normal</span> <span style=" font-size:2pt;">small</span></p></body>""", r"C:/Users/chitg/Test.pdf")
+    sys.exit(app.exec_())
