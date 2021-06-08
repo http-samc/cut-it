@@ -112,3 +112,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.vscode/settings.json
+.vscode/settings.json
+Cut-It/old_app.py
+userData/
+userData/cards.json
+userData/data.json
+output/
+dist/
