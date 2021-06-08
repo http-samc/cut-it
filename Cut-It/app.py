@@ -42,7 +42,7 @@ class main(GUI):
         self.minimize.clicked.connect(self._minimizeText)
 
             # Misc
-        self.autocut.clicked.connect(self._autoCiteAndPoll)
+        self.autocut.clicked.connect(self._auto)
         self.shortcuts.currentTextChanged.connect(self._updateShortcut)
         self.shortcut_input.editingFinished.connect(self._saveShortcut)
         self.evidence_box.textChanged.connect(self._addDelimiter)
@@ -52,6 +52,7 @@ class main(GUI):
         self.open_card.clicked.connect(self._loadCard)
         self.delete_card.clicked.connect(self._deleteCard)
         self.copy_card.clicked.connect(self._copy)
+        self.save_card.clicked.connect(self._print)
 
         # Other __init__ reqs
         self._loadSettings(initialLoad = True)
@@ -309,7 +310,7 @@ class main(GUI):
         clipboard.add(text, html) if copy else ...
         return [text, html]
 
-    def _auto(self, autoCite, autoPoll):
+    def _auto(self, autoCite = False, autoPoll = False):
         """
             Adds MLA & Debate-Grade Citation and/or article text to evidence box
         """
@@ -337,7 +338,6 @@ class main(GUI):
                     msgStr = "We weren't able to find the following information from the URL - you'll have to enter it manually: "
                     for attr in missingAttrs:
                         msgStr += attr + ", "
-
                     self.msg.clear()
                     self.msg.setText(msgStr[:-2])
             
@@ -395,6 +395,10 @@ class main(GUI):
         cursor = self.evidence_box.textCursor()
         cursor.setPosition(0)
         cursor.insertHtml(html)
+        
+        self._toHTML(copy = True)
+        self.msg.clear()
+        self.msg.setText("AutoCut complete!")
 
     def _copy(self):
         """
@@ -541,6 +545,7 @@ class main(GUI):
         self.creds.setText(card.CREDS)
         self.link.setText(card.URL)
         self.cardSelector.setCurrentIndex(self.index + 1)
+        
         # Insert html
         cursor = self.evidence_box.textCursor()
         cursor.insertHtml(card.HTML)
@@ -659,7 +664,7 @@ class main(GUI):
             Adds MLA & Debate-Grade Citation & article text to evidence box
         """
 
-        self._auto(True, False)
+        self._auto(True, True)
 
     def _autoCite(self):
         """

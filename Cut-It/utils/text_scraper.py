@@ -41,7 +41,7 @@ class text:
             VIDEO_ID = URL.replace('https://www.youtube.com/watch?v=', '')
             data = YouTubeTranscriptApi.get_transcript(video_id=VIDEO_ID)
             for timestamp in data: # Data returned has other things not needed (eg. timestamp)
-                text += data["text"] + " "
+                text += timestamp["text"] + " "
             return text[:-1]
 
         # If the URL was a video, a val would've been returned, so we can assume it's a URL
@@ -80,13 +80,3 @@ class text:
             text += paragraph.get_text()
 
         return text
-
-# These were the bindings for the Article class, but it wouldn't compile in Binary
-
-# class news:
-#     @staticmethod
-#     def paper(URL):
-#         article = Article(URL)
-#         article.download()
-#         article.parse()
-#         return article.text

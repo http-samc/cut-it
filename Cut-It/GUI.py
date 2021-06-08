@@ -192,9 +192,7 @@ class GUI(QMainWindow):
         The <code>Save Card</code> button allows you to save the currently opened card as a PDF<br><br>
         - This feature goes off the card that is currently opened, <b>not</b> what is selected in the Card Selector. You need to use the <code>Open Card</code>
         button to open the selected card first, or else the currently opened card will be saved and <b>not</b> what you've selected in the <code>Card Selector</code><br><br>
-        - You need to enter a Tagline (which becomes the filename), or the PDF will be blank<br><br>
-        - To save all cards as a PDF, select Cut a new card and click the open button. Without inputting anything, click the Save Card button
-        """)
+        - You need to enter a Tagline (which becomes the filename), or the file will be called card.pdf""")
         self.msg.setToolTip("""
         The <code>Message</code> box alerts you of what the program is doing at any given moment.
         """)
@@ -241,10 +239,15 @@ class GUI(QMainWindow):
         # Adding Icons
         self.autocut.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/cut_icon.png')))
         self.open_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/open_icon.png')))
-        self.open_card.setFixedSize(20, 20)
         self.delete_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/delete_icon.png')))
         self.copy_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
         self.save_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/save_icon.png')))
+
+        # Setting Button Sizes
+        self.delete_card.setFixedSize(20, 20)
+        self.copy_card.setFixedSize(20, 20)
+        self.open_card.setFixedSize(20, 20)
+        self.save_card.setFixedSize(20, 20)
 
     def addDistroDetails(self) -> str:
         """
