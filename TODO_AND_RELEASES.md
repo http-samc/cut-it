@@ -5,8 +5,9 @@
 4. Switch Evidence Box from ``QPlainTextEdit`` to ``QTextEdit``
 5. Implement ``CTRL-F`` find functionality
 6. Implement ``CTRL-K`` keep selected text functionality
-7. Consolidate ``Cut-It/utils/clipboard_WIN.py`` and ``Cut-It/utils/clipboard_OSX.py`` into ``Cut-It/utils/clipboard.py``
-8. Add ToolTips to labels in the Settings menu
+7. Custom 'paint wheel' selector for user-defined highlight colors
+8. Consolidate ``Cut-It/utils/clipboard_WIN.py`` and ``Cut-It/utils/clipboard_OSX.py`` into ``Cut-It/utils/clipboard.py``
+9. Add ToolTips to labels in the Settings menu
 
 # Release Schedule
 - ``v.1.1@Release`` includes items 1-4 (corresponding to ``v.1.1.01-v.1.1.99@beta``)
