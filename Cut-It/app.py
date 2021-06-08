@@ -199,7 +199,7 @@ class main(GUI):
         self.print_.activated.connect(self._print)
 
         self.closeWindow_ = QShortcut(QtGui.QKeySequence(self.closeWindow), self.evidence_box)
-        self.closeWindow_.activated.connect(self._closeWindow)
+        self.closeWindow_.activated.connect(self._onClose)
 
     def _saveSettings(self):
         """
@@ -247,6 +247,8 @@ class main(GUI):
         # Define current theme, new theme
         currentTheme = data.getPref("Theme")
         newTheme = "light" if currentTheme == "dark" else "dark"
+        self.isLight = True if newTheme == "light" else False
+        GUI.updateToolTipStyling(self)
 
         # Change theme on current instance
         qtmodern.styles.light(app) if newTheme == "light" else qtmodern.styles.dark(app)
@@ -343,7 +345,7 @@ class main(GUI):
             mla_citation = citation.mla() 
 
             if TAG != "":
-                html += """
+                html += f"""
                 <span style='background-color: yellow; font-size: 12pt;'><u><strong>
                     {TAG}
                 </strong></u></span><br>
@@ -394,14 +396,25 @@ class main(GUI):
 
         self._toHTML(copy = True)
 
-    def _onClose(self, event):
+    def _onClose(self, event = None):
         """
             Behavior for window close (saves card first)
         """
 
         self._saveCard()
+        if len(self.cardSelector.currentText()) >= 1:
+            self.index = self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
+
+            try:
+                self.index = int(self.index)
+
+            except Exception:
+                self.index = None
+
+        data.setIndex(self.index)
         self._saveSettings()
-        event.accept()
+
+        event.accept() if event else self.close()
 
     def _tabChanged(self):
         """
@@ -446,7 +459,7 @@ class main(GUI):
             # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
             self.cardIndex += 1
 
-    def _saveCard(self) -> bool:
+    def _saveCard(self) -> any:
         """
             Saves current card if it has data (is not blank)
         """
@@ -465,7 +478,7 @@ class main(GUI):
 
         # Return if card has no data (avoid saving blank cards to .json)
         if not card.isCard():
-            return
+            return False
         
         if self.index is None:
             data.addCard(card)
@@ -473,7 +486,7 @@ class main(GUI):
         else:
             data.addCard(card, idx = self.index)
         
-        return
+        return True
 
     def _loadCard(self, initialLoad = False):
         """
@@ -520,7 +533,7 @@ class main(GUI):
         self.cite.setText(card.CITE)
         self.creds.setText(card.CREDS)
         self.link.setText(card.URL)
-
+        self.cardSelector.setCurrentIndex(self.index + 1)
         # Insert html
         cursor = self.evidence_box.textCursor()
         cursor.insertHtml(card.HTML)
@@ -679,13 +692,6 @@ class main(GUI):
         
         except Exception:
             pass
-
-    def _closeWindow(self):
-        """
-            Closes Window
-        """
-
-        self.close()
 
     """
         High-Level Emphasis Functions

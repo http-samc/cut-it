@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>950</width>
-    <height>530</height>
+    <width>983</width>
+    <height>551</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -779,7 +779,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>0</height>
+              <height>130</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -840,13 +840,13 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>0</height>
+              <height>70</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>275</width>
-              <height>65</height>
+              <height>70</height>
              </size>
             </property>
             <property name="title">
@@ -912,7 +912,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>0</height>
+              <height>100</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -1035,13 +1035,13 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>20</height>
+              <height>65</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>275</width>
-              <height>16777215</height>
+              <height>65</height>
              </size>
             </property>
             <property name="title">
@@ -1074,10 +1074,16 @@ p, li { white-space: pre-wrap; }
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>55</height>
+             </size>
+            </property>
             <property name="maximumSize">
              <size>
               <width>275</width>
-              <height>60</height>
+              <height>55</height>
              </size>
             </property>
             <property name="font">
@@ -1174,7 +1180,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="placeholderText">
-              <string>Bugs? Feature Requests? Let us know here!</string>
+              <string>Bugs? Feature Requests? Tokens of appreciation? Let us know here! Please leave your email if you're reporting a bug so we can follow up if needed.</string>
              </property>
             </widget>
            </item>
@@ -1217,6 +1223,40 @@ p, li { white-space: pre-wrap; }
            <string>Preferences</string>
           </property>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="5" column="1">
+            <widget class="QComboBox" name="highlight_2">
+             <item>
+              <property name="text">
+               <string>Green</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Cyan</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Magenta</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Blue</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Purple</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Yellow</string>
+              </property>
+             </item>
+            </widget>
+           </item>
            <item row="3" column="0">
             <widget class="QLabel" name="zoom_label">
              <property name="text">
@@ -1224,8 +1264,30 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="font_size_min_label">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Font Size of Minimized Text</string>
+             </property>
+            </widget>
+           </item>
            <item row="7" column="0" colspan="2">
             <widget class="QGroupBox" name="SecondaryEmSettings">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
+              </size>
+             </property>
              <property name="title">
               <string>Secondary Emphasis</string>
              </property>
@@ -1306,16 +1368,6 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="font_size_min_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Font Size of Minimized Text</string>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="font_size_normal_label">
              <property name="styleSheet">
@@ -1326,44 +1378,20 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QComboBox" name="highlight_2">
-             <item>
-              <property name="text">
-               <string>Green</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Cyan</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Magenta</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Blue</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Purple</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>Yellow</string>
-              </property>
-             </item>
-            </widget>
-           </item>
            <item row="5" column="0">
             <widget class="QLabel" name="highlight_2_label">
              <property name="text">
               <string>Highlight Color #2</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="font_label">
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Font</string>
              </property>
             </widget>
            </item>
@@ -1400,6 +1428,136 @@ p, li { white-space: pre-wrap; }
               </property>
              </item>
             </widget>
+           </item>
+           <item row="10" column="0" colspan="2">
+            <spacer name="preferences_spacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="highlight_1_label">
+             <property name="text">
+              <string>Highlight Color #1</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="font_size_min">
+             <property name="specialValueText">
+              <string>4</string>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="2">
+            <widget class="QGroupBox" name="TertiaryEmSettings">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="title">
+              <string>Tertiary Emphasis</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_6">
+              <item>
+               <widget class="QCheckBox" name="tertiary_bold">
+                <property name="text">
+                 <string>Bold</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tertiary_underline">
+                <property name="text">
+                 <string>Underline</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="tertiary_italicised">
+                <property name="text">
+                 <string>Italicised</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="tertiary_highlight">
+                <item>
+                 <property name="text">
+                  <string>None</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Green</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Cyan</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Magenta</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Blue</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Purple</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Yellow</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="tertiary_size">
+                <property name="specialValueText">
+                 <string>16</string>
+                </property>
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>26</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="zoom"/>
            </item>
            <item row="0" column="1">
             <widget class="QComboBox" name="font">
@@ -1505,107 +1663,33 @@ p, li { white-space: pre-wrap; }
              </item>
             </widget>
            </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="highlight_1_label">
-             <property name="text">
-              <string>Highlight Color #1</string>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="font_size_normal">
+             <property name="specialValueText">
+              <string>12</string>
              </property>
-            </widget>
-           </item>
-           <item row="8" column="0" colspan="2">
-            <widget class="QGroupBox" name="TertiaryEmSettings">
-             <property name="title">
-              <string>Tertiary Emphasis</string>
+             <property name="minimum">
+              <number>1</number>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QCheckBox" name="tertiary_bold">
-                <property name="text">
-                 <string>Bold</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="tertiary_underline">
-                <property name="text">
-                 <string>Underline</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="tertiary_italicised">
-                <property name="text">
-                 <string>Italicised</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QComboBox" name="tertiary_highlight">
-                <item>
-                 <property name="text">
-                  <string>None</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Green</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Cyan</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Magenta</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Blue</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Purple</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Yellow</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSpinBox" name="tertiary_size">
-                <property name="specialValueText">
-                 <string>16</string>
-                </property>
-                <property name="minimum">
-                 <number>1</number>
-                </property>
-                <property name="maximum">
-                 <number>26</number>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="font_label">
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Font</string>
+             <property name="maximum">
+              <number>24</number>
              </property>
             </widget>
            </item>
            <item row="6" column="0" colspan="2">
             <widget class="QGroupBox" name="PrimaryEmSettings">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>80</height>
+              </size>
+             </property>
              <property name="title">
               <string>Primary Emphasis</string>
              </property>
@@ -1689,32 +1773,19 @@ p, li { white-space: pre-wrap; }
              </layout>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="font_size_normal">
-             <property name="specialValueText">
-              <string>12</string>
+           <item row="9" column="0" colspan="2">
+            <widget class="QLineEdit" name="warning">
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
-             <property name="minimum">
-              <number>1</number>
+             <property name="text">
+              <string>‼️ Any changes made here will apply on the next restart ‼️</string>
              </property>
-             <property name="maximum">
-              <number>24</number>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
              </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QSpinBox" name="zoom"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QSpinBox" name="font_size_min">
-             <property name="specialValueText">
-              <string>4</string>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>24</number>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
