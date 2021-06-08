@@ -38,6 +38,7 @@ class GUI(QMainWindow):
         self.addDistroDetails()
         self.addCardHistory()
         self.addAttrs()
+        self.addToolTips()
         self.updateToolTipStyling()
 
     def addCardHistory(self):
@@ -82,9 +83,9 @@ class GUI(QMainWindow):
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
 
-    def addAttrs(self):
+    def addToolTips(self):
         """
-            Adds in misc. GUI attributes
+            Adds in ToolTips
         """
 
         # Adding ToolTips
@@ -231,7 +232,13 @@ class GUI(QMainWindow):
         self.theme.setToolTip("Changes theme to opposite version (light -> dark; dark -> light)")
         self.feedback.setToolTip("Enter any feedback you have and submit it below")
         self.submit_feedback.setToolTip("Submit the feedback you entered above")
+        self.evidence_box.setToolTip("This is where you cut your card!")
         
+    def addAttrs(self):
+        """
+            Adds in missing attrs.
+        """
+
         # Setting up message box
         self.msg.setCurrentFont(QtGui.QFont("Roboto"))
         self.msg.insertHtml("<p>Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <b>docs.cutit.cards</b>!</p>")

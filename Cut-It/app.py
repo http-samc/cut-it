@@ -173,8 +173,6 @@ class main(GUI):
             Inits custom keybindings for all user-defined shortcuts
         """
 
-        # TODO Keep Selected Text, Find (ctrl+f)
-
         self.clearFormatting_ = QShortcut(QtGui.QKeySequence(self.clearFormatting), self.evidence_box) # Standard alternative
         self.clearFormatting_.activated.connect(self._clearFormatting)
  
