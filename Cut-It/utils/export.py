@@ -53,5 +53,5 @@ if __name__ == "__main__":
     
     app = PyQt5.QtWidgets.QApplication(sys.argv)
     p = PrintPDF("""
-    <body style="font-family: Times New Roman"><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:12pt; font-weight:bold; text-decoration: underline; background-color:#00ffff;">big</span> <span style=" font-weight:bold;">normal</span> <span style=" font-size:2pt;">small</span></p></body>""", r"C:/Users/chitg/Test.pdf")
+    <body style="font-family: Times New Roman"><p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:12pt; font-weight:bold; text-decoration: underline; background-color:#00ffff;">big</span> <span style=" font-weight:bold;">normal</span> <span style=" font-size:2pt;">small</span></p></body>""", r"C:/Users/chitg/Desktop/Test.pdf")
     sys.exit(app.exec_())
