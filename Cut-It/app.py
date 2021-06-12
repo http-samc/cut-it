@@ -736,9 +736,13 @@ class main(GUI):
         # Getting HTML, filename
         html = self._toHTML(isForExport = True)[1]
         filename = self.warrant.text() if self.warrant.text() != "" else "card"
-        filepath = destDir + '/' + filename + '.pdf'
+        filepath = f"{destDir}/{filename}.pdf"
         
         try:
+            if filepath == f"/{filename}.pdf":
+                self.msg.clear()
+                self.msg.setText("Invalid destination selected.")
+                return
             PrintPDF(html, filepath, parent = self)
             self.msg.clear()
             self.msg.setText("Saved PDF Successfully!")

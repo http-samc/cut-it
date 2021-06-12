@@ -1,13 +1,13 @@
 """
     - Logic to export a card (in HTML form) to various filetypes (docx, pdf)
     - TODO: add docx support
-    - Fix bugs from rollback (compile ready -> dev)
 """
 
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
 from utils.resource import PATH
 from PyQt5 import QtGui
+import webbrowser
 import PyQt5
 import time
 import sys
@@ -47,6 +47,7 @@ class PrintPDF(QWidget):
     def finished(self):
         self.webEngineView.close()
         time.sleep(1)
+        webbrowser.open(self.save_path)
         self.close()
 
 if __name__ == "__main__":
