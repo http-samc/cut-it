@@ -167,6 +167,10 @@ class GUI(QMainWindow): # RAW_UI for builds
         - The minimized font-size used is determined by what you selected for <code>Font Size of Minimized Text</code> in the <code>Settings</code> tab<br><br>
         - This can also be accessed by a shortcut that you've defined in the <code>Settings</code> tab
         """)
+        self.clearSelectionFormatting.setToolTip("""
+        <code>Clear Selection Formatting</code> allows you to clear any emphasis you have applied to your selected text in the <code>Evidence Box</code><br><br>
+        - This can also be accessed by a shortcut defined in <code>Settings</code>
+        """)
         self.cardSelector.setToolTip("""
         The <code>Card Selector</code> allows you to reaccess any card you've ever cut with Cut-It!<br><br>
         - To cut a new card, navigate to the <b>Cut a new card</b> setting and click the open button (first one to the right)<br><br>

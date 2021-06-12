@@ -46,6 +46,7 @@ class main(GUI):
         self.primary_highlight.clicked.connect(self._highlightP)
         self.secondary_highlight.clicked.connect(self._highlightS)
         self.minimize.clicked.connect(self._minimizeText)
+        self.clearSelectionFormatting.clicked.connect(self._clearFormatting)
 
             # Misc
         self.autocut.clicked.connect(self._auto)
