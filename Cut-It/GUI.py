@@ -273,7 +273,8 @@ class GUI(QMainWindow): # RAW_UI for builds
         || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors 
         || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits: Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
-        distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Export Icon by Typicons.</p>"
+        distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
+        distroDetails += "New Icon by Greepit Icons.</p>"
 
         self.distro.setText(distroDetails)
 
