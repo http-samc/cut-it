@@ -12,7 +12,6 @@ import requests
 @dataclass
 class Card:
     TAG: str
-    CITE: str
     CREDS: str
     URL: str
     TEXT: str
@@ -24,7 +23,6 @@ class Card:
         """
 
         if ((self.TAG.replace(' ','').replace('\n','').replace('\t','') != "") or 
-            (self.CITE.replace(' ','').replace('\n','').replace('\t','') != "") or 
             (self.CREDS.replace(' ','').replace('\n','').replace('\t','') != "") or 
             (self.URL.replace(' ','').replace('\n','').replace('\t','') != "") or
             (self.TEXT.replace(' ','').replace('\n','').replace('\t','') != "")):

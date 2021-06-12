@@ -779,7 +779,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>130</height>
+              <height>120</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -792,24 +792,17 @@ p, li { white-space: pre-wrap; }
              <property name="bottomMargin">
               <number>15</number>
              </property>
-             <item row="4" column="0">
+             <item row="3" column="0">
               <widget class="QLineEdit" name="creds">
                <property name="placeholderText">
                 <string>Credentials</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
+             <item row="4" column="0">
               <widget class="QLineEdit" name="link">
                <property name="placeholderText">
                 <string>URL</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLineEdit" name="cite">
-               <property name="placeholderText">
-                <string>Cite</string>
                </property>
               </widget>
              </item>
