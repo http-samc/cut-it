@@ -7,11 +7,11 @@ from utils.clipboard_WIN import clipboard
 from utils.feedback import send_feedback
 from utils.version_check import check 
 from utils.text_scraper import text
+from utils.card import Card, Logger
 from PyQt5 import QtGui, QtWidgets
 from utils.export import PrintPDF
 from bs4 import BeautifulSoup
 from utils.citer import cite
-from utils.card import Card
 import qtmodern.windows
 from utils import data
 import qtmodern.styles
@@ -66,6 +66,7 @@ class main(GUI):
         self._loadSettings(initialLoad = True)
         self._loadShortcuts()
         self.__loadAllCards()
+        self._log()
         self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
     
@@ -456,6 +457,15 @@ class main(GUI):
         self._saveSettings()
         self._loadSettings()
 
+    def _log(self):
+        """
+            Posts card objs to API for efficacy monitoring & paywall enforcement
+            & GitHub badge stats
+        """
+
+        self.t = Logger(cards = data.getCardData()["cards"])
+        self.t.start()
+
     """
         Card History Utilities
     """
@@ -528,10 +538,14 @@ class main(GUI):
         # Save card
         self._saveCard()
 
-        # Add to selector
+        # Add to selector, recheck auto's
         if not initialLoad:
             self._addToCardSelector()
-        
+            self.autocite.setCheckState(True)
+            self.autocite.setTristate(False)
+            self.autopoll.setCheckState(True)
+            self.autopoll.setTristate(False)
+
         # Get index of most recent card
         if len(self.cardSelector.currentText()) >= 1:
             self.index = data.getIndex() if initialLoad else self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
