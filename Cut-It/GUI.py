@@ -4,9 +4,9 @@
     Inherited by app.py for simplicity
 """
 
+from PyQt5.QtWidgets import QFrame, QMainWindow
 from utils.ext_combobox import ExtendedComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMainWindow
 from utils.distro import version, tag
 from utils.MainWindow import RAW_UI
 from utils.resource import PATH
@@ -49,9 +49,21 @@ class GUI(QMainWindow): # RAW_UI for builds
             Manually fill out the Card History groupBox (due to custom widgets)
         """
 
+        self.new_card = QtWidgets.QPushButton()
+        self.new_card.setObjectName(u"new_card")
+        self.new_card.setMinimumSize(QSize(20, 20))
+        self.new_card.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.horizontalLayout.addWidget(self.new_card)
+        
+        self.line = QFrame(self.card_history)
+        self.line.setFrameShape(QFrame.VLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.horizontalLayout.addWidget(self.line)
+
         self.cardSelector = ExtendedComboBox()
         self.cardSelector.setObjectName(u"cardSelector")
-        self.cardSelector.setMinimumSize(QSize(150, 0))
+        self.cardSelector.setMinimumSize(QSize(117, 0))
         self.horizontalLayout.addWidget(self.cardSelector)
 
         self.open_card = QtWidgets.QPushButton()
@@ -82,8 +94,10 @@ class GUI(QMainWindow): # RAW_UI for builds
         # Set theme-appropriate tooltip background and evidence box color
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
+            self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
+            self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
 
     def addToolTips(self):
         """
@@ -170,10 +184,14 @@ class GUI(QMainWindow): # RAW_UI for builds
         <code>Clear Selection Formatting</code> allows you to clear any emphasis you have applied to your selected text in the <code>Evidence Box</code><br><br>
         - This can also be accessed by a shortcut defined in <code>Settings</code>
         """)
+        self.new_card.setToolTip("""
+        The <code>New Card</code> button allows you to open a new card to cut<br><br>
+        - Any currently opened work is autosaved to be accessed later in the <code>Card Selector</code><br>
+        - You can access previous cards in the <code>Card Selector</code>
+        """)
         self.cardSelector.setToolTip("""
         The <code>Card Selector</code> allows you to reaccess any card you've ever cut with Cut-It!<br><br>
-        - To cut a new card, navigate to the <b>Cut a new card</b> setting and click the open button (first one to the right)<br><br>
-        - Once you want to view a different card (or cut a new one), select the option and click the open button (first one to the right);
+        - Once you want to view a different card, select the option and click the open button (first one to the right);
         the different/new card will be opened, and the one you were working on will be autosaved and added to the list<br><br>
         - There is no dedicated save button - everything is saved automatically (even if you shut down the program)<br><br>
         - You can also type into the box to search for a card
@@ -251,6 +269,7 @@ class GUI(QMainWindow): # RAW_UI for builds
 
         # Adding Icons
         self.autocut.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/cut_icon.png')))
+        self.new_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/new_icon.png')))
         self.open_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/open_icon.png')))
         self.delete_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/delete_icon.png')))
         self.copy_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
@@ -274,7 +293,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits: Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
-        distroDetails += "New Icon by Greepit Icons.</p>"
+        distroDetails += "New Icon by Phosphor Icons.</p>"
 
         self.distro.setText(distroDetails)
 

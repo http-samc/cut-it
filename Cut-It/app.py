@@ -56,6 +56,7 @@ class main(GUI):
         self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
         self.tab_master.currentChanged.connect(self._tabChanged)
         self.theme.clicked.connect(self._toggleTheme)
+        self.new_card.clicked.connect(self._newCard)
         self.open_card.clicked.connect(self._loadCard)
         self.delete_card.clicked.connect(self._deleteCard)
         self.copy_card.clicked.connect(self._copy)
@@ -481,7 +482,7 @@ class main(GUI):
         
         # Clearing all data in combobox
         self.cardSelector.clear()
-        self.cardSelector.addItem("Cut a new card")
+        self.cardSelector.addItem("Select a Card")
 
         cards = data.getCardData()["cards"]
         
@@ -534,7 +535,7 @@ class main(GUI):
             data.addCard(card, idx = self.index)
         
         return True
-
+    
     def _newCard(self):
         """
             Saves old card and opens new one
