@@ -106,6 +106,7 @@ class main(GUI):
         self.tertiaryEmphasis = data.getShort("Tertiary Emphasis")
         self.clearFormatting = data.getShort("Clear Formatting")
         self.minimizeText = data.getShort("Minimize Text")
+        self.newCard = data.getShort("Cut a New Card")
         self.autoPoll = data.getShort("AutoPoll")
         self.autoCite = data.getShort("AutoCite")
         self.autoCiteAndPoll = data.getShort("AutoPoll + AutoCite")
@@ -197,6 +198,9 @@ class main(GUI):
 
         self.minimizeText_ = QShortcut(QtGui.QKeySequence(self.minimizeText), self.evidence_box)
         self.minimizeText_.activated.connect(self._minimizeText)
+
+        self.newCard_ = QShortcut(QtGui.QKeySequence(self.newCard), self.evidence_box)
+        self.newCard_.activated.connect(self._newCard)
 
         self.autoPoll_ = QShortcut(QtGui.QKeySequence(self.autoPoll), self.evidence_box)
         self.autoPoll_.activated.connect(self._autoPoll)
@@ -502,7 +506,7 @@ class main(GUI):
             # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
             self.cardIndex += 1
 
-    def _saveCard(self) -> any:
+    def _saveCard(self) -> bool:
         """
             Saves current card if it has data (is not blank)
         """
@@ -522,7 +526,7 @@ class main(GUI):
         # Return if card has no data (avoid saving blank cards to .json)
         if not card.isCard():
             return False
-        
+
         if self.index is None:
             data.addCard(card)
         
@@ -530,6 +534,28 @@ class main(GUI):
             data.addCard(card, idx = self.index)
         
         return True
+
+    def _newCard(self):
+        """
+            Saves old card and opens new one
+        """
+
+        # Save card
+        self._saveCard()
+
+        # Prepare new card framework
+        self._addToCardSelector()
+        self.autocite.setCheckState(True)
+        self.autocite.setTristate(False)
+        self.autopoll.setCheckState(True)
+        self.autopoll.setTristate(False)
+        document = self.evidence_box.document()
+        document.clear()
+        self.warrant.setText("")
+        self.cite.setText("")
+        self.creds.setText("")
+        self.link.setText("")
+        self.index = None
 
     def _loadCard(self, initialLoad = False):
         """
