@@ -275,7 +275,7 @@ class main(GUI):
         currentTheme = data.getPref("Theme")
         newTheme = "light" if currentTheme == "dark" else "dark"
         self.isLight = True if newTheme == "light" else False
-        GUI.updateToolTipStyling(self)
+        GUI.updateStyling(self)
 
         # Change theme on current instance
         qtmodern.styles.light(app) if newTheme == "light" else qtmodern.styles.dark(app)

@@ -42,7 +42,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.addCardHistory()
         self.addAttrs()
         self.addToolTips()
-        self.updateToolTipStyling()
+        self.updateStyling()
 
     def addCardHistory(self):
         """
@@ -78,11 +78,10 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.save_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.save_card)
 
-    def updateToolTipStyling(self):
-        # Set theme-appropriate tooltip background
+    def updateStyling(self):
+        # Set theme-appropriate tooltip background and evidence box color
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-        
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
 
