@@ -58,12 +58,11 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.line = QFrame(self.card_history)
         self.line.setFrameShape(QFrame.VLine)
         self.line.setFrameShadow(QFrame.Sunken)
-
         self.horizontalLayout.addWidget(self.line)
 
         self.cardSelector = ExtendedComboBox()
         self.cardSelector.setObjectName(u"cardSelector")
-        self.cardSelector.setMinimumSize(QSize(117, 0))
+        self.cardSelector.setMinimumSize(QSize(105, 0))
         self.horizontalLayout.addWidget(self.cardSelector)
 
         self.open_card = QtWidgets.QPushButton()
@@ -72,6 +71,11 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.open_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.open_card)
         
+        self.line2 = QFrame(self.card_history)
+        self.line2.setFrameShape(QFrame.VLine)
+        self.line2.setFrameShadow(QFrame.Sunken)
+        self.horizontalLayout.addWidget(self.line2)
+
         self.delete_card = QtWidgets.QPushButton()
         self.delete_card.setObjectName(u"delete_card")
         self.delete_card.setMinimumSize(QSize(15, 15))
@@ -95,9 +99,11 @@ class GUI(QMainWindow): # RAW_UI for builds
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
             self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
+            self.line2.setStyleSheet("background-color: rgb(150, 150, 150);")
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
             self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
+            self.line2.setStyleSheet("background-color: rgb(42, 42, 42);")
 
     def addToolTips(self):
         """

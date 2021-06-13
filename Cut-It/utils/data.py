@@ -233,7 +233,7 @@ def getCard(idx: int = 0) -> Card:
     """
         Returns card at start OR at supplied index
     """
-
+    
     return Card(**getCardData()["cards"][idx])
 
 def addCard(card: Card, idx: int = None) -> None:
