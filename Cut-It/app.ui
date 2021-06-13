@@ -779,7 +779,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>130</height>
+              <height>120</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -792,24 +792,17 @@ p, li { white-space: pre-wrap; }
              <property name="bottomMargin">
               <number>15</number>
              </property>
-             <item row="4" column="0">
+             <item row="3" column="0">
               <widget class="QLineEdit" name="creds">
                <property name="placeholderText">
                 <string>Credentials</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
+             <item row="4" column="0">
               <widget class="QLineEdit" name="link">
                <property name="placeholderText">
                 <string>URL</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLineEdit" name="cite">
-               <property name="placeholderText">
-                <string>Cite</string>
                </property>
               </widget>
              </item>
@@ -1074,7 +1067,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>275</width>
-              <height>100</height>
+              <height>65</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -1086,113 +1079,7 @@ p, li { white-space: pre-wrap; }
             <property name="title">
              <string>Card History</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="1" column="3">
-              <widget class="QPushButton" name="save_card">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>55</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QPushButton" name="copy_card">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>55</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="open_card">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>55</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="new_card">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>55</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QPushButton" name="delete_card">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>55</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>new card</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="3">
-              <widget class="QComboBox" name="cardSelector">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <layout class="QHBoxLayout" name="horizontalLayout"/>
            </widget>
           </item>
           <item>

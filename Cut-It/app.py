@@ -517,7 +517,6 @@ class main(GUI):
         # Create Card
         card = Card(
             self.warrant.text(),
-            self.cite.text(),
             self.creds.text(),
             self.link.text(),
             evidence_data[0],
@@ -553,7 +552,6 @@ class main(GUI):
         document = self.evidence_box.document()
         document.clear()
         self.warrant.setText("")
-        self.cite.setText("")
         self.creds.setText("")
         self.link.setText("")
         self.index = None
@@ -595,7 +593,6 @@ class main(GUI):
         # If we don't have a previous card -> Set all fields as empty and return
         if self.index is None:
             self.warrant.setText("")
-            self.cite.setText("")
             self.creds.setText("")
             self.link.setText("")
             return
@@ -604,7 +601,6 @@ class main(GUI):
         card = data.getCard(self.index)
 
         self.warrant.setText(card.TAG)
-        self.cite.setText(card.CITE)
         self.creds.setText(card.CREDS)
         self.link.setText(card.URL)
         self.cardSelector.setCurrentIndex(self.index + 1)
@@ -627,7 +623,6 @@ class main(GUI):
             # Clearing fields
             self.msg.clear()
             self.warrant.setText("")
-            self.cite.setText("")
             self.creds.setText("")
             self.link.setText("")
             document = self.evidence_box.document()
@@ -690,7 +685,6 @@ class main(GUI):
 
         card = Card(
             self.warrant.text(),
-            self.cite.text(),
             self.creds.text(),
             self.link.text(),
             evidence_data[0],
