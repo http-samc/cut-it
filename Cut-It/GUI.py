@@ -39,7 +39,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         
         # Applying custom changes to GUI
         self.addDistroDetails()
-        self.addCardHistory()
+        #self.addCardHistory()
         self.addAttrs()
         self.addToolTips()
         self.updateStyling()
@@ -49,55 +49,55 @@ class GUI(QMainWindow): # RAW_UI for builds
             Manually fill out the Card History groupBox (due to custom widgets)
         """
 
-        self.new_card = QtWidgets.QPushButton()
+        self.new_card = QtWidgets.QPushButton(self.card_history)
         self.new_card.setObjectName(u"new_card")
-        self.new_card.setMinimumSize(QSize(20, 20))
+        #self.new_card.setMinimumSize(QSize(30, 20))
         self.new_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.new_card)
+        self.gridLayout_2.addWidget(self.new_card, 0, 0, 1, 1)
         
-        self.line = QFrame(self.card_history)
-        self.line.setFrameShape(QFrame.VLine)
-        self.line.setFrameShadow(QFrame.Sunken)
+        # self.line = QFrame(self.card_history)
+        # self.line.setFrameShape(QFrame.VLine)
+        # self.line.setFrameShadow(QFrame.Sunken)
+        # self.line.
+        # self.gridLayout_2.addWidget(self.line, 1, 2, 1, 1)
 
-        self.horizontalLayout.addWidget(self.line)
-
-        self.cardSelector = ExtendedComboBox()
+        self.cardSelector = ExtendedComboBox(self.card_history)
         self.cardSelector.setObjectName(u"cardSelector")
-        self.cardSelector.setMinimumSize(QSize(117, 0))
-        self.horizontalLayout.addWidget(self.cardSelector)
+        #self.cardSelector.setMinimumSize(QSize(205, 0))
+        self.gridLayout_2.addWidget(self.cardSelector, 0, 1, 1, 3)
 
-        self.open_card = QtWidgets.QPushButton()
+        self.open_card = QtWidgets.QPushButton(self.card_history)
         self.open_card.setObjectName(u"open_card")
-        self.open_card.setMinimumSize(QSize(20, 20))
+        #self.open_card.setFixedSize(QSize(30, 30))
         self.open_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.open_card)
+        self.gridLayout_2.addWidget(self.open_card, 1, 0, 1, 1)
         
-        self.delete_card = QtWidgets.QPushButton()
+        self.delete_card = QtWidgets.QPushButton(self.card_history)
         self.delete_card.setObjectName(u"delete_card")
-        self.delete_card.setMinimumSize(QSize(15, 15))
+        #self.delete_card.setMinimumSize(QSize(65, 15))
         self.delete_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.delete_card)
+        self.gridLayout_2.addWidget(self.delete_card, 1, 1, 1, 2)
 
-        self.copy_card = QtWidgets.QPushButton()
+        self.copy_card = QtWidgets.QPushButton(self.card_history)
         self.copy_card.setObjectName(u"copy")
-        self.copy_card.setMinimumSize(QSize(15, 15))
+        #self.copy_card.setMinimumSize(QSize(15, 15))
         self.copy_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.copy_card)
+        self.gridLayout_2.addWidget(self.copy_card, 1, 3, 1, 1)
         
-        self.save_card = QtWidgets.QPushButton()
+        self.save_card = QtWidgets.QPushButton(self.card_history)
         self.save_card.setObjectName(u"save_card")
-        self.save_card.setMinimumSize(QSize(15, 15))
+        #self.save_card.setMinimumSize(QSize(15, 15))
         self.save_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.save_card)
+        self.gridLayout_2.addWidget(self.save_card, 1, 3, 1, 1)
 
     def updateStyling(self):
         # Set theme-appropriate tooltip background and evidence box color
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-            self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
+            #self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
-            self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
+            #self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
 
     def addToolTips(self):
         """
