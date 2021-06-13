@@ -110,6 +110,10 @@ class GUI(QMainWindow): # RAW_UI for builds
         - This gets inserted at the top of the card when you use <code>AutoCut</code>, but you need to enter it beforehand<br><br>
         - If you save the card, this is required and will become the PDF's filename
         """)
+        self.cite.setToolTip("""
+        The <code>Cite</code> is where you can input the reference the source of the card, eg. Smith '19 for CNN<br><br>
+        - This gets inserted at the top of the card when you use <code>AutoCut</code>, but you need to enter it beforehand
+        """)
         self.creds.setToolTip("""
         The <code>Credentials</code> is where you can input the credentials of the source of your card<br><br>
         - This gets inserted within the citation when you use <code>AutoCut</code>, but you need to enter it beforehand
