@@ -449,7 +449,9 @@ class main(GUI):
 
             except Exception:
                 self.index = None
-
+        else:
+            self.index = None
+            
         data.setIndex(self.index)
         self._saveSettings()
 

@@ -28,6 +28,7 @@ class ExtendedComboBox(QComboBox):
 
         # connect signals
         self.lineEdit().textEdited.connect(self.pFilterModel.setFilterFixedString)
+        self.lineEdit().setPlaceholderText("Find a card...")
         self.completer.activated.connect(self.on_completer_activated)
 
     def goToStart(self):
