@@ -2,25 +2,26 @@
     Main App
 """
 
-from PyQt5.QtWidgets import (QFileDialog, QShortcut)
-from utils.clipboard_WIN import clipboard
-from PyQt5 import QtCore
-from utils.feedback import send_feedback
-from utils.version_check import check
-from utils.text_scraper import text
-from utils.card import Card, Logger
-from PyQt5 import QtGui, QtWidgets
-from utils.export import printPDF
-from bs4 import BeautifulSoup
-from utils.citer import cite
-import qtmodern.windows
-from utils import data
-import qtmodern.styles
-from PyQt5 import Qt
-from GUI import GUI
-import validators
-import sys
 import os
+import sys
+
+import qtmodern.styles
+import qtmodern.windows
+import validators
+from bs4 import BeautifulSoup
+from PyQt5 import Qt, QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QFileDialog, QShortcut
+
+from GUI import GUI
+from utils import data
+from utils.resource import PATH
+from utils.card import Card, Logger
+from utils.citer import cite
+from utils.clipboard_WIN import clipboard
+from utils.export import printPDF
+from utils.feedback import send_feedback
+from utils.text_scraper import text
+from utils.version_check import check
 
 class main(GUI):
     """
@@ -1015,6 +1016,10 @@ if __name__ == "__main__":
     global app
     QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
     app = QtWidgets.QApplication(sys.argv)
+
+    font = QtGui.QFont()
+    font.setPointSize(8)
+    app.setFont(font)
 
     # Handling themes
     if data.getPref("Theme") == "light":
