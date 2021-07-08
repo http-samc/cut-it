@@ -63,7 +63,6 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.cardSelector = ExtendedComboBox()
         self.cardSelector.setObjectName(u"cardSelector")
         self.cardSelector.setMinimumSize(QSize(105, 0))
-        self.cardSelector.addItem(QtGui.QIcon(PATH.get('Cut-It/images/search_icon.png')), "")
         self.horizontalLayout.addWidget(self.cardSelector)
 
         self.open_card = QtWidgets.QPushButton()
@@ -267,7 +266,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         """
 
         # Setting up message box
-        self.msg.setCurrentFont(QtGui.QFont("Roboto"))
+        self.msg.setCurrentFont(QtGui.QFont("Times New Roman"))
         self.msg.insertHtml("<p>Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <b>docs.cutit.cards</b>!</p>")
 
         # Adding Icons
@@ -289,15 +288,23 @@ class GUI(QMainWindow): # RAW_UI for builds
             Returns a formatted String to be inserted into the Distro box in the about section
         """
 
-        distroDetails = f"""<p align="center">
-        🚀Cut-It FAQ🚀 || Version 📝 {version()} || Tag🏷️ @{tag()}
+        distroDetails = f"""<h1 align="center" style="font-size: 30pt">🚀Cut-It FAQ🚀</h1><br><br><h1 align="center">
+        Version 📝 {version()} || Tag🏷️ @{tag()}
         || Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it
         || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors
         || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits (IconScout): Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
-        distroDetails += "New Icon by Phosphor Icons, Search Icon by Google Inc.</p>"
-
+        distroDetails += "New Icon by Phosphor Icons, Search Icon by Google Inc.</h1>"
+        distroDetails += """
+        <br><br>
+        <h1 align="center">
+        <em>
+        See any issues? Contact us at hello@cutit.cards! Our software is free forever and open sourced,
+        please consider contributing on GitHub!
+        </em>
+        <h1>
+        """
         self.distro.setText(distroDetails)
 
 if __name__ == "__main__":
