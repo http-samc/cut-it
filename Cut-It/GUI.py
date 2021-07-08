@@ -1,10 +1,10 @@
 """
     Creates a GUI object based off the latest version of app.ui
-    GUI visual tests can be ran by running this program 
+    GUI visual tests can be ran by running this program
     Inherited by app.py for simplicity
 """
 
-from PyQt5.QtWidgets import QFrame, QMainWindow
+from PyQt5.QtWidgets import QApplication, QFrame, QMainWindow
 from utils.ext_combobox import ExtendedComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from utils.distro import version, tag
@@ -24,7 +24,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         """
 
         super().__init__()
-        
+
         # Storing theme
         self.isLight = isLight
 
@@ -36,7 +36,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         # Setting Title (Spaces are due to a centering bug in QtModern)
         SPACES = "                    "
         self.setWindowTitle(f"{SPACES}Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
-        
+
         # Applying custom changes to GUI
         self.addDistroDetails()
         self.addCardHistory()
@@ -54,15 +54,16 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.new_card.setMinimumSize(QSize(20, 20))
         self.new_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.new_card)
-        
-        self.line = QFrame(self.card_history)
-        self.line.setFrameShape(QFrame.VLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-        self.horizontalLayout.addWidget(self.line)
+
+        # self.line = QFrame(self.card_history)
+        # self.line.setFrameShape(QFrame.VLine)
+        # self.line.setFrameShadow(QFrame.Sunken)
+        # self.horizontalLayout.addWidget(self.line)
 
         self.cardSelector = ExtendedComboBox()
         self.cardSelector.setObjectName(u"cardSelector")
         self.cardSelector.setMinimumSize(QSize(105, 0))
+        self.cardSelector.addItem(QtGui.QIcon(PATH.get('Cut-It/images/search_icon.png')), "")
         self.horizontalLayout.addWidget(self.cardSelector)
 
         self.open_card = QtWidgets.QPushButton()
@@ -70,11 +71,11 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.open_card.setMinimumSize(QSize(20, 20))
         self.open_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.open_card)
-        
-        self.line2 = QFrame(self.card_history)
-        self.line2.setFrameShape(QFrame.VLine)
-        self.line2.setFrameShadow(QFrame.Sunken)
-        self.horizontalLayout.addWidget(self.line2)
+
+        # self.line2 = QFrame(self.card_history)
+        # self.line2.setFrameShape(QFrame.VLine)
+        # self.line2.setFrameShadow(QFrame.Sunken)
+        # self.horizontalLayout.addWidget(self.line2)
 
         self.delete_card = QtWidgets.QPushButton()
         self.delete_card.setObjectName(u"delete_card")
@@ -87,7 +88,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.copy_card.setMinimumSize(QSize(15, 15))
         self.copy_card.setFocusPolicy(QtCore.Qt.NoFocus)
         self.horizontalLayout.addWidget(self.copy_card)
-        
+
         self.save_card = QtWidgets.QPushButton()
         self.save_card.setObjectName(u"save_card")
         self.save_card.setMinimumSize(QSize(15, 15))
@@ -98,12 +99,12 @@ class GUI(QMainWindow): # RAW_UI for builds
         # Set theme-appropriate tooltip background and evidence box color
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-            self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
-            self.line2.setStyleSheet("background-color: rgb(150, 150, 150);")
+            #self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
+            #self.line2.setStyleSheet("background-color: rgb(150, 150, 150);")
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
-            self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
-            self.line2.setStyleSheet("background-color: rgb(42, 42, 42);")
+            #self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
+            #self.line2.setStyleSheet("background-color: rgb(42, 42, 42);")
 
     def addToolTips(self):
         """
@@ -127,22 +128,22 @@ class GUI(QMainWindow): # RAW_UI for builds
         """)
         self.autocite.setToolTip("""
         <code>AutoCite</code> allows you to auto-generate a debate-grade and MLA citation from the link you inputted in <code>URL</code><br><br>
-        - If this is checked, it is triggered when you click <code>AutoCut</code> to the right 
+        - If this is checked, it is triggered when you click <code>AutoCut</code> to the right
         """)
         self.autopoll.setToolTip("""
         <code>AutoPoll</code> allows you to auto-insert the text of the webpage you inputted in <code>URL</code><br><br>
-        - If this is checked, it is triggered when you click <code>AutoCut</code> to the right 
+        - If this is checked, it is triggered when you click <code>AutoCut</code> to the right
         - If you entered a YouTube Video, the captions are used as article text
         """)
         self.autocut.setToolTip("""
         <code>AutoCut</code> is a feature that saves time getting card details!<br><br>
-        - If the <code>AutoCite</code> checkbox (to the left) is activated, it will add an MLA & 
+        - If the <code>AutoCite</code> checkbox (to the left) is activated, it will add an MLA &
         Debate-style citation to your card.<br><br>
-        - If the <code>AutoPoll</code> checkbox to the left is activated, it will add the text 
+        - If the <code>AutoPoll</code> checkbox to the left is activated, it will add the text
         of the website to your card.<br><br>
-        - You need to select which (or both) of these options you want prior to 
+        - You need to select which (or both) of these options you want prior to
         clicking the button.<br><br>
-        - Make sure you enter any card details in the 
+        - Make sure you enter any card details in the
         <code>Card Information</code> section prior to AutoCutting - <em>they won't fill in afterwards</em>!
         """)
         self.primary_em.setToolTip("""
@@ -229,7 +230,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.font_size_normal.setToolTip("This is the font size for normal, non-emphasized text (applies on restart)")
         self.zoom.setToolTip("""
         This will increase the zoom on the evidence box. Your cards will still export the same with the autocopy feature or the copy button (applies on restart)<br><br>
-        - <u><b>Remember to never copy the text in the evidence box manually, since it won't work with Docs/Word. AutoCut automatically copies 
+        - <u><b>Remember to never copy the text in the evidence box manually, since it won't work with Docs/Word. AutoCut automatically copies
         text to your clipboard anytime you change a card, and it's faster!</b></u>""")
         self.highlight_1.setToolTip("This is the highlight color you can use to highlight text with the <code>H¹</code> button (applies on restart)")
         self.highlight_2.setToolTip("This is the highlight color you can use to highlight text with the <code>H²</code> button (applies on restart)")
@@ -259,7 +260,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.feedback.setToolTip("Enter any feedback you have and submit it below")
         self.submit_feedback.setToolTip("Submit the feedback you entered above")
         self.evidence_box.setToolTip("This is where you cut your card!")
-        
+
     def addAttrs(self):
         """
             Adds in missing attrs.
@@ -289,18 +290,18 @@ class GUI(QMainWindow): # RAW_UI for builds
         """
 
         distroDetails = f"""<p align="center">
-        🚀Cut-It FAQ🚀 || Version 📝 {version()} || Tag🏷️ @{tag()} 
-        || Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it 
-        || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors 
+        🚀Cut-It FAQ🚀 || Version 📝 {version()} || Tag🏷️ @{tag()}
+        || Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it
+        || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors
         || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
-        """.replace('\n','') + "<br><br>Icon Credits: Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
+        """.replace('\n','') + "<br><br>Icon Credits (IconScout): Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
-        distroDetails += "New Icon by Phosphor Icons.</p>"
+        distroDetails += "New Icon by Phosphor Icons, Search Icon by Google Inc.</p>"
 
         self.distro.setText(distroDetails)
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)#QtWidgets.QApplication(sys.argv)
     qtmodern.styles.dark(app)
     gui = GUI(isLight=False)
     gui = qtmodern.windows.ModernWindow(gui)

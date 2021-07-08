@@ -118,8 +118,8 @@ def init():
     try:
         with open(C_PATH, 'r') as f:
             json.loads(f.read())['cards']
-            
-    
+
+
     except Exception:
         with open(C_PATH, 'w') as f:
             json.dump({"cards":[]}, f)
@@ -139,7 +139,7 @@ def setIndex(idx: int)  -> None:
 
     with open(P_PATH, 'r') as f:
         data =  json.loads(f.read())
-    
+
     data["Card Index"] = idx
 
     with open(P_PATH, 'w') as f:
@@ -233,13 +233,16 @@ def getCard(idx: int = 0) -> Card:
     """
         Returns card at start OR at supplied index
     """
-    
-    return Card(**getCardData()["cards"][idx])
+
+    try:
+        return Card(**getCardData()["cards"][idx])
+    except IndexError:
+        return None
 
 def addCard(card: Card, idx: int = None) -> None:
     """
         Checks if a card contains information, if so adds it
-        to the end of cards.json, or if an index is 
+        to the end of cards.json, or if an index is
         supplied it will overwrite the card at that pos
     """
 
@@ -265,7 +268,10 @@ def deleteCard(idx: int) -> None:
 
     if idx is None:
         return
-        
-    del data["cards"][idx]
+
+    try:
+        del data["cards"][idx]
+    except IndexError:
+        return
 
     setCardData(data)

@@ -8,9 +8,8 @@ Please use the exact text that follows without any modification if you are using
 *<-- Begin Credit Text -->*
 ```
 The software you are currently using was developed
-by Samarth Chitgopekar and co-managed by Adithya 
-Vaidyanathan under the name Cut-It. Please refer to 
-the following URI's for information:
+by Samarth Chitgopekar under the name Cut-It. 
+Please refer to the following URI's for information:
 
 1. Samarth Chitgopekar's GitHub
 https://github.com/http-samc

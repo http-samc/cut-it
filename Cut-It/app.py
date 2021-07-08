@@ -3,13 +3,14 @@
 """
 
 from PyQt5.QtWidgets import (QFileDialog, QShortcut)
-from utils.clipboard_WIN import clipboard 
+from utils.clipboard_WIN import clipboard
+from PyQt5 import QtCore
 from utils.feedback import send_feedback
-from utils.version_check import check 
+from utils.version_check import check
 from utils.text_scraper import text
 from utils.card import Card, Logger
 from PyQt5 import QtGui, QtWidgets
-from utils.export import PrintPDF
+from utils.export import printPDF
 from bs4 import BeautifulSoup
 from utils.citer import cite
 import qtmodern.windows
@@ -39,7 +40,7 @@ class main(GUI):
         self.secondary_em.clicked.connect(self._secondaryEmphasis)
         self.tertiary_em.clicked.connect(self._tertiaryEmphasis)
 
-            # Generic Styling 
+            # Generic Styling
         self.bold.clicked.connect(self._bold_)
         self.underline.clicked.connect(self._underline_)
         self.italics.clicked.connect(self._italic_)
@@ -71,7 +72,7 @@ class main(GUI):
         self._log()
         self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
-    
+
     """
         Data Functions
     """
@@ -86,13 +87,18 @@ class main(GUI):
         self._zoom_ = data.getPref("Zoom")
         self.Primary_Highlight_Color = data.getPref("Primary Highlight Color")
         self.Secondary_Highlight_Color = data.getPref("Secondary Highlight Color")
-        
+
         self.unscaled_Font_Size_Normal = data.getPref("Font Size of Normal Text")
         self.Font_Size_Normal = self.unscaled_Font_Size_Normal + self._zoom_
-       
+
+        font = QtGui.QFont()
+        font.setFamily(self._font_)
+        font.setPointSize(self.Font_Size_Normal)
+        self.evidence_box.setFont(font)
+
         self.unscaled_Font_Size_Min = data.getPref("Font Size of Minimized Text")
         self.Font_Size_Min = self._zoom_ + self.unscaled_Font_Size_Min
-        
+
         self.Primary_Em = data.getPref("Primary Emphasis Settings")
         self.Secondary_Em = data.getPref("Secondary Emphasis Settings")
         self.Tertiary_Em = data.getPref("Tertiary Emphasis Settings")
@@ -127,7 +133,7 @@ class main(GUI):
         self.font.setCurrentText(self._font_)
         self.font_size_normal.setValue(self.unscaled_Font_Size_Normal)
         self.font_size_min.setValue(self.unscaled_Font_Size_Min)
-        self.zoom.setValue(self._zoom_) 
+        self.zoom.setValue(self._zoom_)
         self.highlight_1.setCurrentText(self.Primary_Highlight_Color)
         self.highlight_2.setCurrentText(self.Secondary_Highlight_Color)
 
@@ -161,13 +167,13 @@ class main(GUI):
         all_shortcuts = data.getPrefData()["shortcuts"]
         for shortcut in list(all_shortcuts.keys()):
             self.shortcuts.addItem(shortcut)
-        
+
     def _updateShortcut(self):
         """
             Updates shortcut when user wants to view a separate one
         """
 
-        newSequence = data.getShort(self.shortcuts.currentText()) 
+        newSequence = data.getShort(self.shortcuts.currentText())
         if newSequence == 'Choose a shortcut to view/edit . . . (applies on restart)':
             return
         self.shortcut_input.setKeySequence(newSequence)
@@ -187,7 +193,7 @@ class main(GUI):
 
         self.clearFormatting_ = QShortcut(QtGui.QKeySequence(self.clearFormatting), self.evidence_box) # Standard alternative
         self.clearFormatting_.activated.connect(self._clearFormatting)
- 
+
         self.primaryEmphasis_ = QShortcut(QtGui.QKeySequence(self.primaryEmphasis), self.evidence_box)
         self.primaryEmphasis_.activated.connect(self._primaryEmphasis)
 
@@ -220,7 +226,7 @@ class main(GUI):
 
     def _saveSettings(self):
         """
-            Saves settings to data.json 
+            Saves settings to data.json
         """
 
         data.setPref("Font", self.font.currentText())
@@ -261,7 +267,7 @@ class main(GUI):
         """
 
         self.updates.setText(check())
-    
+
     def _feedback(self):
         """
             Submits feedback
@@ -275,7 +281,7 @@ class main(GUI):
             Changes theme from current to reciprocal (applies on reboot)
             (eg. light -> dark, dark -> light)
         """
-        
+
         # Define current theme, new theme
         currentTheme = data.getPref("Theme")
         newTheme = "light" if currentTheme == "dark" else "dark"
@@ -297,7 +303,7 @@ class main(GUI):
         cursor = self.evidence_box.textCursor()
         if cursor.hasSelection():
             return None
-        
+
         START = cursor.selectionStart()-1
         if START < 0:
             return None
@@ -319,8 +325,14 @@ class main(GUI):
         """
 
         doc = self.evidence_box.document()
-        soup = BeautifulSoup(doc.toHtml().replace('<br>', ' '), 'html.parser')
-        html = str(soup.find('p'))
+        soup = BeautifulSoup(doc.toHtml(), 'html.parser')
+        paragraphs = soup.find_all('p')
+        html = ""
+
+        for p in paragraphs:
+            html += str(p)
+
+        html = html.replace('<br>', ' ')
 
         # Formatting for export
         if copy or isForExport:
@@ -331,11 +343,12 @@ class main(GUI):
             html = html.replace(f'font-size:{self.Font_Size_Secondary_Em}pt;', f'font-size:{self.Secondary_Em[4]}pt;')
             html = html.replace(f'font-size:{self.Font_Size_Tertiary_Em}pt;', f'font-size:{self.Tertiary_Em[4]}pt;')
 
-        html = f'<body style="font-family: {self._font_}">' + html + '</body>'
+        html = f'<body style="font-size: {self.Font_Size_Normal}pt; font-family: {self._font_}">' + html + '</body>'
 
         text = str(soup.text)
 
         clipboard.add(text, html) if copy else ...
+
         return [text, html]
 
     def _auto(self, autoCite = False, autoPoll = False):
@@ -368,14 +381,14 @@ class main(GUI):
                         msgStr += attr + ", "
                     self.msg.clear()
                     self.msg.setText(msgStr[:-2])
-            
+
             except Exception:
                 self.msg.clear()
                 self.msg.setText("Sorry, there was an error getting your citation.")
                 return
 
             debate_citation = citation.debate()
-            mla_citation = citation.mla() 
+            mla_citation = citation.mla()
 
             if TAG != "":
                 html += f"""
@@ -383,7 +396,7 @@ class main(GUI):
                     {TAG}
                 </strong></u></span><br>
                 """
-            
+
             html += f"""
             <span style='background-color: cyan; font-size: 12pt;'><u><strong>
                 {debate_citation[0]} '{debate_citation[1]}<br>
@@ -396,17 +409,17 @@ class main(GUI):
                 {CREDS}<br>
                 </i>
                 """
-            
+
             html += f"""
                 {debate_citation[2]} • {debate_citation[3]}<br>
                 {mla_citation}<br><br>
             """
-        
+
         # Adding Article Text if appropriate
         if self.autopoll.isChecked() or autoPoll:
 
             self.autopoll.setCheckState(False)
-            
+
             try:
                 self.msg.clear()
                 self.msg.setText("Polling text . . .")
@@ -418,12 +431,12 @@ class main(GUI):
                 self.msg.setText(f"Sorry, we can't support {URL}! Please use our Chrome Extension instead.")
 
             html += "</p>"
-        
+
         # Inserting Text
         cursor = self.evidence_box.textCursor()
         cursor.setPosition(0)
         cursor.insertHtml(html)
-        
+
         self._toHTML(copy = True)
         self.msg.clear()
         self.msg.setText("AutoCut complete!")
@@ -440,7 +453,8 @@ class main(GUI):
             Behavior for window close (saves card first)
         """
 
-        self._saveCard()
+        self._newCard()
+
         if len(self.cardSelector.currentText()) >= 1:
             self.index = self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
 
@@ -451,7 +465,7 @@ class main(GUI):
                 self.index = None
         else:
             self.index = None
-            
+
         data.setIndex(self.index)
         self._saveSettings()
 
@@ -481,13 +495,13 @@ class main(GUI):
         """
             Adds all cards to card history selector
         """
-        
+
         # Clearing all data in combobox
         self.cardSelector.clear()
         self.cardSelector.addItem("Select a Card")
 
         cards = data.getCardData()["cards"]
-        
+
         # Running Index counter
         self.cardIndex = 0 # current max index of card selector
 
@@ -501,11 +515,11 @@ class main(GUI):
 
             if TAG.replace(' ', '') != "":
                 self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
-            
+
             # Or just use the card text
             else:
                 self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
-            
+
             # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
             self.cardIndex += 1
 
@@ -531,12 +545,12 @@ class main(GUI):
 
         if self.index is None:
             data.addCard(card)
-        
+
         else:
             data.addCard(card, idx = self.index)
-        
+
         return True
-    
+
     def _newCard(self):
         """
             Saves old card and opens new one
@@ -564,7 +578,7 @@ class main(GUI):
         """
 
         # Save card
-        self._saveCard()
+        #self._saveCard()
 
         # Add to selector, recheck auto's
         if not initialLoad:
@@ -573,11 +587,12 @@ class main(GUI):
             self.autocite.setTristate(False)
             self.autopoll.setCheckState(True)
             self.autopoll.setTristate(False)
+            self._saveCard()
 
         # Get index of most recent card
         if len(self.cardSelector.currentText()) >= 1:
             self.index = data.getIndex() if initialLoad else self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
-        
+
         else:
             self.index = None
 
@@ -587,31 +602,37 @@ class main(GUI):
 
         except Exception:
             self.index = None
-        
+
         # Clear Fields
         document = self.evidence_box.document()
         document.clear()
 
-        # If we don't have a previous card -> Set all fields as empty and return
         if self.index is None:
             self.warrant.setText("")
             self.creds.setText("")
             self.link.setText("")
             return
-        
+
         # If we do have a card, get it and set all the respective attrs in the GUI
         card = data.getCard(self.index)
+
+        # If we don't have a previous card -> Set all fields as empty and return
+        if self.index is None or card is None:
+            self.warrant.setText("")
+            self.creds.setText("")
+            self.link.setText("")
+            return
 
         self.warrant.setText(card.TAG)
         self.creds.setText(card.CREDS)
         self.link.setText(card.URL)
         self.cardSelector.setCurrentIndex(self.index + 1)
-        
+
         # Insert html
         cursor = self.evidence_box.textCursor()
         cursor.insertHtml(card.HTML)
         cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
-        self.evidence_box.setTextCursor(cursor) 
+        self.evidence_box.setTextCursor(cursor)
 
     def _deleteCard(self):
         """
@@ -619,8 +640,8 @@ class main(GUI):
         """
 
         if self.hasClickedDeleteOnce:
-            
-            data.deleteCard(self.index) 
+
+            data.deleteCard(self.index)
 
             # Clearing fields
             self.msg.clear()
@@ -639,12 +660,12 @@ class main(GUI):
 
             except Exception:
                 currentIndex = None
-            
+
             self.cardSelector.removeItem(currentIndex + 1) if currentIndex is not None else self.cardSelector.setCurrentIndex(0)
 
             self.msg.setText("Card deleted successfully!")
             self.hasClickedDeleteOnce = False
-            
+
             # Reload all cards to avoid index errors
             self.__loadAllCards()
 
@@ -654,7 +675,7 @@ class main(GUI):
             try:
                 if len(self.cardSelector.currentText()) > 0:
                     currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
-                
+
                 else:
                     currentIndex = None
 
@@ -666,13 +687,13 @@ class main(GUI):
                 message = "<b>WARNING!</b> You are attempting to delete the card that is currently open, "
                 message += "NOT what is selected in the Card History bar. If you want to proceed, click the delete button again."
                 self.msg.insertHtml(message)
-            
+
             else:
                 self.msg.clear()
                 self.msg.setText("""You are attempting to delete the currently opened card. Click the delete button again to confirm.""")
-            
+
             self.hasClickedDeleteOnce = True
-    
+
     def _addToCardSelector(self):
         """
             Adds current card to card selector
@@ -712,7 +733,7 @@ class main(GUI):
         """
             Resets the delete status (clicked once) if the selected card changes
         """
-        
+
         self.hasClickedDeleteOnce = False
 
     """
@@ -731,14 +752,14 @@ class main(GUI):
         """
 
         self._auto(True, False)
-    
+
     def _autoPoll(self):
         """
             Adds article text to evidence box
         """
 
         self._auto(False, True)
-    
+
     def _print(self):
         """
             Triggers User Input for Directory and Saves Card as PDF
@@ -755,22 +776,25 @@ class main(GUI):
                 'Folder To Save In',
                 startingDir,
                 QFileDialog.ShowDirsOnly)
-        
+
         # Getting HTML, filename
         html = self._toHTML(isForExport = True)[1]
-        filename = self.warrant.text() if self.warrant.text() != "" else "card"
-        filepath = f"{destDir}/{filename}.pdf"
-        
+        cardName = self.warrant.text() if self.warrant.text() != "" else "Cut-It Export"
+
+        path = f"{destDir}"
+
         try:
-            if filepath == f"/{filename}.pdf":
+            if path == "":
                 self.msg.clear()
                 self.msg.setText("Invalid destination selected.")
                 return
-            PrintPDF(html, filepath, parent = self)
+
+            printPDF(html, path, cardName = cardName)
             self.msg.clear()
             self.msg.setText("Saved PDF Successfully!")
 
-        except Exception:
+        except Exception as e:
+            print(e)
             self.msg.clear()
             self.msg.setText("There was an error saving your .pdf.")
 
@@ -788,7 +812,7 @@ class main(GUI):
         # If there's no selection return None
         if not cursor.hasSelection():
             return None
-        
+
         # Return tuple
         return (cursor.selectionStart(), cursor.selectedText())
 
@@ -831,18 +855,18 @@ class main(GUI):
 
         self.__addText(text, selection_data[0])
         self._toHTML(copy = True)
-    
+
     def _secondaryEmphasis(self):
         """
             Styles text with Secondary Emphasis
-        """ 
+        """
 
         selection_data = self.__getSelectedText()
         if selection_data == None:
             return
         text = selection_data[1]
-        
-        text = self._bold(text) if self.Secondary_Em[0] else text        
+
+        text = self._bold(text) if self.Secondary_Em[0] else text
         text = self._italic(text) if self.Secondary_Em[1] else text
         text = self._underline(text) if self.Secondary_Em[2] else text
         text = self._highlight(text, self.Secondary_Em[3]) if self.Secondary_Em[3] != None else text
@@ -854,7 +878,7 @@ class main(GUI):
     def _tertiaryEmphasis(self):
         """
             Styles text with Tertiary Emphasis
-        """ 
+        """
 
         selection_data = self.__getSelectedText()
         if selection_data == None:
@@ -874,7 +898,7 @@ class main(GUI):
         """
             Highlights text with Primary Highlight Color
         """
-        
+
         selection_data = self.__getSelectedText()
         if selection_data == None:
             return
@@ -904,7 +928,7 @@ class main(GUI):
             return
         self.__addText(self._bold(selection_data[1]), selection_data[0])
         self._toHTML(copy = True)
-    
+
     def _underline_(self):
         """
             Underlines selected text
@@ -930,8 +954,8 @@ class main(GUI):
     def _clearFormatting(self):
         """
             Clears Formatting on selected text
-        """ 
-        
+        """
+
         selection_data = self.__getSelectedText()
         if selection_data == None:
             return
@@ -941,7 +965,7 @@ class main(GUI):
 
     def _minimizeText(self):
         """
-            Minimizes Text 
+            Minimizes Text
         """
 
         selection_data = self.__getSelectedText()
@@ -958,16 +982,16 @@ class main(GUI):
         """
             Returns bolded version of :param: text
         """
-        
+
         return f"<b>{text}</b>"
-    
+
     def _underline(self, text):
         """
             Returns underlined version of :param: text
         """
 
         return f"<u>{text}</u>"
-    
+
     def _italic(self, text):
         """
             Returns italicised version of :param: text
@@ -981,14 +1005,15 @@ class main(GUI):
         """
 
         return f"<span style='background-color: {color}'>{text}</span>"
-    
+
 if __name__ == "__main__":
-    
+
     # Initialize User Data
     data.init()
 
     # Create App
     global app
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
     app = QtWidgets.QApplication(sys.argv)
 
     # Handling themes
@@ -999,7 +1024,7 @@ if __name__ == "__main__":
     else:
         qtmodern.styles.dark(app)
         isLight = False
-    
+
     gui = main(isLight=isLight)
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
