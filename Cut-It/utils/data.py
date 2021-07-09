@@ -2,7 +2,6 @@
     - Manages User Preferences and Card History
 """
 
-from typing import Dict
 from schema import Schema, And, Use, Optional, SchemaError
 from utils.resource import PATH
 from utils.card import Card
@@ -144,6 +143,7 @@ def setIndex(idx: int)  -> None:
 
     with open(P_PATH, 'w') as f:
         json.dump(data, f)
+
 """
     Preferences Methods
 """

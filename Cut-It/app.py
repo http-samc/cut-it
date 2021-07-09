@@ -11,6 +11,7 @@ import validators
 from bs4 import BeautifulSoup
 from PyQt5 import Qt, QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QShortcut
+from PyQt5.QtCore import QThread
 
 from GUI import GUI
 from utils import data
@@ -22,6 +23,8 @@ from utils.export import printPDF
 from utils.feedback import send_feedback
 from utils.text_scraper import text
 from utils.version_check import check
+from utils.chrome_server import server
+import threading
 
 class main(GUI):
     """
@@ -73,6 +76,18 @@ class main(GUI):
         self._log()
         self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
+
+        self.setupChrome()
+
+    """
+        Cut-It Chrome Functions
+    """
+    def setupChrome(self):
+        kwargs = {'host': '127.0.0.1', 'port': 5000, 'threaded': True, 'use_reloader': False, 'debug': False}
+        threading.Thread(target=server.run, daemon=True, kwargs=kwargs).start()
+
+    def addFromChrome(self, data):
+        print(data)
 
     """
         Data Functions

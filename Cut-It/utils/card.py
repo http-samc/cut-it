@@ -22,12 +22,12 @@ class Card:
             Returns (bool) if the card actually has data
         """
 
-        if ((self.TAG.replace(' ','').replace('\n','').replace('\t','') != "") or 
-            (self.CREDS.replace(' ','').replace('\n','').replace('\t','') != "") or 
+        if ((self.TAG.replace(' ','').replace('\n','').replace('\t','') != "") or
+            (self.CREDS.replace(' ','').replace('\n','').replace('\t','') != "") or
             (self.URL.replace(' ','').replace('\n','').replace('\t','') != "") or
             (self.TEXT.replace(' ','').replace('\n','').replace('\t','') != "")):
             return True
-            
+
         else:
             return False
 
@@ -49,13 +49,13 @@ class Logger(QThread):
             Posts cards to logging server on close
             :param: cards (list of card asdicts)
         """
-        
+
         #data = {"cards": self.cards}
         #print(data)
         data = {"cards": ["CHICKENS", 1]}
         BASE = "http://127.0.0.1:5000/otr/cut-it/cardfile"#"https://api.flare-software.live/otr/cut-it/cardfile"
-        
+
         #try:
-        r = requests.post(BASE, data = data)     
+        r = requests.post(BASE, data = data)
         # except Exception:
         #     ...
