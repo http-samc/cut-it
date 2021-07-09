@@ -3,7 +3,7 @@
 """
 
 import os
-import sys
+import sys, json
 
 import qtmodern.styles
 import qtmodern.windows
@@ -87,7 +87,7 @@ class main(GUI):
         threading.Thread(target=server.run, daemon=True, kwargs=kwargs).start()
 
     def addFromChrome(self, data):
-        print(data)
+        print("!")
 
     """
         Data Functions

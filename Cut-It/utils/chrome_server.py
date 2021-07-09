@@ -1,7 +1,8 @@
 from flask import Flask, request, Response
 from PyQt5.QtCore import QObject, pyqtSignal
-import json
+import json, time
 
+global server
 server = Flask(__name__)
 
 @server.route('/', methods=["POST"])
