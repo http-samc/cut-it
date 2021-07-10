@@ -1,10 +1,12 @@
 """
     - Extension of the QComboBox class that allows for searchable queries
-    - credit: this answer https://stackoverflow.com/a/4829759/13723971 
+    - credit: this answer https://stackoverflow.com/a/4829759/13723971
 """
 
+from PyQt5 import QtGui
 from PyQt5.QtCore import Qt, QSortFilterProxyModel
 from PyQt5.QtWidgets import QCompleter, QComboBox
+from PyQt5.QtGui import QFont
 
 class ExtendedComboBox(QComboBox):
 
@@ -28,7 +30,8 @@ class ExtendedComboBox(QComboBox):
 
         # connect signals
         self.lineEdit().textEdited.connect(self.pFilterModel.setFilterFixedString)
-        self.lineEdit().setPlaceholderText("Find a card...")
+        self.lineEdit().setPlaceholderText("🔎 AutoFind® a card from Card History")
+        self.lineEdit().setFont(QFont('Times', 8))
         self.completer.activated.connect(self.on_completer_activated)
 
     def goToStart(self):
@@ -36,7 +39,7 @@ class ExtendedComboBox(QComboBox):
         line_edit.setCursorPosition(0)
         self.setLineEdit(line_edit)
 
-    # on selection of an item from the completer, select the corresponding item from combobox 
+    # on selection of an item from the completer, select the corresponding item from combobox
     def on_completer_activated(self, text):
 
         if text:
@@ -45,7 +48,7 @@ class ExtendedComboBox(QComboBox):
             self.activated[str].emit(self.itemText(index))
 
 
-    # on model change, update the models of the filter and completer as well 
+    # on model change, update the models of the filter and completer as well
     def setModel(self, model):
 
         super(ExtendedComboBox, self).setModel(model)
@@ -58,4 +61,4 @@ class ExtendedComboBox(QComboBox):
 
         self.completer.setCompletionColumn(column)
         self.pFilterModel.setFilterKeyColumn(column)
-        super(ExtendedComboBox, self).setModelColumn(column)   
+        super(ExtendedComboBox, self).setModelColumn(column)

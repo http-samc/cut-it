@@ -4,7 +4,7 @@
     Inherited by app.py for simplicity
 """
 
-from PyQt5.QtWidgets import QApplication, QFrame, QMainWindow
+from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QLayout, QMainWindow
 from utils.ext_combobox import ExtendedComboBox
 from PyQt5 import QtCore, QtGui, QtWidgets
 from utils.distro import version, tag
@@ -35,7 +35,7 @@ class GUI(QMainWindow): # RAW_UI for builds
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
         SPACES = "                    "
-        self.setWindowTitle(f"{SPACES}Cut-It™ by Offtime Roadmap® v.{version()}@{tag()}")
+        self.setWindowTitle(f"{SPACES}Cut-It™ v.{version()}@{tag()}")
 
         # Applying custom changes to GUI
         self.addDistroDetails()
@@ -49,61 +49,48 @@ class GUI(QMainWindow): # RAW_UI for builds
             Manually fill out the Card History groupBox (due to custom widgets)
         """
 
-        self.new_card = QtWidgets.QPushButton()
-        self.new_card.setObjectName(u"new_card")
-        self.new_card.setMinimumSize(QSize(20, 20))
-        self.new_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.new_card)
-
-        # self.line = QFrame(self.card_history)
-        # self.line.setFrameShape(QFrame.VLine)
-        # self.line.setFrameShadow(QFrame.Sunken)
-        # self.horizontalLayout.addWidget(self.line)
-
+        self.gridLayout_7.setSpacing(5)
         self.cardSelector = ExtendedComboBox()
         self.cardSelector.setObjectName(u"cardSelector")
-        self.cardSelector.setMinimumSize(QSize(105, 0))
-        self.horizontalLayout.addWidget(self.cardSelector)
+        self.cardSelector.setMinimumSize(QSize(230, 20))
+        self.gridLayout_7.addWidget(self.cardSelector, 0, 0, 1, 3)
 
         self.open_card = QtWidgets.QPushButton()
         self.open_card.setObjectName(u"open_card")
-        self.open_card.setMinimumSize(QSize(20, 20))
+        self.open_card.setMinimumSize(QSize(100, 20))
         self.open_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.open_card)
-
-        # self.line2 = QFrame(self.card_history)
-        # self.line2.setFrameShape(QFrame.VLine)
-        # self.line2.setFrameShadow(QFrame.Sunken)
-        # self.horizontalLayout.addWidget(self.line2)
+        self.gridLayout_7.addWidget(self.open_card, 0, 3)
 
         self.delete_card = QtWidgets.QPushButton()
         self.delete_card.setObjectName(u"delete_card")
-        self.delete_card.setMinimumSize(QSize(15, 15))
+        self.delete_card.setMinimumSize(QSize(70, 20))
         self.delete_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.delete_card)
+        self.gridLayout_7.addWidget(self.delete_card, 1, 0)
 
         self.copy_card = QtWidgets.QPushButton()
         self.copy_card.setObjectName(u"copy")
-        self.copy_card.setMinimumSize(QSize(15, 15))
+        self.copy_card.setMinimumSize(QSize(70, 20))
         self.copy_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.copy_card)
+        self.gridLayout_7.addWidget(self.copy_card, 1, 1)
 
         self.save_card = QtWidgets.QPushButton()
         self.save_card.setObjectName(u"save_card")
-        self.save_card.setMinimumSize(QSize(15, 15))
+        self.save_card.setMinimumSize(QSize(70, 20))
         self.save_card.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.horizontalLayout.addWidget(self.save_card)
+        self.gridLayout_7.addWidget(self.save_card, 1, 2)
+
+        self.new_card = QtWidgets.QPushButton()
+        self.new_card.setObjectName(u"new_card")
+        self.new_card.setMinimumSize(QSize(100, 20))
+        self.new_card.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.gridLayout_7.addWidget(self.new_card, 1, 3)
 
     def updateStyling(self):
         # Set theme-appropriate tooltip background and evidence box color
         if self.isLight:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-            #self.line.setStyleSheet("background-color: rgb(150, 150, 150);")
-            #self.line2.setStyleSheet("background-color: rgb(150, 150, 150);")
         else:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
-            #self.line.setStyleSheet("background-color: rgb(42, 42, 42);")
-            #self.line2.setStyleSheet("background-color: rgb(42, 42, 42);")
 
     def addToolTips(self):
         """
@@ -277,11 +264,12 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.copy_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
         self.save_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/save_icon.png')))
 
-        # Setting Button Sizes
-        self.delete_card.setFixedSize(20, 20)
-        self.copy_card.setFixedSize(20, 20)
-        self.open_card.setFixedSize(20, 20)
-        self.save_card.setFixedSize(20, 20)
+        # Setting Text
+        self.open_card.setText(" Open Selection ")
+        self.new_card.setText("    New Card      ")
+        self.delete_card.setText(" Delete")
+        self.copy_card.setText(" Copy")
+        self.save_card.setText(" Export")
 
     def addDistroDetails(self) -> str:
         """

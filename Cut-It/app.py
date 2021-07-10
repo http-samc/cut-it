@@ -225,6 +225,12 @@ class main(GUI):
         self.closeWindow_ = QShortcut(QtGui.QKeySequence(self.closeWindow), self.evidence_box)
         self.closeWindow_.activated.connect(self._onClose)
 
+        self.closeWindow__ = QShortcut(QtGui.QKeySequence(self.closeWindow), self.feedback)
+        self.closeWindow__.activated.connect(self._onClose)
+
+        self.closeWindow___ = QShortcut(QtGui.QKeySequence(self.closeWindow), self.distro)
+        self.closeWindow___.activated.connect(self._onClose)
+
     def _saveSettings(self):
         """
             Saves settings to data.json
@@ -346,7 +352,7 @@ class main(GUI):
 
         html = f'<body style="font-size: {self.Font_Size_Normal}pt; font-family: {self._font_}">' + html + '</body>'
 
-        text = str(soup.text)
+        text = str(soup.text)[2:]
 
         clipboard.add(text, html) if copy else ...
 
@@ -499,7 +505,7 @@ class main(GUI):
 
         # Clearing all data in combobox
         self.cardSelector.clear()
-        self.cardSelector.addItem("Select a Card")
+        self.cardSelector.addItem("Select Card & open with 'Open Selection'")
 
         cards = data.getCardData()["cards"]
 
@@ -572,14 +578,16 @@ class main(GUI):
         self.creds.setText("")
         self.link.setText("")
         self.index = None
+        self.cardSelector.setCurrentIndex(0)
 
     def _loadCard(self, initialLoad = False):
         """
             Loads most recent card (saves previous one as well and adds to card selector)
         """
 
-        # Save card
-        #self._saveCard()
+        if len(self.cardSelector.currentText()) >= 1 and not self.cardSelector.currentText()[0].isnumeric():
+            self.index = None
+            return
 
         # Add to selector, recheck auto's
         if not initialLoad:
