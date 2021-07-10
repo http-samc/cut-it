@@ -41,7 +41,7 @@ class cite:
             self.date = self.date.replace('-', '/')
             self.date = self.date.split('/')
             self.date = self.date[1] + "/" + self.date[2] + "/" + self.date[0]
-            
+
             #Getting last 2 digits of publication year
 
             self.split_date = self.date.split('/')
@@ -55,7 +55,7 @@ class cite:
             self.accessed = self.response["accessDate"]
             self.accessed = self.accessed.split('/')
             self.accessed = self.accessed[1] + "/" + self.accessed[0] + "/" + self.accessed[2]
-        
+
         else:
             self.date = ""
             self.year = ""
@@ -76,7 +76,7 @@ class cite:
 
             if key in excludedData:
                 continue
-            
+
             element = self.response[key]
 
             if isinstance(element, list) and len(element) == 0:
@@ -84,7 +84,7 @@ class cite:
 
             elif (element is None) or (element == ''):
                 retList.append(key)
-        
+
         if len(retList) == 0:
             return None
 
@@ -97,7 +97,7 @@ class cite:
 
         data = [self.lastName, self.year, self.publication, self.url]
         return data
-    
+
     def mla(self):
         """
             Returns an MLA 8 citation
