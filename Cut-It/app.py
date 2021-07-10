@@ -55,12 +55,11 @@ class main(GUI):
         self.shortcuts.currentTextChanged.connect(self._updateShortcut)
         self.shortcut_input.editingFinished.connect(self._saveShortcut)
         self.evidence_box.textChanged.connect(self._addDelimiter)
-        #self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
+        self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
         self.tab_master.currentChanged.connect(self._tabChanged)
         self.theme.clicked.connect(self._toggleTheme)
         self.new_card.clicked.connect(self._newCard)
-        #self.open_card.clicked.connect(self._loadCard)
-        #self.cardSelector.currentIndexChanged.connect(self._loadCard)
+        self.open_card.clicked.connect(self._loadCard)
         self.delete_card.clicked.connect(self._deleteCard)
         self.copy_card.clicked.connect(self._copy)
         self.save_card.clicked.connect(self._print)
@@ -68,10 +67,11 @@ class main(GUI):
         self.submit_feedback.clicked.connect(self._feedback)
 
         # Other __init__ reqs
-        self.__loadAllCards()
         self._loadSettings(initialLoad = True)
         self._loadShortcuts()
-        self._cardSelectionChanged(initialLoad=True)
+        self.__loadAllCards()
+        self._log()
+        self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
 
     """
@@ -192,8 +192,6 @@ class main(GUI):
             Inits custom keybindings for all user-defined shortcuts
         """
 
-        self.copyOverride = QShortcut(QtGui.QKeySequence("Ctrl+C"), self.evidence_box)
-        self.copyOverride.activated.connect(self._copy)
         self.clearFormatting_ = QShortcut(QtGui.QKeySequence(self.clearFormatting), self.evidence_box) # Standard alternative
         self.clearFormatting_.activated.connect(self._clearFormatting)
 
@@ -260,257 +258,6 @@ class main(GUI):
             self.tertiary_highlight.currentText(),
             self.tertiary_size.value()
         ])
-
-    """
-        Card History Utilities
-    """
-    # working
-    def __loadAllCards(self):
-        """
-            Adds all cards to card history selector
-        """
-
-        # Clearing all data in combobox
-        self.cardSelector.clear()
-        self.cardSelector.addItem("Unnamed Card")
-
-        cards = data.getCardData()["cards"]
-
-        # Running Index counter
-        self.cardIndex = 0 # current max index of card selector
-
-        # add listener after all cards are loaded to avoid unwanted triggering
-        self.cardSelector.currentIndexChanged.connect(self._cardSelectionChanged)
-
-        for card in cards:
-
-            card = Card(**card) # Construct Card from dict
-
-            # If we have a tagline, use that as a primary identifier
-            TAG = card.TAG.replace('\t', '').replace('\n', '')
-            TEXT = card.TEXT.replace('\t', '').replace('\n', '')
-
-            if TAG.replace(' ', '') != "":
-                self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
-
-            # Or just use the card text
-            else:
-                self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
-
-            # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
-            self.cardIndex += 1
-
-    # working
-    def _saveCard(self) -> bool:
-        """
-            Saves current card if it has data (is not blank)
-        """
-
-        evidence_data = self._toHTML()
-
-        # Create Card
-        card = Card(
-            self.warrant.text(),
-            self.creds.text(),
-            self.link.text(),
-            evidence_data[0],
-            evidence_data[1]
-        )
-
-        # Return if card has no data (avoid saving blank cards to .json)
-        if not card.isCard():
-            return False
-
-        if self.index is None:
-            data.addCard(card)
-
-        else:
-            data.addCard(card, idx = self.index)
-
-        return True
-
-    def _newCard(self):
-        """
-            Saves old card and opens new one
-        """
-
-        # Save card
-        self._saveCard()
-
-        # Prepare new card framework
-        self._addToCardSelector()
-        self.autocite.setCheckState(True)
-        self.autocite.setTristate(False)
-        self.autopoll.setCheckState(True)
-        self.autopoll.setTristate(False)
-        document = self.evidence_box.document()
-        document.clear()
-        self.warrant.setText("")
-        self.creds.setText("")
-        self.link.setText("")
-        self.index = None
-
-    # working
-    def _deleteCard(self):
-        """
-            Deletes currently open card after second click for safety
-        """
-
-        if self.hasClickedDeleteOnce:
-
-            data.deleteCard(self.index)
-
-            # Clearing fields
-            self.msg.clear()
-            self.warrant.setText("")
-            self.creds.setText("")
-            self.link.setText("")
-            document = self.evidence_box.document()
-            document.clear()
-
-            # Removing from card selector
-            try:
-                if len(self.cardSelector.currentText()) > 0:
-                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
-                else:
-                    currentIndex = None
-
-            except Exception:
-                currentIndex = None
-
-            self.cardSelector.removeItem(currentIndex + 1) if currentIndex is not None else self.cardSelector.setCurrentIndex(0)
-
-            self.msg.setText("Card deleted successfully!")
-            self.hasClickedDeleteOnce = False
-
-            # Reload all cards to avoid index errors
-            self.__loadAllCards()
-
-        else:
-
-            # If the card in Card Selector isn't what is actually open, alert user.
-            try:
-                if len(self.cardSelector.currentText()) > 0:
-                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
-
-                else:
-                    currentIndex = None
-
-            except Exception:
-                currentIndex = None
-
-            if (currentIndex is not None) and (currentIndex != self.index):
-                self.msg.clear()
-                message = "<b>WARNING!</b> You are attempting to delete the card that is currently open, "
-                message += "NOT what is selected in the Card History bar. If you want to proceed, click the delete button again."
-                self.msg.insertHtml(message)
-
-            else:
-                self.msg.clear()
-                self.msg.setText("""You are attempting to delete the currently opened card. Click the delete button again to confirm.""")
-
-            self.hasClickedDeleteOnce = True
-
-    # working
-    def _addToCardSelector(self):
-        """
-            Adds current card to card selector
-        """
-
-        # If the card already has an index, it already exists in the selector
-        if self.index is not None:
-            return
-
-        # Create Card
-        evidence_data = self._toHTML()
-
-        card = Card(
-            self.warrant.text(),
-            self.creds.text(),
-            self.link.text(),
-            evidence_data[0],
-            evidence_data[1]
-        )
-
-        # If the card isn't a card, don't add it
-        if not card.isCard():
-            return
-
-        # Add card to selector
-        TAG = card.TAG.replace('\t', '').replace('\n', '')
-        TEXT = card.TEXT.replace('\t', '').replace('\n', '')
-
-        if TAG.replace(' ', '') != "":
-            self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
-        else:
-            self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
-
-        self.cardIndex += 1
-
-    def _cardSelectionChanged(self, initialLoad = False):
-        """
-            Resets delete counter && loads appropriate card
-        """
-
-        print("Card Change Detected!")
-
-        self.hasClickedDeleteOnce = False
-
-        if not initialLoad:
-            self._addToCardSelector() # add to selector if fresh card
-            # reset autocut
-            self.autocite.setCheckState(True)
-            self.autocite.setTristate(False)
-            self.autopoll.setCheckState(True)
-            self.autopoll.setTristate(False)
-
-        # get new index
-        self.index = None
-        if len(self.cardSelector.currentText()) >= 1: # if we have text
-            print("We have text")
-            if initialLoad: self.index = data.getIndex() # get idx from last session
-            # set idx to what's in selector
-            else: self.index = self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
-            print(self.index)
-        try: self.index = int(self.index)
-        except Exception: self.index = None
-
-        # clear ev box
-        document = self.evidence_box.document()
-        document.clear()
-
-        # if we don't have card => clear all other fields & return
-        if self.index is None:
-            print("No index")
-            self.warrant.setText("")
-            self.creds.setText("")
-            self.link.setText("")
-            return
-
-        # Get new card obj
-        card = data.getCard(self.index)
-
-        # If we don't have a previous card -> Set all fields as empty and return
-        if card is None:
-            print("No card")
-            self.warrant.setText("")
-            self.creds.setText("")
-            self.link.setText("")
-            return
-
-        print(card.TEXT)
-
-        # Update card info
-        self.warrant.setText(card.TAG)
-        self.creds.setText(card.CREDS)
-        self.link.setText(card.URL)
-        self.cardSelector.setCurrentIndex(self.index + 1)
-
-        # Update ev box
-        cursor = self.evidence_box.textCursor()
-        cursor.insertHtml(card.HTML)
-        cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
-        self.evidence_box.setTextCursor(cursor)
 
     """
         Misc. Utils
@@ -741,6 +488,254 @@ class main(GUI):
 
         self.t = Logger(cards = data.getCardData()["cards"])
         self.t.start()
+
+    """
+        Card History Utilities
+    """
+    def __loadAllCards(self):
+        """
+            Adds all cards to card history selector
+        """
+
+        # Clearing all data in combobox
+        self.cardSelector.clear()
+        self.cardSelector.addItem("Select a Card")
+
+        cards = data.getCardData()["cards"]
+
+        # Running Index counter
+        self.cardIndex = 0 # current max index of card selector
+
+        for card in cards:
+
+            card = Card(**card) # Construct Card from dict
+
+            # If we have a tagline, use that as a primary identifier
+            TAG = card.TAG.replace('\t', '').replace('\n', '')
+            TEXT = card.TEXT.replace('\t', '').replace('\n', '')
+
+            if TAG.replace(' ', '') != "":
+                self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
+
+            # Or just use the card text
+            else:
+                self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
+
+            # Move to next index (we won't have blanks due to the filtering in _saveCard w/ Card.isCard())
+            self.cardIndex += 1
+
+    def _saveCard(self) -> bool:
+        """
+            Saves current card if it has data (is not blank)
+        """
+
+        evidence_data = self._toHTML()
+
+        # Create Card
+        card = Card(
+            self.warrant.text(),
+            self.creds.text(),
+            self.link.text(),
+            evidence_data[0],
+            evidence_data[1]
+        )
+
+        # Return if card has no data (avoid saving blank cards to .json)
+        if not card.isCard():
+            return False
+
+        if self.index is None:
+            data.addCard(card)
+
+        else:
+            data.addCard(card, idx = self.index)
+
+        return True
+
+    def _newCard(self):
+        """
+            Saves old card and opens new one
+        """
+
+        # Save card
+        self._saveCard()
+
+        # Prepare new card framework
+        self._addToCardSelector()
+        self.autocite.setCheckState(True)
+        self.autocite.setTristate(False)
+        self.autopoll.setCheckState(True)
+        self.autopoll.setTristate(False)
+        document = self.evidence_box.document()
+        document.clear()
+        self.warrant.setText("")
+        self.creds.setText("")
+        self.link.setText("")
+        self.index = None
+
+    def _loadCard(self, initialLoad = False):
+        """
+            Loads most recent card (saves previous one as well and adds to card selector)
+        """
+
+        # Save card
+        #self._saveCard()
+
+        # Add to selector, recheck auto's
+        if not initialLoad:
+            self._addToCardSelector()
+            self.autocite.setCheckState(True)
+            self.autocite.setTristate(False)
+            self.autopoll.setCheckState(True)
+            self.autopoll.setTristate(False)
+            self._saveCard()
+
+        # Get index of most recent card
+        if len(self.cardSelector.currentText()) >= 1:
+            self.index = data.getIndex() if initialLoad else self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")]
+
+        else:
+            self.index = None
+
+        # Convert to int if appropriate
+        try:
+            self.index = int(self.index)
+
+        except Exception:
+            self.index = None
+
+        # Clear Fields
+        document = self.evidence_box.document()
+        document.clear()
+
+        if self.index is None:
+            self.warrant.setText("")
+            self.creds.setText("")
+            self.link.setText("")
+            return
+
+        # If we do have a card, get it and set all the respective attrs in the GUI
+        card = data.getCard(self.index)
+
+        # If we don't have a previous card -> Set all fields as empty and return
+        if self.index is None or card is None:
+            self.warrant.setText("")
+            self.creds.setText("")
+            self.link.setText("")
+            return
+
+        self.warrant.setText(card.TAG)
+        self.creds.setText(card.CREDS)
+        self.link.setText(card.URL)
+        self.cardSelector.setCurrentIndex(self.index + 1)
+
+        # Insert html
+        cursor = self.evidence_box.textCursor()
+        cursor.insertHtml(card.HTML)
+        cursor.setPosition(0, QtGui.QTextCursor.MoveAnchor)
+        self.evidence_box.setTextCursor(cursor)
+
+    def _deleteCard(self):
+        """
+            Deletes currently open card after second click for safety
+        """
+
+        if self.hasClickedDeleteOnce:
+
+            data.deleteCard(self.index)
+
+            # Clearing fields
+            self.msg.clear()
+            self.warrant.setText("")
+            self.creds.setText("")
+            self.link.setText("")
+            document = self.evidence_box.document()
+            document.clear()
+
+            # Removing from card selector
+            try:
+                if len(self.cardSelector.currentText()) > 0:
+                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
+                else:
+                    currentIndex = None
+
+            except Exception:
+                currentIndex = None
+
+            self.cardSelector.removeItem(currentIndex + 1) if currentIndex is not None else self.cardSelector.setCurrentIndex(0)
+
+            self.msg.setText("Card deleted successfully!")
+            self.hasClickedDeleteOnce = False
+
+            # Reload all cards to avoid index errors
+            self.__loadAllCards()
+
+        else:
+
+            # If the card in Card Selector isn't what is actually open, alert user.
+            try:
+                if len(self.cardSelector.currentText()) > 0:
+                    currentIndex = int(self.cardSelector.currentText()[:self.cardSelector.currentText().find(":")])
+
+                else:
+                    currentIndex = None
+
+            except Exception:
+                currentIndex = None
+
+            if (currentIndex is not None) and (currentIndex != self.index):
+                self.msg.clear()
+                message = "<b>WARNING!</b> You are attempting to delete the card that is currently open, "
+                message += "NOT what is selected in the Card History bar. If you want to proceed, click the delete button again."
+                self.msg.insertHtml(message)
+
+            else:
+                self.msg.clear()
+                self.msg.setText("""You are attempting to delete the currently opened card. Click the delete button again to confirm.""")
+
+            self.hasClickedDeleteOnce = True
+
+    def _addToCardSelector(self):
+        """
+            Adds current card to card selector
+        """
+
+        # If the card already has an index, it already exists in the selector
+        if self.index is not None:
+            return
+
+        # Create Card
+        evidence_data = self._toHTML()
+
+        card = Card(
+            self.warrant.text(),
+            self.creds.text(),
+            self.link.text(),
+            evidence_data[0],
+            evidence_data[1]
+        )
+
+        # If the card isn't a card, don't add it
+        if not card.isCard():
+            return
+
+        # Add card to selector
+        TAG = card.TAG.replace('\t', '').replace('\n', '')
+        TEXT = card.TEXT.replace('\t', '').replace('\n', '')
+
+        if TAG.replace(' ', '') != "":
+            self.cardSelector.addItem(f"{self.cardIndex}: {TAG} - {TEXT}")
+        else:
+            self.cardSelector.addItem(f"{self.cardIndex}: {TEXT}")
+
+        self.cardIndex += 1
+
+    def _cardSelectionChanged(self):
+        """
+            Resets the delete status (clicked once) if the selected card changes
+        """
+
+        self.hasClickedDeleteOnce = False
 
     """
         Shortcut Functions
