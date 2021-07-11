@@ -78,7 +78,7 @@ class main(GUI):
         self.hasClickedDeleteOnce = False
 
         # Prompt update if needed
-        #self._updater_()
+        self._updater_()
 
     """
         Updater
