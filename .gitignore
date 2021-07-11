@@ -120,3 +120,4 @@ userData/cards.json
 userData/data.json
 output/
 dist/
+Cut-It/utils/card.py
