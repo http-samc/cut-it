@@ -78,7 +78,7 @@ class main(GUI):
         self.hasClickedDeleteOnce = False
 
         # Prompt update if needed
-        self._updater_()
+        #self._updater_()
 
     """
         Updater
@@ -125,7 +125,8 @@ class main(GUI):
 
         font = QtGui.QFont()
         font.setFamily(self._font_)
-        font.setPointSize(self.Font_Size_Normal)
+        font.setPointSize(self.unscaled_Font_Size_Normal)
+        #font.setPointSize(self.Font_Size_Normal)
         self.evidence_box.setFont(font)
 
         self.unscaled_Font_Size_Min = data.getPref("Font Size of Minimized Text")
@@ -153,7 +154,7 @@ class main(GUI):
         self.closeWindow = data.getShort("Close Window")
 
         # Set Zoom
-        self.evidence_box.zoomIn(self._zoom_) if initialLoad else ...
+        self.evidence_box.zoomIn(self._zoom_)
 
         self.__loadSettingsUI() if initialLoad else ... # We don't need to reapply settings to UI if user has already selected them
 
@@ -891,6 +892,7 @@ class main(GUI):
         text = self._italic(text) if self.Primary_Em[1] else text
         text = self._underline(text) if self.Primary_Em[2] else text
         text = self._highlight(text, self.Primary_Em[3]) if self.Primary_Em[3] != None else text
+        print(self.Font_Size_Primary_Em)
         text = f'<span style="font-size:{self.Font_Size_Primary_Em}pt">{text}</span>'
 
         self.__addText(text, selection_data[0])
