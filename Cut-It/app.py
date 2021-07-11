@@ -14,6 +14,7 @@ from PyQt5.QtWidgets import QFileDialog, QShortcut
 
 from GUI import GUI
 from utils import data
+from utils.updater import Updater
 from utils.resource import PATH
 from utils.card import Card, Logger
 from utils.citer import cite
@@ -21,7 +22,8 @@ from utils.clipboard_WIN import clipboard
 from utils.export import printPDF
 from utils.feedback import send_feedback
 from utils.text_scraper import text
-from utils.version_check import check
+from utils.version_check import check, pollReleases
+from utils.bypass_browser import getBrowser
 
 class main(GUI):
     """
@@ -52,6 +54,7 @@ class main(GUI):
 
             # Misc
         self.autocut.clicked.connect(self._auto)
+        self.autobypass.clicked.connect(self._autoBypass)
         self.shortcuts.currentTextChanged.connect(self._updateShortcut)
         self.shortcut_input.editingFinished.connect(self._saveShortcut)
         self.evidence_box.textChanged.connect(self._addDelimiter)
@@ -73,6 +76,34 @@ class main(GUI):
         self._log()
         self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
+
+        # Prompt update if needed
+        #self._updater_()
+
+    """
+        Updater
+    """
+    def _updater_(self):
+        """
+            Determines whether to present an update window
+        """
+
+        data = pollReleases() # preventing excess GitHub API calls
+        if not data: return
+
+        # Create dialog and show it while forcing it to be resolved
+        # prior to showing the main gui
+        self.updateDialog = Updater(parent=self, data=data)
+        self.updateDialog.exec_()
+
+    """
+        AutoBypass
+    """
+    def _autoBypass(self):
+        """
+            Generates Bypassed Browser
+        """
+        getBrowser()
 
     """
         Data Functions

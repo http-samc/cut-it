@@ -5,6 +5,7 @@
 VERSION = "1.0"
 TAGS = ["Enterprise", "Release", "Beta"]
 TAG = TAGS[1]
+URL = "https://api.github.com/repos/http-samc/cut-it/releases"
 
 def version():
     """
@@ -19,3 +20,10 @@ def tag():
     """
 
     return TAG
+
+def releases():
+    """
+        Returns GitHub API Releases URL
+    """
+
+    return URL

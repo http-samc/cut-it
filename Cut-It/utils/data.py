@@ -2,14 +2,20 @@
     - Manages User Preferences and Card History
 """
 
-from typing import Dict
 from schema import Schema, And, Use, Optional, SchemaError
 from utils.resource import PATH
 from utils.card import Card
 import json
+import userpaths
+from pathlib import Path
 
-P_PATH = PATH.get('userData/data.json') # Preferences Storage Path
-C_PATH = PATH.get('userData/cards.json') # Card History Storage Path
+# Creating folder in public documents dir
+documentsDir = userpaths.get_my_documents()
+Path(documentsDir+'\\Cut-It').mkdir(parents=True, exist_ok=True)
+BASE = documentsDir+'\\Cut-It\\'
+
+P_PATH = PATH.get(BASE+ 'data.json') # Preferences Storage Path
+C_PATH = PATH.get(BASE + 'cards.json') # Card History Storage Path
 
 # Defining Schema for the preferences and shortcuts section of Preferences
 PREFS_SCHEMA = Schema({

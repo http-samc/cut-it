@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1080</width>
-    <height>600</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1080</width>
-    <height>600</height>
+    <height>630</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -100,7 +100,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>355</width>
-              <height>120</height>
+              <height>110</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -184,7 +184,7 @@ p, li { white-space: pre-wrap; }
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>20</height>
+              <height>15</height>
              </size>
             </property>
            </spacer>
@@ -200,7 +200,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>355</width>
-              <height>65</height>
+              <height>90</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -212,61 +212,14 @@ p, li { white-space: pre-wrap; }
             <property name="title">
              <string>AutoCut</string>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <layout class="QGridLayout" name="gridLayout_10">
              <property name="bottomMargin">
               <number>15</number>
              </property>
-             <item>
-              <widget class="QCheckBox" name="autocite">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string>AutoCite</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="autopoll">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string>AutoPoll</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
+             <property name="verticalSpacing">
+              <number>10</number>
+             </property>
+             <item row="0" column="4" alignment="Qt::AlignTop">
               <widget class="QPushButton" name="autocut">
                <property name="minimumSize">
                 <size>
@@ -288,6 +241,89 @@ p, li { white-space: pre-wrap; }
                </property>
               </widget>
              </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>AutoCite</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="5">
+              <widget class="QPushButton" name="autobypass">
+               <property name="minimumSize">
+                <size>
+                 <width>335</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string> Launch AutoBypass Browser</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" alignment="Qt::AlignVCenter">
+              <widget class="QCheckBox" name="autocite">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2" alignment="Qt::AlignVCenter">
+              <widget class="QCheckBox" name="autopoll">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>AutoPoll</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -302,7 +338,7 @@ p, li { white-space: pre-wrap; }
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>1</height>
+              <height>25</height>
              </size>
             </property>
            </spacer>
@@ -318,7 +354,7 @@ p, li { white-space: pre-wrap; }
             <property name="minimumSize">
              <size>
               <width>355</width>
-              <height>140</height>
+              <height>125</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -568,7 +604,7 @@ p, li { white-space: pre-wrap; }
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>35</height>
+              <height>30</height>
              </size>
             </property>
            </spacer>
@@ -782,7 +818,7 @@ p, li { white-space: pre-wrap; }
            <item row="3" column="0">
             <widget class="QLabel" name="zoom_label">
              <property name="text">
-              <string>Text Zoom</string>
+              <string>Text Zoom (only works on new cards) </string>
              </property>
             </widget>
            </item>

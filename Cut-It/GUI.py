@@ -28,7 +28,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         # Storing theme
         self.isLight = isLight
 
-        self.setWindowIcon(QtGui.QIcon(PATH.get('Cut-It/images/otr_icon.png')))
+        self.setWindowIcon(QtGui.QIcon(PATH.get('images/otr_icon.png')))
 
         # Loading UI
         uic.loadUi('Cut-It/app.ui', self)
@@ -257,12 +257,13 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.msg.insertHtml("<p>Welcome to Cut-It! Hover over an item for a few seconds to get a description, or read the docs at: <b>docs.cutit.cards</b>!</p>")
 
         # Adding Icons
-        self.autocut.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/cut_icon.png')))
-        self.new_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/new_icon.png')))
-        self.open_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/open_icon.png')))
-        self.delete_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/delete_icon.png')))
-        self.copy_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/copy_icon.png')))
-        self.save_card.setIcon(QtGui.QIcon(PATH.get('Cut-It/images/save_icon.png')))
+        self.autocut.setIcon(QtGui.QIcon(PATH.get('images/cut_icon.png')))
+        self.new_card.setIcon(QtGui.QIcon(PATH.get('images/new_icon.png')))
+        self.open_card.setIcon(QtGui.QIcon(PATH.get('images/open_icon.png')))
+        self.delete_card.setIcon(QtGui.QIcon(PATH.get('images/delete_icon.png')))
+        self.copy_card.setIcon(QtGui.QIcon(PATH.get('images/copy_icon.png')))
+        self.save_card.setIcon(QtGui.QIcon(PATH.get('images/save_icon.png')))
+        self.autobypass.setIcon(QtGui.QIcon(PATH.get('images/browser_icon.png')))
 
         # Setting Text
         self.open_card.setText(" Open Selection ")
@@ -283,7 +284,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits (IconScout): Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
-        distroDetails += "New Icon by Phosphor Icons, Search Icon by Google Inc.</h1>"
+        distroDetails += "New Icon by Phosphor Icons, Browser Icon by Bawie Cahyo, Search Icon by Google Inc.</h1>"
         distroDetails += """
         <br><br>
         <h1 align="center">
