@@ -8,7 +8,7 @@ class clipboard():
 
     @staticmethod
     def add(text, html):
-        
+
         """
         Injects both regular text (unformatted)
         and html ('rich' text) to clipboard

@@ -2,8 +2,8 @@
     - Function to allow resources to be accessed when the project is compiled
 """
 
-import sys
 import os
+import sys
 
 class PATH:
 

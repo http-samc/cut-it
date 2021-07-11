@@ -1,5 +1,6 @@
 import chromedriver_autoinstaller
 from selenium import webdriver
+
 from utils.resource import PATH
 
 def getBrowser():

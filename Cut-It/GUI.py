@@ -4,17 +4,18 @@
     Inherited by app.py for simplicity
 """
 
+import sys
+
+import qtmodern.styles
+import qtmodern.windows
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QLayout, QMainWindow
+
+from utils.distro import tag, version
 from utils.ext_combobox import ExtendedComboBox
-from PyQt5 import QtCore, QtGui, QtWidgets
-from utils.distro import version, tag
 from utils.MainWindow import RAW_UI
 from utils.resource import PATH
-from PyQt5.QtCore import QSize
-import qtmodern.windows
-import qtmodern.styles
-from PyQt5 import uic
-import sys
 
 class GUI(QMainWindow): # RAW_UI for builds
 
@@ -297,7 +298,7 @@ class GUI(QMainWindow): # RAW_UI for builds
         self.distro.setText(distroDetails)
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)#QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     qtmodern.styles.dark(app)
     gui = GUI(isLight=False)
     gui = qtmodern.windows.ModernWindow(gui)

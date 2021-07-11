@@ -1,15 +1,15 @@
-import sys
 import datetime
+import sys
 
 import chromedriver_autoinstaller
 import qtmodern
-from PyQt5 import uic, QtGui
+from PyQt5 import QtGui, uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDialog
 from selenium import webdriver
 
-from utils.version_check import pollReleases
 from utils.resource import PATH
+from utils.version_check import pollReleases
 
 class Updater(QDialog):
 

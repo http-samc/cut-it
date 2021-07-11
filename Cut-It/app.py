@@ -14,16 +14,16 @@ from PyQt5.QtWidgets import QFileDialog, QShortcut
 
 from GUI import GUI
 from utils import data
-from utils.updater import Updater
-from utils.resource import PATH
+from utils.bypass_browser import getBrowser
 from utils.card import Card, Logger
 from utils.citer import cite
 from utils.clipboard_WIN import clipboard
 from utils.export import printPDF
 from utils.feedback import send_feedback
+from utils.resource import PATH
 from utils.text_scraper import text
+from utils.updater import Updater
 from utils.version_check import check, pollReleases
-from utils.bypass_browser import getBrowser
 
 class main(GUI):
     """

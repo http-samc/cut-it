@@ -2,12 +2,14 @@
     - Manages User Preferences and Card History
 """
 
-from schema import Schema, And, Use, Optional, SchemaError
-from utils.resource import PATH
-from utils.card import Card
 import json
-import userpaths
 from pathlib import Path
+
+import userpaths
+from schema import And, Optional, Schema, SchemaError, Use
+
+from utils.card import Card
+from utils.resource import PATH
 
 # Creating folder in public documents dir
 documentsDir = userpaths.get_my_documents()

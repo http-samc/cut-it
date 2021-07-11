@@ -2,10 +2,12 @@
     - Checks to see if more recent version (update) is available
 """
 
-import requests
-from utils.distro import version, releases, tag
 import json
 import platform
+
+import requests
+
+from utils.distro import releases, tag, version
 
 def pollReleases():
     """Searches GitHub Releases for new version of matching tag
@@ -53,4 +55,4 @@ def pollReleases():
 def check() -> str:
     query = pollReleases()
     if not query: return "No updates available."
-    else: return f"Download {query['name']} at cutit.cards/updates"
+    else: return f"Restart to download {query['name']}"

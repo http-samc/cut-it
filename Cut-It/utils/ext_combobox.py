@@ -4,9 +4,10 @@
 """
 
 from PyQt5 import QtGui
-from PyQt5.QtCore import Qt, QSortFilterProxyModel
-from PyQt5.QtWidgets import QCompleter, QComboBox
+from PyQt5.QtCore import QSortFilterProxyModel, Qt
 from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QComboBox, QCompleter
+
 
 class ExtendedComboBox(QComboBox):
 
