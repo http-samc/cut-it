@@ -1,0 +1,89 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Programming/OffTime/cut-it/Cut-It/app.py"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Programming/OffTime/cut-it/images/cut-it.ico"
+  },
+  {
+   "optionDest": "ascii",
+   "value": false
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "win_private_assemblies",
+   "value": false
+  },
+  {
+   "optionDest": "win_no_prefer_redirects",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Programming/OffTime/cut-it/images;images/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Programming/OffTime/cut-it/env/Lib/site-packages/qtmodern;qtmodern/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Programming/OffTime/cut-it/bypass.crx;."
+  },
+  {
+   "optionDest": "hiddenimports",
+   "value": "webdriver_manager"
+  },
+  {
+   "optionDest": "pathex",
+   "value": "C:/Programming/OffTime/cut-it/env/Lib/site-packages"
+  },
+  {
+   "optionDest": "collect_submodules",
+   "value": "webdriver_manager"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

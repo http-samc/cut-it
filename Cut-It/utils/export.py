@@ -7,7 +7,8 @@ import json
 import re
 import time
 
-import chromedriver_autoinstaller
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
 
@@ -24,11 +25,8 @@ def printPDF(body, path, cardName = "Cut-It Export"):
     html = f"<!DOCTYPE html><html><head><title>{cardName}</title></head>{body}</html>"
     html = re.escape(html)
 
-    # generating version-appropriate driver
-    chromedriver_autoinstaller.install()
-
     # Adding print config, app mode, log level, window size
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
 
     settings = {
         "recentDestinations": [{
@@ -68,7 +66,7 @@ def printPDF(body, path, cardName = "Cut-It Export"):
     chrome_options.add_argument("--window-size=600,400")
 
     # Creating browser
-    browser = webdriver.Chrome(options=chrome_options)
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     # Overwriting HTML
     browser.execute_script(f"document.write(`{html}`)")

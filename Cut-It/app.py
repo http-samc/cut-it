@@ -78,7 +78,7 @@ class main(GUI):
         self.hasClickedDeleteOnce = False
 
         # Prompt update if needed
-        #self._updater_()
+        self._updater_()
 
     """
         Updater
@@ -126,7 +126,6 @@ class main(GUI):
         font = QtGui.QFont()
         font.setFamily(self._font_)
         font.setPointSize(self.unscaled_Font_Size_Normal)
-        #font.setPointSize(self.Font_Size_Normal)
         self.evidence_box.setFont(font)
 
         self.unscaled_Font_Size_Min = data.getPref("Font Size of Minimized Text")
@@ -835,7 +834,6 @@ class main(GUI):
             self.msg.setText("Saved PDF Successfully!")
 
         except Exception as e:
-            print(e)
             self.msg.clear()
             self.msg.setText("There was an error saving your .pdf.")
 
@@ -892,7 +890,6 @@ class main(GUI):
         text = self._italic(text) if self.Primary_Em[1] else text
         text = self._underline(text) if self.Primary_Em[2] else text
         text = self._highlight(text, self.Primary_Em[3]) if self.Primary_Em[3] != None else text
-        print(self.Font_Size_Primary_Em)
         text = f'<span style="font-size:{self.Font_Size_Primary_Em}pt">{text}</span>'
 
         self.__addText(text, selection_data[0])
@@ -1049,29 +1046,33 @@ class main(GUI):
         return f"<span style='background-color: {color}'>{text}</span>"
 
 if __name__ == "__main__":
+    try:
+        # Initialize User Data
+        data.init()
 
-    # Initialize User Data
-    data.init()
+        # Create App
+        global app
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
+        app = QtWidgets.QApplication(sys.argv)
 
-    # Create App
-    global app
-    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
-    app = QtWidgets.QApplication(sys.argv)
+        font = QtGui.QFont()
+        font.setPointSize(8)
+        app.setFont(font)
 
-    font = QtGui.QFont()
-    font.setPointSize(8)
-    app.setFont(font)
+        # Handling themes
+        if data.getPref("Theme") == "light":
+            qtmodern.styles.light(app)
+            isLight = True
 
-    # Handling themes
-    if data.getPref("Theme") == "light":
-        qtmodern.styles.light(app)
-        isLight = True
+        else:
+            qtmodern.styles.dark(app)
+            isLight = False
 
-    else:
-        qtmodern.styles.dark(app)
-        isLight = False
-
-    gui = main(isLight=isLight)
-    gui = qtmodern.windows.ModernWindow(gui)
-    gui.show()
-    sys.exit(app.exec_())
+        gui = main(isLight=isLight)
+        gui = qtmodern.windows.ModernWindow(gui)
+        gui.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        import time
+        print(e)
+        time.sleep(100)

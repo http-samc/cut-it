@@ -1,17 +1,17 @@
-import chromedriver_autoinstaller
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
 from utils.resource import PATH
 
 def getBrowser():
-    chromedriver_autoinstaller.install()
 
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = Options()
     chrome_options.add_extension(PATH.get('bypass.crx'))
     chrome_options.add_experimental_option("detach", True)
     chrome_options.add_argument("--log-level=3")
 
-    browser = webdriver.Chrome(options=chrome_options)
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
     html = """
         <html><head><title>AutoBypass</title></head><body>
@@ -192,3 +192,6 @@ def getBrowser():
         </body></html>
     """
     browser.execute_script(f"document.write(`{html}`)")
+
+if __name__ == "__main__":
+    getBrowser()

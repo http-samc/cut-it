@@ -1,7 +1,8 @@
 import datetime
 import sys
 
-import chromedriver_autoinstaller
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 import qtmodern
 from PyQt5 import QtGui, uic
 from PyQt5.QtCore import Qt
@@ -9,9 +10,10 @@ from PyQt5.QtWidgets import QApplication, QDialog
 from selenium import webdriver
 
 from utils.resource import PATH
+from utils.UpdateDialog import UpdateDialog
 from utils.version_check import pollReleases
 
-class Updater(QDialog):
+class Updater(UpdateDialog):
 
     def __init__(self, parent=None, data=None) -> None:
         """
@@ -21,7 +23,7 @@ class Updater(QDialog):
         super().__init__(parent=parent)
 
         self.setWindowFlags(Qt.CustomizeWindowHint | Qt.FramelessWindowHint | Qt.Dialog | Qt.WindowStaysOnTopHint | Qt.Tool)
-        self.setWindowIcon(QtGui.QIcon(PATH.get('images/otr_icon.png')))
+        self.setWindowIcon(QtGui.QIcon(PATH.get('images/cut-it.ico')))
         self.setFixedSize(800,600)
         self.parent = parent
 
@@ -29,7 +31,7 @@ class Updater(QDialog):
         if not self.data: self.close(); return # no updates => close
 
         # Loading UI
-        uic.loadUi('Cut-It/update.ui', self)
+        #uic.loadUi('Cut-It/update.ui', self)
 
         self.addOptions()
 
@@ -59,17 +61,15 @@ class Updater(QDialog):
     def getUpdate(self):
         """Opens download URL in Selenium Chrome"""
 
-        chromedriver_autoinstaller.install()
-
         # Config browser
-        chrome_options = webdriver.ChromeOptions()
+        chrome_options = Options()
         chrome_options.add_argument(f"--app={self.download}")
         chrome_options.add_argument("--log-level=3")
         chrome_options.add_argument("--window-size=600,400")
         chrome_options.add_experimental_option("detach", True)
 
         # Open it to download URI
-        browser = webdriver.Chrome(options=chrome_options)
+        browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
         # Quit program to allow downloaded updater to run
         self._quit()

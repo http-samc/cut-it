@@ -14,10 +14,10 @@ from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QLayout, QMainWindow
 
 from utils.distro import tag, version
 from utils.ext_combobox import ExtendedComboBox
-from utils.MainWindow import RAW_UI
+from utils.MainWindow import MainWindow
 from utils.resource import PATH
 
-class GUI(QMainWindow): # RAW_UI for builds
+class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
     def __init__(self, isLight = False) -> None:
         """
@@ -29,10 +29,10 @@ class GUI(QMainWindow): # RAW_UI for builds
         # Storing theme
         self.isLight = isLight
 
-        self.setWindowIcon(QtGui.QIcon(PATH.get('images/otr_icon.png')))
+        self.setWindowIcon(QtGui.QIcon(PATH.get('images/cut-it.ico')))
 
         # Loading UI
-        uic.loadUi('Cut-It/app.ui', self)
+        #uic.loadUi('Cut-It/app.ui', self)
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
         SPACES = "                    "
