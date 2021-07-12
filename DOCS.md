@@ -1,4 +1,4 @@
-
+`Cut-It` **1.0@Release**
 ## [Cut-It.app.py](/Cut-It/app.py)
 ---
 ### Cut-It.app.`main` [class] [inherits: `GUI`]
@@ -6,7 +6,15 @@ Adds logic to the GUI class
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### main.`__init__`
-None
+No Documentation Provided
+#### main.`_updater_`
+```Python
+Determines whether to present an update window
+```
+#### main.`_autoBypass`
+```Python
+Generates Bypassed Browser
+```
 #### main.`_loadSettings`
 ```Python
 Loads all user data into instance vars
@@ -189,8 +197,8 @@ Returns highlighted version of :param: text of the color :param: color
 
 ## [Cut-It.GUI.py](/Cut-It/GUI.py)
 ---
-### Cut-It.GUI.`GUI` [class] [inherits: `QMainWindow`]
-None
+### Cut-It.GUI.`GUI` [class] [inherits: `MainWindow`]
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### GUI.`__init__`
@@ -202,7 +210,7 @@ Loads latest UI
 Manually fill out the Card History groupBox (due to custom widgets)
 ```
 #### GUI.`updateStyling`
-None
+No Documentation Provided
 #### GUI.`addToolTips`
 ```Python
 Adds in ToolTips
@@ -220,11 +228,15 @@ Returns a formatted String to be inserted into the Distro box in the about secti
 ## [Cut-It.install.py](/Cut-It/install.py)
 ---
 ### Cut-It.install.`install` [function]
-None
+No Documentation Provided
+## [Cut-It.utils.bypass_browser.py](/Cut-It/utils/bypass_browser.py)
+---
+### Cut-It.utils.bypass_browser.`getBrowser` [function]
+No Documentation Provided
 ## [Cut-It.utils.card.py](/Cut-It/utils/card.py)
 ---
 ### Cut-It.utils.card.`Card` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### Card.`isCard`
@@ -237,20 +249,11 @@ Returns (dict) representation of the object
 ```
 </p></details>
 
-### Cut-It.utils.card.`Logger` [class] [inherits: `QThread`]
-None
-<details style='color: #333333'><summary>Methods</summary><p>
-
-#### Logger.`__init__`
-None
-#### Logger.`run`
-None
-</p></details>
 
 ## [Cut-It.utils.citer.py](/Cut-It/utils/citer.py)
 ---
 ### Cut-It.utils.citer.`cite` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### cite.`__init__`
@@ -283,7 +286,7 @@ Returns an MLA 8 citation
 ## [Cut-It.utils.clipboard_OSX.py](/Cut-It/utils/clipboard_OSX.py)
 ---
 ### Cut-It.utils.clipboard_OSX.`clipboard` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### clipboard.`add`
@@ -296,7 +299,7 @@ and html ('rich' text) to clipboard
 ## [Cut-It.utils.clipboard_WIN.py](/Cut-It/utils/clipboard_WIN.py)
 ---
 ### Cut-It.utils.clipboard_WIN.`clipboard` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### clipboard.`add`
@@ -378,6 +381,10 @@ Returns current software version
 ```Python
 Returns current software tag
 ```
+### Cut-It.utils.distro.`releases` [function]
+```Python
+Returns GitHub API Releases URL
+```
 ## [Cut-It.utils.export.py](/Cut-It/utils/export.py)
 ---
 ### Cut-It.utils.export.`printPDF` [function]
@@ -392,41 +399,41 @@ Args:
 ## [Cut-It.utils.ext_combobox.py](/Cut-It/utils/ext_combobox.py)
 ---
 ### Cut-It.utils.ext_combobox.`ExtendedComboBox` [class] [inherits: `QComboBox`]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### ExtendedComboBox.`__init__`
-None
+No Documentation Provided
 #### ExtendedComboBox.`goToStart`
-None
+No Documentation Provided
 #### ExtendedComboBox.`on_completer_activated`
-None
+No Documentation Provided
 #### ExtendedComboBox.`setModel`
-None
+No Documentation Provided
 #### ExtendedComboBox.`setModelColumn`
-None
+No Documentation Provided
 </p></details>
 
 ## [Cut-It.utils.feedback.py](/Cut-It/utils/feedback.py)
 ---
 ### Cut-It.utils.feedback.`send_feedback` [function]
-None
+No Documentation Provided
 ## [Cut-It.utils.MainWindow.py](/Cut-It/utils/MainWindow.py)
 ---
-### Cut-It.utils.MainWindow.`RAW_UI` [class] [inherits: `QMainWindow`]
-None
+### Cut-It.utils.MainWindow.`MainWindow` [class] [inherits: `QMainWindow`]
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
-#### RAW_UI.`setupUi`
-None
-#### RAW_UI.`retranslateUi`
-None
+#### MainWindow.`__init__`
+No Documentation Provided
+#### MainWindow.`retranslateUi`
+No Documentation Provided
 </p></details>
 
 ## [Cut-It.utils.resource.py](/Cut-It/utils/resource.py)
 ---
 ### Cut-It.utils.resource.`PATH` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### PATH.`get`
@@ -439,14 +446,54 @@ returns path for included files
 ## [Cut-It.utils.text_scraper.py](/Cut-It/utils/text_scraper.py)
 ---
 ### Cut-It.utils.text_scraper.`text` [class]
-None
+No Documentation Provided
 <details style='color: #333333'><summary>Methods</summary><p>
 
 #### text.`scrape`
-None
+No Documentation Provided
+</p></details>
+
+## [Cut-It.utils.UpdateDialog.py](/Cut-It/utils/UpdateDialog.py)
+---
+### Cut-It.utils.UpdateDialog.`UpdateDialog` [class] [inherits: `QDialog`]
+No Documentation Provided
+<details style='color: #333333'><summary>Methods</summary><p>
+
+#### UpdateDialog.`__init__`
+No Documentation Provided
+#### UpdateDialog.`retranslateUi`
+No Documentation Provided
+</p></details>
+
+## [Cut-It.utils.updater.py](/Cut-It/utils/updater.py)
+---
+### Cut-It.utils.updater.`Updater` [class] [inherits: `UpdateDialog`]
+No Documentation Provided
+<details style='color: #333333'><summary>Methods</summary><p>
+
+#### Updater.`__init__`
+```Python
+Loads latest UI
+```
+#### Updater.`addOptions`
+```Python
+Adds data about an update, if any
+```
+#### Updater.`getUpdate`
+```Python
+Opens download URL in Selenium Chrome
+```
+#### Updater.`_quit`
+No Documentation Provided
+#### Updater.`_close`
+No Documentation Provided
 </p></details>
 
 ## [Cut-It.utils.version_check.py](/Cut-It/utils/version_check.py)
 ---
+### Cut-It.utils.version_check.`pollReleases` [function]
+```Python
+Searches GitHub Releases for new version of matching tag
+```
 ### Cut-It.utils.version_check.`check` [function]
-None
+No Documentation Provided

@@ -1,6 +1,6 @@
 # Contributing Policy
 If you are interested in contributing to the codebase, you must adhere to the following guidelines:
-- Open an ``Issue`` to discuss what changes you'd like to make (do **not** make a ``Pull Request`` without discussing it first)
+- Open an ``Issue`` to discuss what changes you'd like to make
 - If approved by a *Project Manager*, we'd be interested in integrating the feature into the codebase
   - Keep in mind that even if we don't see the need for the feature, you're more than welcome (per our license) to fork the repository and write your own version
 - After writing the code, you can make a ``Pull Request``
@@ -13,12 +13,11 @@ If you are interested in contributing to the codebase, you must adhere to the fo
 
 # Contributing FAQ
 Here are some quick basics about the project:
-- The codebase is in Python 3.X, and the GUI interface used is PyQt6. These are mainstays of the codebase and thus will not likely be changed by any requested PRs. 
+- The codebase is in Python 3.X, and the GUI interface used is PyQt. These are mainstays of the codebase and thus will not likely be changed by any requested PRs.
 - The app is designed to be deployed on Windows and MacOS.
-- The Resources folder contains raw UI files (straight from the Qt Designer tool), UI images, and any other nonessential utilities (these are not included in builds).
 - The Utils folder contains various API resources that enable Cut-It's functionality. A short description of each class is found at the top of their respective files.
-- ``app.py`` is the main file, and is what the build is based off of. Anytime a binary is generated, a *temporary* ``app.py`` is generated with the converted UI code to avoid bundling raw UI files.
+- ``app.py`` is the main file, and is what the build is based off of. Any time a binary is generated, a *temporary* ``app.py`` is generated with the converted UI code to avoid bundling raw UI files.
 - If you'd like to contribute but don't have any ideas, feel free to check the ``Issues`` tab and filter for the ``Enhancement`` tag, which will show you uncoded TODOs.
-  
+
 # Any questions?
-Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)! 
+Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech)!

@@ -18,11 +18,20 @@
   <img style="border-radius:5px" src="https://github.com/http-samc/cut-it/blob/main/ui_images/stacked.png?raw=true">
 
 </p>
+<br>
 
+# *for users*
+
+## 🖥️ Getting Cut-It 🖥️
+If you're interested as a user, checkout [our website](http://cutit.cards) for download info.
+You can view the user-side documentation [here](https://cut-it-1.gitbook.io/docs/).<br><br>
+
+# *for developers*
 ## 🚀 Quick Start 🚀
-- FAQ: See [our FAQ File](/FAQ.md).
+- FAQ: See [our website](http://cutit.cards).
+- Documentation: See [our API Documentation](/DOCS.md)
 - Licensing: See [our License](/LICENSE).
-- Contributing: See [our Code of Conduct](/CODEOFCONDUCT.md#2-contributing)
+- Contributing: See [our Code of Conduct](/CODE_OF_CONDUCT.md#2-contributing).
 - Supported Versions: See [our Security File](/SECURITY.md#supported-versions).
 
 ## 📝 Current Project Managers 📝
@@ -33,4 +42,4 @@
 # Did we miss anything❓
 Contact [Samarth Chitgopekar](mailto:sam@chitgopekar.tech) for any codebase questions, [Adithya Vaidyanathan](mailto:adithya@offtimeroadmap.com) for Enterprise questions, or [Gabe Seidman](mailto:gabe@offtimeroadmap.com) for advertising.
 
-<sup>1 <sub>*Cut-It does not claim endorsement by these respective organizations, and their logos' respective rights are reserved. It is simply through the direct actions of these institutions which enabled the project to begin and grow.*</sup></sub>
+<sup>1 <sub>*Cut-It is not compensated by these organizations, and their logos' respective rights are reserved. It is simply these institutions which enabled the project to grow.*</sup></sub>
