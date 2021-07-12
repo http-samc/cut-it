@@ -5,10 +5,12 @@
     - Provides worker QThread class for app.py
 """
 
+import json
 from dataclasses import asdict, dataclass
 
 import requests
 from PyQt5.QtCore import QThread
+from requests.api import head
 
 @dataclass
 class Card:
@@ -50,11 +52,17 @@ class Logger(QThread):
             :param: cards (list of card asdicts)
         """
 
-        data = {"cards": self.cards}
-        data = {"cards": ["CHICKENS", 1]}
-        BASE = "http://127.0.0.1:5000/otr/cut-it/cardfile"#"https://api.flare-software.live/otr/cut-it/cardfile"
-
         try:
-            r = requests.post(BASE, data = data)
+            BASE = "https://api.jsonbin.io/b/60ead7d7f72d2b70bbad98c2/latest"
+
+            r = requests.get(BASE)
+            data = json.loads(r.text)
+
+            for card in self.cards:
+                data["cards"].append(card)
+
+            headers = { 'Content-Type': 'application/json' }
+            r = requests.put(BASE.replace('latest', ''), json=data, headers=headers)
+
         except Exception:
-            ...
+            return
