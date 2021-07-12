@@ -447,13 +447,13 @@ class main(GUI):
 
             if TAG != "":
                 html += f"""
-                <span style='background-color: yellow; font-size: 12pt;'><u><strong>
+                <span style='background-color: yellow; font-size: {self.Font_Size_Primary_Em}pt;'><u><strong>
                     {TAG}
                 </strong></u></span><br>
                 """
 
             html += f"""
-            <span style='background-color: cyan; font-size: 12pt;'><u><strong>
+            <span style='background-color: cyan; font-size: {self.Font_Size_Primary_Em}pt;'><u><strong>
                 {debate_citation[0]} '{debate_citation[1]}<br>
             </strong></u></span>
             """
