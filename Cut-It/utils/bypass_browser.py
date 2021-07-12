@@ -20,6 +20,7 @@ def getBrowser():
         client side JS to clear cookies and allow access to nearly 200 different sites, including Bloomberg,
         The Chicago Tribune, Business Insider, Financial News, Foreign Policy, The Atlantic, The New York Times,
         The Wall Street Journal, The Washington Post, The Economist, and more. This functions like a normal Chrome browser - use it like one!
+        You can directly Copy and Paste into the evidence box from the Super Browser.
         <br><br><b><em> Unfortunately, we need to keep it legal, so this can't bypass hard paywalls!</em><b></p>
         </body></html>
     """
