@@ -1,14 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_submodules
+
+hiddenimports = ['webdriver_manager']
+hiddenimports += collect_submodules('webdriver_manager')
 
 
 block_cipher = None
 
 
 a = Analysis(['C:/Programming/OffTime/cut-it/Cut-It/app.py'],
-             pathex=['C:\\Programming\\OffTime\\cut-it'],
+             pathex=['C:/Programming/OffTime/cut-it/env/Lib/site-packages', 'C:\\Programming\\OffTime\\cut-it'],
              binaries=[],
              datas=[('C:/Programming/OffTime/cut-it/images', 'images/'), ('C:/Programming/OffTime/cut-it/env/Lib/site-packages/qtmodern', 'qtmodern/'), ('C:/Programming/OffTime/cut-it/bypass.crx', '.')],
-             hiddenimports=[],
+             hiddenimports=hiddenimports,
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -27,7 +31,7 @@ exe = EXE(pyz,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True , icon='C:\\Programming\\OffTime\\cut-it\\images\\cut-it.ico')
+          console=False , icon='C:\\Programming\\OffTime\\cut-it\\images\\cut-it.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
