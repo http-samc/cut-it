@@ -205,7 +205,10 @@ class main(GUI):
             Updates shortcut when user wants to view a separate one
         """
 
-        newSequence = data.getShort(self.shortcuts.currentText())
+        try:
+            newSequence = data.getShort(self.shortcuts.currentText())
+        except KeyError:
+            return
         if newSequence == 'Choose a shortcut to view/edit . . . (applies on restart)':
             return
         self.shortcut_input.setKeySequence(newSequence)

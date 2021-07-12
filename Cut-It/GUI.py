@@ -299,8 +299,8 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    qtmodern.styles.dark(app)
-    gui = GUI(isLight=False)
+    qtmodern.styles.light(app)
+    gui = GUI(isLight=True)
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())

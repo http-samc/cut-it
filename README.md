@@ -1,4 +1,4 @@
-# ✂️ Cut-It ✂️ 
+# ✂️ Cut-It ✂️
 
  The next generation card-cutting tool, written in pure 🐍 using ``🇶🇹``, made possible in part by<sup>1</sup>:
  <p align="center" style="vertical-align: middle">
@@ -13,6 +13,10 @@
     <img src="https://img.shields.io/endpoint?color=green&url=https%3A%2F%2Fapi.jsonbin.io%2Fb%2F6042e0a7121bf907dd96fa4a%2F7">
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.jsonbin.io%2Fb%2F6042e0a7121bf907dd96fa4a%2F9">
     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fapi.jsonbin.io%2Fb%2F6042e0a7121bf907dd96fa4a%2F12">
+</p>
+<p align="center">
+  <img style="border-radius:5px" src="https://github.com/http-samc/cut-it/blob/main/ui_images/stacked.png?raw=true">
+
 </p>
 
 ## 🚀 Quick Start 🚀
