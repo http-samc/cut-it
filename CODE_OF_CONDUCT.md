@@ -7,8 +7,9 @@ Please see our software license [here](/LICENSE). You may use Cut-It commerciall
 This is how we'd like to be credited if this appendix is invoked (this is mandated under GNU GPL V3 OSS). Please use the exact text that follows without any modification if you are using Cut-It in a manner described in [Section 1](#1-legalese). The text must be placed in a manner that will be viewed by all users, regardless of the action they take with the program (eg. a startup menu/notification/homepage widget).\
 *<-- Begin Credit Text -->*
 ```
-The software you are currently using was developed
-by Samarth Chitgopekar under the name Cut-It.
+The software you are currently using was originally developed
+by Samarth Chitgopekar under the name Cut-It. Cut-It is
+actively maintained by himself and Adithya Vaidyanathan.
 Please refer to the following URI's for information:
 
 1. Samarth Chitgopekar's GitHub
