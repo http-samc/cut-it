@@ -57,7 +57,7 @@ class Logger(QThread):
             BASE = "https://api.jsonbin.io/b/60eca8a40cd33f7437c6fba2/latest"
 
             ip = requests.get("https://api4.my-ip.io/ip").text
-            print(ip)
+
             r = requests.get(BASE)
             data = json.loads(r.text)
 
