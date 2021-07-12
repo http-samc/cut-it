@@ -4,6 +4,7 @@
 
 import os
 import sys
+import webbrowser
 
 import qtmodern.styles
 import qtmodern.windows
@@ -80,6 +81,9 @@ class main(GUI):
         # Prompt update if needed
         self._updater_()
 
+        # Show docs if needed
+        self._firstLoad_()
+
     """
         Updater
     """
@@ -95,6 +99,15 @@ class main(GUI):
         # prior to showing the main gui
         self.updateDialog = Updater(parent=self, data=data)
         self.updateDialog.exec_()
+
+    """
+        First Load
+    """
+    def _firstLoad_(self):
+        "Opens Docs if needed"
+        if not data.getFirstLoad(): return
+        webbrowser.open("https://docs.cutit.cards", 1)
+        data.setFirstLoad()
 
     """
         AutoBypass

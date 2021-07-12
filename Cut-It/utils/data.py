@@ -30,7 +30,7 @@ PREFS_SCHEMA = Schema({
     "Primary Emphasis Settings": And(list),
     "Secondary Emphasis Settings": And(list),
     "Tertiary Emphasis Settings": And(list),
-    "Theme": And(str)
+    "Theme": And(str),
 })
 
 SHORTCUTS_SCHEMA = Schema({
@@ -58,6 +58,7 @@ def init():
         with open(P_PATH, 'r') as f:
             data = json.loads(f.read())
             data["Card Index"]
+            data["FirstLoad"]
             PREFS_SCHEMA.validate(data["preferences"])
             SHORTCUTS_SCHEMA.validate(data["shortcuts"])
 
@@ -118,7 +119,8 @@ def init():
                     "Save As PDF": "CTRL+P",
                     "Close Window": "CTRL+W"
                 },
-                "Card Index": None
+                "Card Index": None,
+                "FirstLoad": True
             }
             json.dump(data, f)
 
@@ -131,6 +133,24 @@ def init():
     except Exception:
         with open(C_PATH, 'w') as f:
             json.dump({"cards":[]}, f)
+
+# First Load Methods
+def getFirstLoad() -> bool:
+    """
+        Returns (bool) if this is the first load
+    """
+    with open(P_PATH, 'r') as f:
+        return json.loads(f.read())["FirstLoad"]
+
+def setFirstLoad(val: bool = False) -> None:
+    """
+        Sets FirstLoad to val
+    """
+    with open(P_PATH, 'r') as f:
+        data =  json.loads(f.read())
+    data["FirstLoad"] = False
+    with open(P_PATH, 'w') as f:
+        json.dump(data, f)
 
 def getIndex() -> int:
     """
