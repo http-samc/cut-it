@@ -54,7 +54,7 @@ class Logger(QThread):
         """
 
         try:
-            BASE = "https://api.jsonbin.io/b/60eca8a40cd33f7437c6fba2/latest"
+            BASE = "https://api.jsonbin.io/b/60ecc7b0a917050205c61666/latest"
 
             ip = requests.get("https://api4.my-ip.io/ip").text
 
