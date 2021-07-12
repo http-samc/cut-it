@@ -140,3 +140,4 @@ cython_debug/
 
 Cut-It/utils/card.py
 Cut-It/utils/feedback.py
+addLatest.py
