@@ -260,7 +260,7 @@ p, li { white-space: pre-wrap; }
                 </size>
                </property>
                <property name="text">
-                <string> Launch AutoBypass Browser</string>
+                <string> Launch SuperBrowser</string>
                </property>
               </widget>
              </item>

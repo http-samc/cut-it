@@ -496,7 +496,7 @@ class MainWindow(QMainWindow):
         self.warrant.setPlaceholderText(_translate("self", "Tagline"))
         self.options_box.setTitle(_translate("self", "AutoCut"))
         self.label.setText(_translate("self", "AutoCite"))
-        self.autobypass.setText(_translate("self", " Launch AutoBypass Browser"))
+        self.autobypass.setText(_translate("self", " Launch SuperBrowser"))
         self.label_2.setText(_translate("self", "AutoPoll"))
         self.cut_it_box.setTitle(_translate("self", "Cut-It"))
         self.primary_em.setText(_translate("self", "Primary Emphasis"))
