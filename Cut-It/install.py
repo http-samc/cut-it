@@ -44,15 +44,15 @@ def install(modules):
 if __name__ == '__main__':
 
     from sys import platform
-    
+
     if general_modules:
         install(general_modules)
 
     if (platform == 'windows') and (windows_modules):
         install(windows_modules)
-    
+
     elif (platform == 'linux') and (linux_modules):
         install(linux_modules)
-    
+
     elif (platform == 'darwin') and (darwin_modules):
         install(darwin_modules)

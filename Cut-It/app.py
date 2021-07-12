@@ -1072,6 +1072,7 @@ if __name__ == "__main__":
         gui = qtmodern.windows.ModernWindow(gui)
         gui.show()
         sys.exit(app.exec_())
+
     except Exception as e:
         import time
         print(e)
