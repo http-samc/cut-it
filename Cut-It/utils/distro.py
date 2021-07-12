@@ -3,8 +3,10 @@
 """
 
 VERSION = "1.0"
-TAGS = ["Enterprise", "Release", "Beta"]
-TAG = TAGS[1]
+TAGS = ["ISD", "Enterprise for ISD®", "Release", "Beta"]
+TAG_DISPLAY = TAGS[1]
+TAG = TAGS[0]
+
 URL = "https://api.github.com/repos/http-samc/cut-it/releases"
 
 def version():
@@ -20,6 +22,13 @@ def tag():
     """
 
     return TAG
+
+def tagDisplay():
+    """
+        Returns display name of tag
+    """
+
+    return TAG_DISPLAY
 
 def releases():
     """

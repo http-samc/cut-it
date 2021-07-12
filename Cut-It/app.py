@@ -19,8 +19,10 @@ from utils.bypass_browser import getBrowser
 from utils.card import Card, Logger
 from utils.citer import cite
 from utils.clipboard_WIN import clipboard
+from utils.distro import tagDisplay
 from utils.export import printPDF
 from utils.feedback import Feedback
+from utils.ISD_theme import ISD
 from utils.resource import PATH
 from utils.text_scraper import text
 from utils.updater import Updater
@@ -31,11 +33,14 @@ class main(GUI):
         Adds logic to the GUI class
     """
 
-    def __init__(self, isLight=False) -> None:
-        super().__init__(isLight=isLight)
+    def __init__(self, isLight=False, ISD=False) -> None:
+        super().__init__(isLight=isLight, ISD=ISD)
 
         # Close Event
         self.closeEvent = self._onClose
+
+        # Defining ISD settings
+        self.ISD = ISD
 
         # Setting Slots
 
@@ -344,7 +349,9 @@ class main(GUI):
         GUI.updateStyling(self)
 
         # Change theme on current instance
-        qtmodern.styles.light(app) if newTheme == "light" else qtmodern.styles.dark(app)
+        if newTheme == "light" and not self.ISD: qtmodern.styles.light(app)
+        elif newTheme == "light" and self.ISD: ISD(app)
+        else: qtmodern.styles.dark(app)
 
         # Store new preference for future instances
         data.setPref("Theme", newTheme)
@@ -1062,34 +1069,35 @@ class main(GUI):
         return f"<span style='background-color: {color}'>{text}</span>"
 
 if __name__ == "__main__":
-    try:
-        # Initialize User Data
-        data.init()
+    # Initialize User Data
+    data.init()
 
-        # Create App
-        global app
-        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
-        app = QtWidgets.QApplication(sys.argv)
+    # Create App
+    global app
+    QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_Use96Dpi)
+    app = QtWidgets.QApplication(sys.argv)
 
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        app.setFont(font)
+    font = QtGui.QFont()
+    font.setPointSize(8)
+    app.setFont(font)
 
-        # Handling themes
-        if data.getPref("Theme") == "light":
-            qtmodern.styles.light(app)
-            isLight = True
+    # Handling themes
+    if data.getPref("Theme") == "light" and "ISD" in tagDisplay():
+        ISD(app)
+        isLight = True
+        isISD = True
 
-        else:
-            qtmodern.styles.dark(app)
-            isLight = False
+    elif data.getPref("Theme") == "light":
+        qtmodern.styles.light(app)
+        isLight = True
+        isISD = False
 
-        gui = main(isLight=isLight)
-        gui = qtmodern.windows.ModernWindow(gui)
-        gui.show()
-        sys.exit(app.exec_())
+    else:
+        qtmodern.styles.dark(app)
+        isLight = False
+        isISD = False
 
-    except Exception as e:
-        import time
-        print(e)
-        time.sleep(100)
+    gui = main(isLight=isLight, ISD=isISD)
+    gui = qtmodern.windows.ModernWindow(gui)
+    gui.show()
+    sys.exit(app.exec_())

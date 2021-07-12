@@ -104,7 +104,7 @@ def init():
                         None,
                         8
                     ],
-                    "Theme" : "light"
+                    "Theme" : "light",
                 },
                 "shortcuts": {
                     "Primary Emphasis": "CTRL+S",

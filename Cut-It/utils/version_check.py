@@ -14,6 +14,7 @@ def pollReleases():
     """
 
     TAG = tag()
+
     VERSION = int(version().replace('.', ''))
 
     r = requests.get(releases())

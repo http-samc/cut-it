@@ -12,14 +12,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QLayout, QMainWindow
 
-from utils.distro import tag, version
+from utils.distro import tag, tagDisplay, version
 from utils.ext_combobox import ExtendedComboBox
+from utils.ISD_theme import ISD
 from utils.MainWindow import MainWindow
 from utils.resource import PATH
 
 class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
-    def __init__(self, isLight = False) -> None:
+    def __init__(self, isLight = False, ISD = False) -> None:
         """
             Loads latest UI
         """
@@ -28,6 +29,7 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
         # Storing theme
         self.isLight = isLight
+        self.ISD = ISD
 
         self.setWindowIcon(QtGui.QIcon(PATH.get('images/cut-it.ico')))
 
@@ -36,7 +38,7 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
         SPACES = "                    "
-        self.setWindowTitle(f"{SPACES}Cut-It™ v.{version()}@{tag()}")
+        self.setWindowTitle(f"{SPACES}Cut-It™ v.{version()}@{tagDisplay()}")
 
         # Applying custom changes to GUI
         self.addDistroDetails()
@@ -88,9 +90,11 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
     def updateStyling(self):
         # Set theme-appropriate tooltip background and evidence box color
-        if self.isLight:
+        if self.isLight and not ISD:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-        else:
+        elif self.isLight and ISD:
+            self.setStyleSheet("QToolTip { color: rgb(7, 47, 78); background-color: rgb(36, 92, 132); border: 0px;}")
+        elif not self.isLight:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
 
     def addToolTips(self):
@@ -299,8 +303,8 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    qtmodern.styles.light(app)
-    gui = GUI(isLight=True)
+    ISD(app)
+    gui = GUI(isLight=True, ISD=True)
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())
