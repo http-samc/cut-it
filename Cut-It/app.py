@@ -42,6 +42,9 @@ class main(GUI):
         # Defining ISD settings
         self.ISD = ISD
 
+        # Error
+        self.error = None
+
         # Setting Slots
 
             # Custom Emphasis Levels
@@ -79,7 +82,7 @@ class main(GUI):
         self._loadSettings(initialLoad = True)
         self._loadShortcuts()
         self.__loadAllCards()
-        self._log()
+        if not self.error: self._log()
         self._loadCard(initialLoad = True)
         self.hasClickedDeleteOnce = False
 
@@ -172,6 +175,7 @@ class main(GUI):
 
         # Set Zoom
         self.evidence_box.zoomIn(self._zoom_)
+        if self.tertiaryEmphasis == "Ctrl+.": self.error = True
 
         self.__loadSettingsUI() if initialLoad else ... # We don't need to reapply settings to UI if user has already selected them
 
