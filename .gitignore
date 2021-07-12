@@ -138,5 +138,5 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-feedback.py
-card.py
+Cut-It/utils/card.py
+Cut-It/utils/feedback.py
