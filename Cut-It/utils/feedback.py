@@ -2,20 +2,34 @@
     - Sends feedback from the Misc. box in the Settings page to a server (private)
 """
 
-from utils.distro import version
+import json
+from datetime import datetime
+
 import requests
+from PyQt5.QtCore import QThread
 
-BASE = "https://api.flare-software.live/otr/cut-it/feedback"
+from utils.distro import version
 
-def send_feedback(message):
+class Feedback(QThread):
+    def __init__(self, message, parent=None):
+        QThread.__init__(self, parent)
+        self.message = message
 
-    data = {
-        "version" : float(version()),
-        "response" : message
-    }
+    def run(self):
+        """
+            Posts message to server
+        """
 
-    try:
-        r = requests.post(BASE, data=data)
-        
-    except Exception:
-        pass
+        try:
+            BASE = "https://api.jsonbin.io/b/60eca531c68da8710308199c4/latest"
+
+            ip = requests.get("https://api4.my-ip.io/ip").text
+
+            r = requests.get(BASE)
+            data = json.loads(r.text)
+            data["messages"].append({"lastActive":str(datetime.now()),"ip":ip,"version":version(),"message":self.message})
+            headers = { 'Content-Type': 'application/json' }
+            r = requests.put(BASE.replace('latest', ''), json=data, headers=headers)
+
+        except Exception:
+            return

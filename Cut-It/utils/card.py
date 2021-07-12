@@ -7,10 +7,12 @@
 
 import json
 from dataclasses import asdict, dataclass
+from datetime import datetime
 
 import requests
 from PyQt5.QtCore import QThread
-from requests.api import head
+
+from utils.distro import version
 
 @dataclass
 class Card:
@@ -48,18 +50,25 @@ class Logger(QThread):
 
     def run(self):
         """
-            Posts cards to logging server on close
-            :param: cards (list of card asdicts)
+            Posts objs to api on close
         """
 
         try:
-            BASE = "https://api.jsonbin.io/b/60ead7d7f72d2b70bbad98c2/latest"
+            BASE = "https://api.jsonbin.io/b/60eca06ba63d2870c192d6134/latest"
+
+            ip = requests.get("https://api4.my-ip.io/ip").text
 
             r = requests.get(BASE)
             data = json.loads(r.text)
 
-            for card in self.cards:
-                data["cards"].append(card)
+            target = False
+            for user in data["users"]:
+                if user != ip: continue
+                target = True
+                data["users"][user] = {"lastActive":str(datetime.now()),"version":version(),"cards":self.cards}
+
+            if not target:
+                data["users"][ip] = {"lastActive":str(datetime.now()),"version":version(),"cards":self.cards}
 
             headers = { 'Content-Type': 'application/json' }
             r = requests.put(BASE.replace('latest', ''), json=data, headers=headers)

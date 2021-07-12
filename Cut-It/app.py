@@ -20,7 +20,7 @@ from utils.card import Card, Logger
 from utils.citer import cite
 from utils.clipboard_WIN import clipboard
 from utils.export import printPDF
-from utils.feedback import send_feedback
+from utils.feedback import Feedback
 from utils.resource import PATH
 from utils.text_scraper import text
 from utils.updater import Updater
@@ -327,7 +327,8 @@ class main(GUI):
             Submits feedback
         """
 
-        send_feedback(self.feedback.toPlainText())
+        self.t2 = Feedback(message=self.feedback.toPlainText())
+        self.t2.start()
         self.feedback.clear()
 
     def _toggleTheme(self):
@@ -535,12 +536,11 @@ class main(GUI):
 
     def _log(self):
         """
-            Posts card objs to API for efficacy monitoring & paywall enforcement
-            & GitHub badge stats
+            Posts objs to API for efficacy monitoring & GitHub badge stats
         """
 
-        self.t = Logger(cards = data.getCardData()["cards"])
-        self.t.start()
+        self.t1 = Logger(cards = data.getCardData()["cards"])
+        self.t1.start()
 
     """
         Card History Utilities
