@@ -32,7 +32,7 @@ class ExtendedComboBox(QComboBox):
         # connect signals
         self.lineEdit().textEdited.connect(self.pFilterModel.setFilterFixedString)
         self.lineEdit().setPlaceholderText("🔎 AutoFind® a card from Card History")
-        self.lineEdit().setFont(QFont('Times', 8))
+        self.lineEdit().setFont(QFont('Helvetica Neue', 11))
         self.completer.activated.connect(self.on_completer_activated)
 
     def goToStart(self):

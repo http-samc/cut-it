@@ -78,7 +78,7 @@ def init():
             data = {
                 "preferences": {
                     "Font": "Times New Roman",
-                    "Zoom": 0,
+                    "Zoom": 4,
                     "Primary Highlight Color": "Cyan",
                     "Secondary Highlight Color": "Yellow",
                     "Font Size of Normal Text": 8,

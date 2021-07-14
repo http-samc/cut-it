@@ -89,9 +89,13 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         self.gridLayout_7.addWidget(self.new_card, 1, 3)
 
     def updateStyling(self):
-        font = QtGui.QFont()
-        font.setPointSize(13)
-        self.msg.setFont(font)
+        self.msg.setStyleSheet("font-size: 12pt")
+        self.cardSelector.setStyleSheet("font-size: 11pt")
+        self.primary_em.setStyleSheet("font-size: 10pt")
+        self.secondary_em.setStyleSheet("font-size: 10pt")
+        self.tertiary_em.setStyleSheet("font-size: 10pt")
+        self.open_card.setStyleSheet("font-size: 10pt")
+        self.new_card.setStyleSheet("font-size: 10pt")
 
         # Set theme-appropriate tooltip background and evidence box color
         if self.isLight and not self.ISD:
@@ -286,11 +290,11 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
             Returns a formatted String to be inserted into the Distro box in the about section
         """
 
-        distroDetails = f"""<h1 align="center" style="font-size: 30pt">🚀Cut-It FAQ🚀</h1><br><br><h1 align="center">
-        Version 📝 {version()} || Tag🏷️ @{tag()}
-        || Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it
-        || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors
-        || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
+        distroDetails = f"""<h1 align="center" style="font-size: 30pt">🚀 Cut-It FAQ 🚀</h1><br><br><h1 align="center">
+        Version 📝 {version()} || Tag 🏷️ @{tag()}
+        || Website 🌐 https://cutit.cards || GitHub Repository 📚 https://github.com/http-samc/cut-it
+        || Contributors 👐 https://github.com/http-samc/cut-it/graphs/contributors
+        || Current Project Managers 👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits (IconScout): Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
         distroDetails += "New Icon by Phosphor Icons, Browser Icon by Bawie Cahyo, Search Icon by Google Inc.</h1>"
@@ -298,7 +302,7 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         <br><br>
         <h1 align="center">
         <em>
-        See any issues? Contact us at hello@cutit.cards! Our software is free forever and open sourced,
+        See any issues? Submit feedback in Settings or open an Issue on GitHub! Our software is free forever and open sourced,
         please consider contributing on GitHub!
         </em>
         <h1>
