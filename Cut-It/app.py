@@ -18,7 +18,7 @@ from utils import data
 from utils.bypass_browser import getBrowser
 from utils.card import Card, Logger
 from utils.citer import cite
-from utils.clipboard_WIN import clipboard
+from utils.clipboard_OSX import clipboard
 from utils.distro import tagDisplay
 from utils.export import printPDF
 from utils.feedback import Feedback
@@ -1082,7 +1082,7 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
 
     font = QtGui.QFont()
-    font.setPointSize(8)
+    font.setPointSize(12)
     app.setFont(font)
 
     # Handling themes

@@ -8,7 +8,7 @@ import sys
 
 import qtmodern.styles
 import qtmodern.windows
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5 import QtCore, QtGui, QtWidgets, uic, QtGui
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QApplication, QFrame, QLabel, QLayout, QMainWindow
 
@@ -37,8 +37,8 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         #uic.loadUi('Cut-It/app.ui', self)
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
-        SPACES = "                    "
-        self.setWindowTitle(f"{SPACES}Cut-It™ v.{version()}@{tagDisplay()}")
+        SPACES = "                   "
+        self.setWindowTitle(f"Cut-It™ v.{version()}@{tagDisplay()}{SPACES}")
 
         # Applying custom changes to GUI
         self.addDistroDetails()
@@ -89,10 +89,14 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         self.gridLayout_7.addWidget(self.new_card, 1, 3)
 
     def updateStyling(self):
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.msg.setFont(font)
+
         # Set theme-appropriate tooltip background and evidence box color
-        if self.isLight and not ISD:
+        if self.isLight and not self.ISD:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-        elif self.isLight and ISD:
+        elif self.isLight and self.ISD:
             self.setStyleSheet("QToolTip { color: rgb(7, 47, 78); background-color: rgb(36, 92, 132); border: 0px;}")
         elif not self.isLight:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
