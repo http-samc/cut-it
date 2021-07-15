@@ -44,7 +44,7 @@ class Updater(UpdateDialog):
         date = date.strftime('%b %d, %Y at %H:%M GMT')
 
         # Generate & set markdown str
-        info: str = f'Version: `{self.data["name"]} ({date})`\n\nRequired: `{"Yes" if self.data["required"] else "No"}`\n\n---\n{self.data["desc"]}'
+        info: str = f'Version: `{self.data["name"]} ({date})`\n\nRequired: `{"Yes" if self.data["required"] else "No"}`\n\n*When you update, your default browser will open and you\'ll see a downloaded installer. If this doesn\'t work, head over to cutit.cards and download the installer from there.*\n\n---\n{self.data["desc"]}'
         self.info.setMarkdown(info)
 
         # Define our download URL
