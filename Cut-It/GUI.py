@@ -37,7 +37,7 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         #uic.loadUi('Cut-It/app.ui', self)
 
         # Setting Title (Spaces are due to a centering bug in QtModern)
-        SPACES = "                   "
+        SPACES = ""#"                   "
         self.setWindowTitle(f"Cut-It™ v.{version()}@{tagDisplay()}{SPACES}")
 
         # Applying custom changes to GUI
