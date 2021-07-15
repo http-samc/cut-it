@@ -93,8 +93,7 @@ class main(GUI):
         self._firstLoad_()
 
         # Refresh UI to prevent widget bugs
-        self.showMinimized() 
-        #self.showNormal()
+        self.showMinimized()
 
     """
         Updater

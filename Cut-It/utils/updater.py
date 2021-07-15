@@ -1,5 +1,6 @@
 import datetime
 import sys
+import webbrowser
 
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
@@ -61,15 +62,17 @@ class Updater(UpdateDialog):
     def getUpdate(self):
         """Opens download URL in Selenium Chrome"""
 
-        # Config browser
-        chrome_options = Options()
-        chrome_options.add_argument(f"--app={self.download}")
-        chrome_options.add_argument("--log-level=3")
-        chrome_options.add_argument("--window-size=600,400")
-        chrome_options.add_experimental_option("detach", True)
+        webbrowser.open(self.download, 1)
 
-        # Open it to download URI
-        browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+        # # Config browser
+        # chrome_options = Options()
+        # chrome_options.add_argument(f"--app={self.download}")
+        # chrome_options.add_argument("--log-level=3")
+        # chrome_options.add_argument("--window-size=600,400")
+        # chrome_options.add_experimental_option("detach", True)
+
+        # # Open it to download URI
+        # browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
 
         # Quit program to allow downloaded updater to run
         self._quit()
