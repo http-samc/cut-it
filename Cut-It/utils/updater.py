@@ -1,5 +1,6 @@
 import datetime
 import sys
+import webbrowser
 
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
@@ -43,7 +44,7 @@ class Updater(UpdateDialog):
         date = date.strftime('%b %d, %Y at %H:%M GMT')
 
         # Generate & set markdown str
-        info: str = f'Version: `{self.data["name"]} ({date})`\n\nRequired: `{"Yes" if self.data["required"] else "No"}`\n\n---\n{self.data["desc"]}'
+        info: str = f'Version: `{self.data["name"]} ({date})`\n\nRequired: `{"Yes" if self.data["required"] else "No"}`\n\n*When you update, your default browser will open and you\'ll see a downloaded installer. If this doesn\'t work, head over to cutit.cards and download the installer from there.*\n\n---\n{self.data["desc"]}'
         self.info.setMarkdown(info)
 
         # Define our download URL
@@ -61,15 +62,17 @@ class Updater(UpdateDialog):
     def getUpdate(self):
         """Opens download URL in Selenium Chrome"""
 
-        # Config browser
-        chrome_options = Options()
-        chrome_options.add_argument(f"--app={self.download}")
-        chrome_options.add_argument("--log-level=3")
-        chrome_options.add_argument("--window-size=600,400")
-        chrome_options.add_experimental_option("detach", True)
+        # # Config browser
+        # chrome_options = Options()
+        # chrome_options.add_argument(f"--app={self.download}")
+        # chrome_options.add_argument("--log-level=3")
+        # chrome_options.add_argument("--window-size=600,400")
+        # chrome_options.add_experimental_option("detach", True)
 
-        # Open it to download URI
-        browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+        # # Open it to download URI
+        # browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
+
+        webbrowser.open(self.download, 1)
 
         # Quit program to allow downloaded updater to run
         self._quit()

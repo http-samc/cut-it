@@ -9,7 +9,7 @@ block_cipher = None
 
 
 a = Analysis(['C:/Programming/OffTime/cut-it/Cut-It/app.py'],
-             pathex=['C:/Programming/OffTime/cut-it/env/Lib/site-packages', 'C:\\Programming\\OffTime\\cut-it'],
+             pathex=['C:/Programming/OffTime/cut-it/env/Lib/site-packages', 'C:\\Programming\\OffTime\\Cut-It'],
              binaries=[],
              datas=[('C:/Programming/OffTime/cut-it/images', 'images/'), ('C:/Programming/OffTime/cut-it/env/Lib/site-packages/qtmodern', 'qtmodern/'), ('C:/Programming/OffTime/cut-it/bypass.crx', '.')],
              hiddenimports=hiddenimports,

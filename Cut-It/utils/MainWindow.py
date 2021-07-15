@@ -407,6 +407,7 @@ class MainWindow(QMainWindow):
         self.warning.setAlignment(QtCore.Qt.AlignCenter)
         self.warning.setReadOnly(True)
         self.warning.setObjectName("warning")
+        self.warning.setStyleSheet("color: yellow; background-color: gray;")
         self.gridLayout.addWidget(self.warning, 10, 0, 1, 2)
         self.TertiaryEmSettings = QtWidgets.QGroupBox(self.pref_box)
         self.TertiaryEmSettings.setMinimumSize(QtCore.QSize(0, 80))

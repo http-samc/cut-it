@@ -1101,7 +1101,7 @@ if __name__ == "__main__":
         isLight = False
         isISD = False
 
-    gui = main(isLight=isLight, ISD=isISD)
+    gui = main(isLight=isLight, ISD=True)
     gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())
