@@ -94,6 +94,7 @@ class main(GUI):
 
         # Refresh UI to prevent widget bugs
         self.showMinimized()
+        self.showNormal()
 
     """
         Updater
