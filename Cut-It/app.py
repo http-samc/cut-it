@@ -93,7 +93,8 @@ class main(GUI):
         self._firstLoad_()
 
         # Refresh UI to prevent widget bugs
-        self.resize(1080, 630)
+        self.showMinimized() 
+        #self.showNormal()
 
     """
         Updater
@@ -1105,6 +1106,6 @@ if __name__ == "__main__":
         isISD = False
 
     gui = main(isLight=isLight, ISD=isISD)
-    gui = qtmodern.windows.ModernWindow(gui)
+    #gui = qtmodern.windows.ModernWindow(gui)
     gui.show()
     sys.exit(app.exec_())
