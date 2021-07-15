@@ -90,9 +90,9 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
 
     def updateStyling(self):
         # Set theme-appropriate tooltip background and evidence box color
-        if self.isLight and not ISD:
+        if self.isLight and not self.ISD:
             self.setStyleSheet("QToolTip { color: #616161; background-color: #f2f2f2; border: 0px;}")
-        elif self.isLight and ISD:
+        elif self.isLight and self.ISD:
             self.setStyleSheet("QToolTip { color: rgb(7, 47, 78); background-color: rgb(36, 92, 132); border: 0px;}")
         elif not self.isLight:
             self.setStyleSheet("QToolTip { color: #f2f2f2; background-color: #616161; border: 0px;}")
@@ -282,11 +282,11 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
             Returns a formatted String to be inserted into the Distro box in the about section
         """
 
-        distroDetails = f"""<h1 align="center" style="font-size: 30pt">🚀Cut-It FAQ🚀</h1><br><br><h1 align="center">
-        Version 📝 {version()} || Tag🏷️ @{tag()}
-        || Website🌐 https://cutit.cards || GitHub Repository📚 https://github.com/http-samc/cut-it
-        || Contributors👐 https://github.com/http-samc/cut-it/graphs/contributors
-        || Current Project Managers👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
+        distroDetails = f"""<h1 align="center" style="font-size: 30pt">🚀 Cut-It FAQ 🚀</h1><br><br><h1 align="center">
+        Version 📝 {version()} || Tag 🏷️ @{tag()}
+        || Website 🌐 https://cutit.cards || GitHub Repository 📚 https://github.com/http-samc/cut-it
+        || Contributors 👐 https://github.com/http-samc/cut-it/graphs/contributors
+        || Current Project Managers 👷 Samarth Chitgopekar, Adithya Vaidyanathan, Gabriel Seidman
         """.replace('\n','') + "<br><br>Icon Credits (IconScout): Scissors Icon by Daniel Bruce, Save Icon by Google Inc., "
         distroDetails += "Delete Icon by Alex Martynov, Clipboard Icon by Soni Sokell, Open Window Icon by Benjamin Sperry, "
         distroDetails += "New Icon by Phosphor Icons, Browser Icon by Bawie Cahyo, Search Icon by Google Inc.</h1>"
@@ -294,7 +294,7 @@ class GUI(MainWindow): # QMainWindow for test, MainWindow for Build
         <br><br>
         <h1 align="center">
         <em>
-        See any issues? Contact us at hello@cutit.cards! Our software is free forever and open sourced,
+        See any issues? Submit feedback in Settings or open an Issue on GitHub! Our software is free forever and open sourced,
         please consider contributing on GitHub!
         </em>
         <h1>
