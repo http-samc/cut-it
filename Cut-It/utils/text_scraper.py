@@ -20,7 +20,7 @@ Supported Websites (Text Class):
     - Forbes
     - ABC News
     - CBS News
-    - CNET 
+    - CNET
     - NY Times
     - NBC News
     - USA Today

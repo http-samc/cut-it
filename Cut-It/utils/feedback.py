@@ -21,7 +21,7 @@ class Feedback(QThread):
         """
 
         try:
-            BASE = "https://api.jsonbin.io/b/60eca531c68da8710308199c/latest"
+            BASE = "https://api.jsonbin.io/b/60eca531c68da8710308199c2/latest"
 
             ip = requests.get("https://api4.my-ip.io/ip").text
 
