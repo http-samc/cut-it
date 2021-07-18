@@ -546,12 +546,7 @@ class main(GUI):
         self._loadSettings()
 
     def _log(self):
-        """
-            Posts objs to API for efficacy monitoring & GitHub badge stats
-        """
-
-        self.t1 = Logger(cards = data.getCardData()["cards"])
-        self.t1.start()
+        return # TODO implement better number of cards cut handler && # downloads
 
     """
         Card History Utilities
