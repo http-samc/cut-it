@@ -49,29 +49,5 @@ class Logger(QThread):
         self.cards = cards if isinstance(cards, list) else None
 
     def run(self):
-        """
-            Posts objs to api on close
-        """
 
-        try:
-            BASE = "https://api.jsonbin.io/b/60ecc7b0a917050205c61666/latest"
-
-            ip = requests.get("https://api4.my-ip.io/ip").text
-
-            r = requests.get(BASE)
-            data = json.loads(r.text)
-
-            target = False
-            for user in data["users"]:
-                if user != ip: continue
-                target = True
-                data["users"][user] = {"lastActive":str(datetime.now()),"version":version(),"cards":self.cards}
-
-            if not target:
-                data["users"][ip] = {"lastActive":str(datetime.now()),"version":version(),"cards":self.cards}
-
-            headers = { 'Content-Type': 'application/json' }
-            r = requests.put(BASE.replace('latest', ''), json=data, headers=headers)
-
-        except Exception:
-            return
+        return
