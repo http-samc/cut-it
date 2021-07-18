@@ -4,8 +4,8 @@
 
 VERSION = "1.0"
 TAGS = ["ISD", "Enterprise for ISD®", "Release", "Beta"]
-TAG_DISPLAY = TAGS[1]
-TAG = TAGS[0]
+TAG_DISPLAY = TAGS[2] # 1 for ISD
+TAG = TAGS[2] # 0 for ISD
 
 URL = "https://api.github.com/repos/http-samc/cut-it/releases"
 
